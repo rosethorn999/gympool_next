@@ -1,27 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* root css */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+	--whisper: #e6e6e6;
+	--pattens-blue: #dee2e6;
+	--summerSky: #40a7ff;
+	--codGrey: #30363b;
+	--blueCharcoal: #272e33;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	--grassGreen: #2ed97d;
+	--mayaBlue: #86b7fe;
+	--dodgerBlue: #0099ff;
+	--dodgerBlueWith25Opacity: #008ae646;
+	--electricBlue: #008ae6;
+	--white: #fff;
+	--whiteSmoke: #f7f7f7;
+	--whisper: #e6e6e6;
+	--charcoal: #444444;
+	--nightRider: #333;
+	--black: #000;
+	--persianRed: #e52525;
+	--bloodred: #d7002e;
+	--gympoolBlue: #01b0f5;
+	--bloodredWith25Opacity: #d7002f42;
+	--pink: #e67f7f;
+	--sunflower: #e4be1f;
+	--chestnut: #b95252;
+	--dodgerBlue: #2680ea;
+	--pattensBlue: #dee2e6;
+	--navyBlue: #0058e5;
 }
