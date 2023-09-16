@@ -1,5 +1,4 @@
 'use client';
-// import '../scss/Register.scss';
 // import { useHistory, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';

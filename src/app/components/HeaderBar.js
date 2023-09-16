@@ -1,6 +1,5 @@
 'use client';
 import Image from 'next/image';
-// import "../scss/HeaderBar.scss";
 import { useState } from 'react';
 // import {
 //   HashRouter as Router,
@@ -117,7 +116,7 @@ function HeaderBar() {
 				<div className="login-area hidden md:inline-block md:h-[67px] md:w-1/5 md:pr-2 md:text-right md:leading-[76px]">
 					{isLoggedIn ? (
 						<>
-							<Link className="mx-2" href="./manage">
+							<Link className="mx-2" href="/manage">
 								管理後台
 							</Link>
 							<span>|</span>
@@ -127,7 +126,7 @@ function HeaderBar() {
 						</>
 					) : (
 						<>
-							<Link className="mx-2" href="./invitation">
+							<Link className="mx-2" href="/invitation">
 								註冊
 							</Link>
 							<span>|</span>

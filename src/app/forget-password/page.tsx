@@ -1,5 +1,4 @@
 'use client';
-// import '../scss/RequestResetPassword.scss';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';
 // import { useHistory } from 'react-router-dom';

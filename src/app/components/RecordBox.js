@@ -1,4 +1,3 @@
-// import "../scss/RecordBox.scss";
 import selections from '../../../public/selections.json';
 import world_gym from '../../../public/world_gym.jpg';
 import PropTypes from 'prop-types';

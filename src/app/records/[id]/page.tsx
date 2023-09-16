@@ -1,43 +1,17 @@
-// import '../scss/RecordDetail.scss';
 import Link from 'next/link';
 import selections from '../../../../public/selections.json';
-// import { HashRouter as Router, Link, useHistory } from 'react-router-dom';
 import Image from 'next/image';
 import RecordBox from '@/app/components/RecordBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
-interface IRecord {
-	title: string;
-	monthly_rental: Number;
-	id: string;
-}
-function RecordDetail({ params }: any) {
-	// const history = useHistory();
-	// params.id;
-	const records = [
-		{ title: '111title', id: '12', monthly_rental: 899 },
-		{ title: '222', id: '12312314', monthly_rental: 899 },
-		{ title: '333', id: '12wgw24', monthly_rental: 899 },
-		{ title: '444', id: '12wef24', monthly_rental: 899 },
-		{ title: '555', id: 'few', monthly_rental: 899 },
-		{ title: '666', id: 'fe412123w', monthly_rental: 899 },
-	];
-	let record: any = {
-		title: 'Title title title123',
-		gym_type: 1,
-		store: '中正店',
-		monthly_rental: 988,
-		county: '基隆市',
-		district: '七堵區',
-		expiry_date: '2023-10-06',
-		remark:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed risus nibh, hendrerit a eros vitae, dapibus lacinia augue. Maecenas egestas arcu sit amet ultricies tincidunt. Proin lacinia interdum odio vel porttitor. Vivamus mollis sollicitudin lectus, at venenatis leo sodales at. Fusce commodo vehicula tincidunt. Cras feugiat vestibulum ligula, dignissim condimentum orci. Donec elementum dignissim odio vel suscipit. Aenean id urna fermentum felis cursus aliquam nec vel orci. Proin consequat malesuada ex vel sagittis. Proin at laoreet tortor. Nunc tellus arcu, rutrum in odio sed, rutrum pellentesque mauris. Praesent elementum mi neque, eget sagittis dolor pulvinar nec. Nulla sodales pulvinar urna, vel blandit dolor. Integer imperdiet, orci id faucibus varius, mi libero congue est, nec mollis ante massa nec sapien. Nullam non lobortis lectus, non elementum metus. Vestibulum a lacus et purus bibendum vestibulum at eu enim. Etiam ex justo, molestie vel laoreet ac, luctus ac sapien. Sed non vestibulum leo, sed bibendum turpis. Aenean placerat pellentesque mi, sit amet tincidunt nulla tempor vel. Phasellus et aliquet ipsum. Curabitur posuere tincidunt tellus et iaculis. Aliquam erat volutpat. Vestibulum mi tortor, eleifend sed facilisis ut, consequat id mi. Sed quis finibus sem. Pellentesque sollicitudin tempor quam ut lacinia. Nunc feugiat fermentum felis, quis dapibus magna vulputate ut. Nullam vestibulum tortor lacus, quis hendrerit neque condimentum sed. Praesent consequat nisi ex, sed sodales nisl venenatis a. Maecenas pulvinar, lacus non dapibus faucibus, nisi nisl blandit metus, in tempor felis est commodo felis. Donec bibendum vitae dolor ac condimentum. Praesent aliquet luctus neque, quis malesuada arcu auctor et. Phasellus ac viverra purus. Aliquam elementum ultrices rhoncus. Sed efficitur nisl nec volutpat pulvinar. Sed suscipit in mi eu posuere. Proin sit amet arcu porta, tristique urna in, blandit ligula. Sed libero magna, dictum sit amet tellus condimentum, suscipit interdum lacus. Sed euismod, quam condimentum consectetur aliquam, lacus ante dignissim odio, a suscipit nunc orci sed mauris. Vestibulum interdum diam vel ornare condimentum. Cras suscipit nunc quis consequat finibus. Nunc vulputate, odio nec ornare rutrum, sem tellus posuere ante, eget pellentesque risus erat vel nunc. Curabitur eget sapien ut ligula condimentum aliquet id vitae nulla. Donec eu nibh vel erat porta laoreet id quis tortor. Curabitur enim risus, fermentum at dui non, fringilla tincidunt velit. Suspendisse hendrerit, velit at malesuada ullamcorper, diam nisl luctus est, ut faucibus purus leo non orci. Praesent blandit nulla nec risus iaculis lacinia. Donec ante nibh, condimentum in venenatis id, tempor eget mi. Quisque scelerisque odio vel ullamcorper congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ac dapibus leo. Nullam quis enim a ipsum ullamcorper placerat. Etiam eros purus, interdum id dapibus in, lobortis eget lectus. Donec sodales odio nulla, quis pulvinar ante fringilla in. Proin vehicula quis sem ac congue. Phasellus eu purus et lorem tempor convallis. Donec facilisis consectetur eros, a scelerisque dolor ornare non. Pellentesque maximus arcu tincidunt aliquam convallis. Integer tristique lacus risus, eu commodo libero efficitur nec. Morbi et erat at est pellentesque mollis.',
-		features: [1, 2],
-		processing_fee: 300,
-		create_time: '2023-01-21T09:08:06.704104Z',
-		creator: 'Alex',
-		inventory: 1,
-	}; // sessionStorage.getItem('record') ? JSON.parse(sessionStorage.getItem('record')) : {};
+import { getRecords, getRecord } from '@/app/apis/api';
+import { IRecord } from '@/app/type/type';
+
+async function RecordDetail({ params }: any) {
+	const recordId = params.id;
+	const records = await getRecords(); // TODO: get relate data
+	const record = await getRecord(recordId);
+
 	const {
 		title,
 		gym_type,
@@ -64,9 +38,6 @@ function RecordDetail({ params }: any) {
 		const monthCount = Math.round((d - now) / 1000 / 60 / 60 / 24 / 30);
 		return monthly_rental * monthCount + processing_fee;
 	};
-	// const goBack = () => {
-	// 	history.goBack();
-	// };
 	const gym_typeCaption = (v: any) => {
 		let selected = selection.gym_types.filter(function (item: any) {
 			return item.val === v;
@@ -82,7 +53,7 @@ function RecordDetail({ params }: any) {
 			<div className="h-full p-5 md:py-0">
 				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
 					<Link href="/records">&larr; 回上一頁</Link>
-					{/* FIXME: need to click twice */}
+					{/* FIXME: need to click twice sometimes*/}
 				</div>
 				<div className="record-container mb-24 md:mb-48">
 					<div className="upper-box mb-24 w-full gap-4 md:flex">
@@ -98,7 +69,7 @@ function RecordDetail({ params }: any) {
 							<span className="text-persianRed">{inventory <= 0 && <p>已售出</p>}</span>
 							<div className="contacts-box">
 								<p className="text-xl">賣家資訊</p>
-								<Link className="text-dodgerBlue" href={'#'}>
+								<Link className="text-dodgerBlue" href={`/user/${creator}`}>
 									{creator}
 								</Link>
 								<div className="flex flex-wrap gap-2">
@@ -142,7 +113,7 @@ function RecordDetail({ params }: any) {
 					<div className="bottom-box mb-24 w-full rounded border border-whisper ">
 						<div className="header h-10 bg-whisper px-5 leading-10">備註</div>
 						<div className="h-36 overflow-auto ">
-							<div className="remark p-4 text-sm ">{remark}d</div>
+							<div className="remark p-4 text-sm">{remark}</div>
 						</div>
 					</div>
 					<h2 className="mb-12 text-4xl">附近其他的商品</h2>

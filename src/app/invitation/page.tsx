@@ -1,5 +1,4 @@
 'use client';
-// import '../scss/Invitation.scss';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';
 import { open, close } from '../components/Spinner';
