@@ -1,19 +1,18 @@
 'use client';
-// import { useHistory, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';
-import { open, close } from '../components/Spinner';
+import { SetSpinnerOpen, SetSpinnerClose } from '../components/Spinner';
 import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextBox from '../components/TextBox';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 
 function Register() {
-	// const history = useHistory();
-	// const { search } = useLocation();
-	const search = { id: '4d34037e-5470-4d07-b717-9383716f15a4' };
-	const invitation_id = new URLSearchParams(search).get('id');
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const invitation_id = searchParams.get('id');
+	if (!invitation_id) redirect('/');
 
 	const validate = (values: any) => {
 		const errors: any = {};
@@ -71,46 +70,42 @@ function Register() {
 		},
 	});
 
-	function createUser(values: any) {
+	async function createUser(values: any) {
 		let url = '/user/';
-		open();
-		basicRequest
-			.post(url, values)
-			.then(() => {
-				const msg = `${values.email} 已經可以使用`;
-				Swal.fire('完成', msg, 'success').then(() => {
-					// history.push('/login');
-					redirect('/login');
-				});
-			})
-			.catch(function (error: any) {
-				let msgs: any[] = [];
-				if (error.response.status === 400) {
-					let msg = error.response.data;
-					const keys = Object.keys(msg);
-					const commonMsg: any = {
-						'This password is too common.': '密碼太過於常見',
-						'This password is entirely numeric.': '密碼需由數字與英文組成',
-						'user with this username already exists.': '此使用者名稱已被註冊',
-						'invitation not exist.': '連結錯誤 請重開邀請信中連結',
-					};
-					keys.forEach((key) => {
-						msg[key].forEach((msg: any) => {
-							msgs.push(commonMsg[msg] || msg);
-						});
+		SetSpinnerOpen();
+		try {
+			const req = await basicRequest.post(url, values);
+			const msg = `${values.email} 已經可以使用`;
+			SetSpinnerClose();
+			await Swal.fire('完成', msg, 'success');
+			router.push('/login');
+		} catch (error: any) {
+			let msgs: string[] = [];
+			if (error.response.status === 400) {
+				let msg = error.response.data;
+				const keys = Object.keys(msg);
+				const commonMsg: any = {
+					'This password is too common.': '密碼太過於常見',
+					'This password is entirely numeric.': '密碼需由數字與英文組成',
+					'user with this username already exists.': '此使用者名稱已被註冊',
+					'invitation not exist.': '連結錯誤, 請重開邀請信中連結',
+					'user with this email already exists.': '此電子信箱已被註冊',
+				};
+				keys.forEach((key) => {
+					msg[key].forEach((msg: any) => {
+						msgs.push(commonMsg[msg] || msg);
 					});
-				}
-				const title = error.response.status.toString();
-				if (msgs.length > 0) {
-					Swal.fire(title, msgs.join('<br>'), 'error');
-				} else {
-					Swal.fire(title, JSON.stringify(error.response.data), 'error');
-				}
-				console.error(error);
-			})
-			.finally(() => {
-				close();
-			});
+				});
+			}
+			const title = error.response.status.toString();
+			if (msgs.length > 0) {
+				Swal.fire(title, msgs.join('<br>'), 'error');
+			} else {
+				Swal.fire(title, JSON.stringify(error.response.data), 'error');
+			}
+			console.error(error);
+		}
+		SetSpinnerClose();
 	}
 	return (
 		<div className="Register container text-center">
@@ -123,7 +118,7 @@ function Register() {
 						<div className="form-group mb-3 block w-full">
 							<TextBox
 								name="email"
-								extraClass={`${formik.errors.email ? 'is-invalid' : null}`}
+								extraclass={`${formik.errors.email ? 'is-invalid' : ''}`}
 								placeholder="電子信箱"
 								onChange={formik.handleChange}
 								value={formik.values.email}
@@ -133,7 +128,7 @@ function Register() {
 							<TextBox
 								name="username"
 								type="text"
-								extraClass={`${formik.errors.username ? 'is-invalid' : null}`}
+								extraclass={`${formik.errors.username ? 'is-invalid' : ''}`}
 								placeholder="使用者名稱"
 								onChange={formik.handleChange}
 								value={formik.values.username}
@@ -143,7 +138,7 @@ function Register() {
 							<TextBox
 								name="password"
 								type="password"
-								extraClass={`${formik.errors.password ? 'is-invalid' : null}`}
+								extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
 								placeholder="密碼"
 								onChange={formik.handleChange}
 								value={formik.values.password}
@@ -153,7 +148,7 @@ function Register() {
 							<TextBox
 								name="password2"
 								type="password"
-								extraClass={`${formik.errors.password ? 'is-invalid' : null}`}
+								extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
 								placeholder="確認密碼"
 								onChange={formik.handleChange}
 								value={formik.values.password2}
@@ -163,7 +158,7 @@ function Register() {
 							<TextBox
 								name="last_name"
 								type="text"
-								extraClass={`${formik.errors.last_name ? 'is-invalid' : null}`}
+								extraclass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
 								placeholder="姓"
 								onChange={formik.handleChange}
 								value={formik.values.last_name}
@@ -173,7 +168,7 @@ function Register() {
 							<TextBox
 								name="first_name"
 								type="text"
-								extraClass={`${formik.errors.first_name ? 'is-invalid' : null}`}
+								extraclass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
 								placeholder="名"
 								onChange={formik.handleChange}
 								value={formik.values.first_name}

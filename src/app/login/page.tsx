@@ -1,19 +1,18 @@
 'use client';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';
-import { open, close } from '../components/Spinner';
-// import { HashRouter as Router, Link, useHistory } from 'react-router-dom';
+import { SetSpinnerOpen, SetSpinnerClose } from '../components/Spinner';
 // import { useDispatch } from 'react-redux';
 // import { login } from '../store/user';
 import { useFormik } from 'formik';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import TextBox from '../components/TextBox';
 import Button from '../components/Button';
 
 function Login() {
 	// const dispatch = useDispatch();
-	// const history = useHistory();
+	const router = useRouter();
 	const validate = (values: any) => {
 		const errors: any = {};
 
@@ -40,37 +39,32 @@ function Login() {
 			clickLogin(values);
 		},
 	});
-	function clickLogin(values: any) {
-		open();
-		basicRequest
-			.post('/login/', values)
-			.then((response: any) => {
-				const token = 'jwt ' + response.data.token;
-				const user = response.data.user;
-				Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success').then(() => {
-					// dispatch(login({ token, user }));
-					// history.push('/');
-					redirect('/');
-				});
-			})
-			.catch(function (error: any) {
-				const title = error.response.status.toString();
-				let msg = JSON.stringify(error.response.data);
-				if (error.response.status === 400) {
-					msg = error.response.data.non_field_errors?.[0].replace(
-						'Unable to log in with provided credentials.',
-						'無法使用此帳號密碼登入'
-					);
-				}
-				Swal.fire(title, msg, 'error');
-				console.error(error);
-			})
-			.finally(() => {
-				close();
-			});
+	async function clickLogin(values: any) {
+		SetSpinnerOpen();
+		try {
+			const req = await basicRequest.post('/login/', values);
+			const token = 'jwt ' + req.data.token;
+			const user = req.data.user;
+			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
+			// dispatch(login({ token, user }));
+			SetSpinnerClose();
+			router.push('/');
+		} catch (error: any) {
+			const title = error.response.status.toString();
+			let msg = JSON.stringify(error.response.data);
+			if (error.response.status === 400) {
+				msg = error.response.data.non_field_errors?.[0].replace(
+					'Unable to log in with provided credentials.',
+					'無法使用此帳號密碼登入'
+				);
+			}
+			Swal.fire(title, msg, 'error');
+			console.error(error);
+		}
+		SetSpinnerClose();
 	}
 	function social_register(values: any) {
-		open();
+		SetSpinnerOpen();
 
 		const url = '/user/';
 		basicRequest
@@ -99,7 +93,7 @@ function Login() {
 				}
 			})
 			.finally(() => {
-				close();
+				SetSpinnerClose();
 			});
 	}
 	function fbLogin() {
@@ -135,7 +129,7 @@ function Login() {
 						name="email"
 						placeholder="電子信箱"
 						onChange={formik.handleChange}
-						extraClass={
+						extraclass={
 							formik.errors.email
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''
@@ -149,7 +143,7 @@ function Login() {
 						placeholder="密碼"
 						type="password"
 						onChange={formik.handleChange}
-						extraClass={
+						extraclass={
 							formik.errors.password
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''
@@ -158,11 +152,7 @@ function Login() {
 					/>
 				</div>
 				<div className="form-group mb-3 block w-full">
-					{/* <Router> */}
-					<p>
-						<Link href="/forget-password">忘記密碼?</Link>
-					</p>
-					{/* </Router> */}
+					<Link href="/forget-password">忘記密碼?</Link>
 				</div>
 				<div className="button-box mt-12">
 					<Button type="submit" disabled={!formik.isValid}>

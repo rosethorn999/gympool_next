@@ -1,16 +1,14 @@
 'use client';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';
-// import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-// import { open, close } from '../components/Spinner';
+import { SetSpinnerClose, SetSpinnerOpen } from '../components/Spinner';
 import Button from '../components/Button';
 
 function RequestResetPassword() {
 	// TODO: Add captcha
-	// const history = useHistory();
 	const router = useRouter();
 	const validate = (values: any) => {
 		const errors: any = {};
@@ -33,16 +31,14 @@ function RequestResetPassword() {
 		},
 	});
 	function resetPassword(values: any) {
-		open();
+		SetSpinnerOpen();
 
 		const url = '/password-reset/';
 		basicRequest
 			.post(url, values)
-			.then(() => {
-				Swal.fire('完成', '連結已經寄到你的信箱', 'success').then(() => {
-					// history.push('/');
-					router.push('/');
-				});
+			.then(async () => {
+				await Swal.fire('完成', '連結已經寄到你的信箱', 'success');
+				router.push('/');
 			})
 			.catch(function (error: any) {
 				const title = error.response.status.toString();
@@ -57,12 +53,9 @@ function RequestResetPassword() {
 				console.error(error);
 			})
 			.finally(() => {
-				close();
+				SetSpinnerClose();
 			});
 	}
-	// function goBack() {
-	// 	history.goBack();
-	// }
 	return (
 		// <div className="RequestResetPassword">
 		<div className="login text-center">
@@ -90,7 +83,6 @@ function RequestResetPassword() {
 				</div>
 			</form>
 		</div>
-		// </div>
 	);
 }
 

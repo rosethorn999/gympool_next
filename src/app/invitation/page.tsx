@@ -1,9 +1,10 @@
 'use client';
 import Swal from 'sweetalert2';
 import basicRequest from '../apis/api';
-import { open, close } from '../components/Spinner';
+import { SetSpinnerOpen, SetSpinnerClose } from '../components/Spinner';
 // import { HashRouter as Router, Link, useHistory } from 'react-router-dom';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+
 // import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 // import { login } from '../store/user';
@@ -12,6 +13,7 @@ import TextBox from '../components/TextBox';
 import Button from '../components/Button';
 
 function Invitation() {
+	const router = useRouter();
 	// const dispatch = useDispatch();
 	// const history = useHistory();
 
@@ -36,33 +38,34 @@ function Invitation() {
 		},
 	});
 
-	function requestInvitation(values: any) {
-		open();
-		let url = '/invitation/';
+	async function requestInvitation(values: any) {
+		SetSpinnerOpen();
 
-		basicRequest
-			.post(url, values)
-			.then(() => {
-				Swal.fire('認證信已經寄出', `請至 ${values.email} 點擊信中連結`, 'success').then(() => {
-					// history.push('/');
-					redirect('/');
-				});
-			})
-			.catch((error) => {
-				const title = error.response.status.toString();
-				let msg = JSON.stringify(error.response.data);
-				if (error.response.status === 400) {
-					msg = error.response.data?.detail.replace(
-						'had been registered as a user.',
-						'已經註冊過了, 請登入'
-					);
-				}
-				Swal.fire(title, msg, 'error');
-				console.error(error);
-			})
-			.finally(() => {
-				close();
-			});
+		try {
+			let url = '/invitation/';
+			const req = await basicRequest.post(url, values);
+			await req;
+			SetSpinnerClose();
+			const confirm = await Swal.fire(
+				'認證信已經寄出',
+				`請至 ${values.email} 點擊信中連結`,
+				'success'
+			);
+
+			router.push('/');
+		} catch (error: any) {
+			const title = error.response.status.toString();
+			let msg = JSON.stringify(error.response.data);
+			if (error.response.status === 400) {
+				msg = error.response.data?.detail.replace(
+					'had been registered as a user.',
+					'已經註冊過了, 請登入'
+				);
+			}
+			Swal.fire(title, msg, 'error');
+			console.error(error);
+		}
+		SetSpinnerClose();
 	}
 	function fbLogin() {
 		const payload = { auth_type: 'rerequest', scope: 'email,public_profile', return_scopes: true };
@@ -89,17 +92,14 @@ function Invitation() {
 	}
 
 	function clickLogin(values: any) {
-		open();
+		SetSpinnerOpen();
 		basicRequest
 			.post('/login/', values)
-			.then((response) => {
+			.then(async (response) => {
 				const token = 'jwt ' + response.data.token;
 				const user = response.data.user;
-				Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success').then(() => {
-					// dispatch(login({ token, user }));
-					// history.push('/');
-					redirect('/');
-				});
+				await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
+				redirect('/');
 			})
 			.catch(function (error) {
 				const title = error.response.status.toString();
@@ -113,13 +113,12 @@ function Invitation() {
 				Swal.fire(title, msg, 'error');
 				console.error(error);
 			})
-
 			.finally(() => {
-				close();
+				SetSpinnerClose();
 			});
 	}
 	function social_register(values: any) {
-		open();
+		SetSpinnerOpen();
 
 		const url = '/user/';
 		basicRequest
@@ -148,12 +147,11 @@ function Invitation() {
 				}
 			})
 			.finally(() => {
-				close();
+				SetSpinnerClose();
 			});
 	}
 
 	return (
-		// <div className="invitation">
 		<div className="invitation container h-full w-full text-center md:px-5 md:py-12">
 			<form onSubmit={formik.handleSubmit}>
 				<h1 className="mb-3">用電子郵件註冊</h1>
@@ -162,7 +160,7 @@ function Invitation() {
 						name="email"
 						placeholder={'電子信箱'}
 						onChange={formik.handleChange}
-						extraClass={
+						extraclass={
 							formik.errors.email
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''
@@ -171,11 +169,9 @@ function Invitation() {
 					/>
 				</div>
 				<div className="form-group mb-3 block w-full">
-					{/* <Router> */}
-					<p>
-						<Link href="/login">已有帳號? 直接登入</Link>
-					</p>
-					{/* </Router> */}
+					<Link href="/login">
+						已有帳號? <span className="text-dodgerBlue">直接登入</span>
+					</Link>
 				</div>
 				<div className="button-box mt-12">
 					<Button type="submit" disabled={!formik.isValid}>
@@ -191,7 +187,6 @@ function Invitation() {
 				<Button onClick={() => fbLogin()}>Facebook 登入</Button>
 			</div>
 		</div>
-		// </div>
 	);
 }
 

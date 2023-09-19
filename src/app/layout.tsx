@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import HeaderBar from './components/HeaderBar';
 import FooterBar from './components/FooterBar';
+import { Spinner } from './components/Spinner';
 
 config.autoAddCss = false;
 const inter = Inter({ subsets: ['latin'] });
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={inter.className}>
+				<Spinner />
 				<HeaderBar />
 				<div className="min-h-[calc(100vh-250px)] w-full bg-white">
 					<div className="container mx-auto">{children}</div>

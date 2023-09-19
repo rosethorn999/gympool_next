@@ -6,11 +6,11 @@ import loadingGif from '../../../public/loading.gif';
 import basicRequest, { getRecords } from '../apis/api';
 import selections from '../../../public/selections.json';
 import zipCode from '../../../public/twZipCode.json';
-// import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { IRecord } from '../type/type';
 
 async function Record({ params }: any) {
 	const baseRecordUrl = '/records/';
@@ -18,7 +18,6 @@ async function Record({ params }: any) {
 	// const history = useHistory();
 	// const [currentPage, setCurrentPage] = useState(0);
 	const { page: currentPage = 0 } = params;
-	console.log(params);
 	// const [pagination, setPagination] = useState<any>({
 	// 	pageIndex: 1,
 	// 	nextUrl: null,
@@ -36,7 +35,7 @@ async function Record({ params }: any) {
 	// const [districts, setDistricts] = useState<any[]>([]);
 	// TODO expiry_date is a key feature, should be set as order
 
-	const records = await getRecords();
+	const records: IRecord[] = await getRecords();
 	const activeTab = '新北';
 	const selection = {
 		zipCode,
