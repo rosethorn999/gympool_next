@@ -14,7 +14,7 @@ import { IRecord } from '../type/type';
 
 async function Record({ params }: any) {
 	const baseRecordUrl = '/records/';
-	const municipalities = ['臺北', '新北', '臺中', '臺南', '高雄'];
+	const cities = ['臺北', '新北', '臺中', '臺南', '高雄'];
 	// const history = useHistory();
 	// const [currentPage, setCurrentPage] = useState(0);
 	const { page: currentPage = 0 } = params;
@@ -166,7 +166,7 @@ async function Record({ params }: any) {
 					</div>
 					<div className="query-fun block h-8 w-full overflow-auto whitespace-nowrap align-middle md:w-1/3">
 						<select className="country-tab-container h-full w-full list-none rounded-2xl border-whisper">
-							{['全部區', ...municipalities].map((o, i) => {
+							{['全部區', ...cities].map((o, i) => {
 								return (
 									<option
 										key={o}

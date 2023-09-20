@@ -53,7 +53,6 @@ async function RecordDetail({ params }: any) {
 			<div className="h-full p-5 md:py-0">
 				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
 					<Link href="/records">&larr; 回上一頁</Link>
-					{/* FIXME: need to click twice sometimes*/}
 				</div>
 				<div className="record-container mb-24 md:mb-48">
 					<div className="upper-box mb-24 w-full gap-4 md:flex">

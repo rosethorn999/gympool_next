@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { IRecord, ICountry } from '../../app/type/type';
+import { IRecord } from '../../app/type/type';
+import Cookies from 'js-cookie';
 // let host = process.env.REACT_APP_HOST;
 const host = 'https://gympool-stg.nodm.app/api/';
 
@@ -9,7 +10,7 @@ const basicRequest = axios.create({
 
 basicRequest.interceptors.request.use(
 	(config) => {
-		let token = ''; // localStorage.getItem('token');
+		const token = Cookies.get('token');
 		if (token) {
 			config.headers['Authorization'] = token;
 		}

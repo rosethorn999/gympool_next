@@ -1,33 +1,22 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
-// import {
-//   HashRouter as Router,
-//   Link,
-//   useLocation,
-//   useHistory,
-// } from "react-router-dom";
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-// import { useDispatch } from "react-redux";
-// import { logout } from "../store/user";
-// import store from "../store/index";
-// import logo from './../gymPoolLogo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-function HeaderBar() {
-	// const dispatch = useDispatch();
-	// const history = useHistory();
-	// const { pathname } = useLocation();
-	const [mobileOverlayHeight, setMobileOverlayHeight] = useState('');
-	const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
-	const [triggerButtonClass, setTriggerButtonClass] = useState('');
-	const [search, setSearch] = useState('');
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	// const search = '';
-	// const mobileOverlayHeight = '';
-	// const triggerButtonClass = '';
-	// const isLoggedIn = false;
+import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
+function HeaderBar() {
+	const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+	const [search, setSearch] = useState('');
+	const token = Cookies.get('token');
+
+	const [isLoggedIn, setIsLoggedIn] = useState();
+	useEffect(() => {
+		setIsLoggedIn(!!token);
+	}, []);
 	// store.subscribe(() => {
 	//   // When state will be updated(in our case, when items will be fetched),
 	//   // we will update local component state and force component to re-render
@@ -35,33 +24,18 @@ function HeaderBar() {
 	//   setIsLoggedIn(store.getState().user.user);
 	// });
 
-	// useEffect(() => {
-	//   triggerMobileMenu(false);
-	// }, [pathname]);
-
-	function goIndex() {
-		// history.push(`/`);
-		window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-	}
-	function goRecords() {
-		let key = search.trim();
-		if (key === '') return;
-		// history.push(`/records?search=${search.trim()}`);
-	}
 	function clickLogout() {
-		// dispatch(logout());
-		// history.push("/");
+		Cookies.remove('token');
+		Cookies.remove('user');
+		setIsLoggedIn(false);
+		redirect('/');
 	}
 	function triggerMobileMenu(toStatus = false) {
 		toStatus = !isMobileMenuOpened;
 		setIsMobileMenuOpened(toStatus);
 		if (toStatus) {
-			setMobileOverlayHeight('h-full');
-			setTriggerButtonClass('closed');
 			document.querySelector('body').style.overflow = 'hidden';
 		} else {
-			setMobileOverlayHeight('');
-			setTriggerButtonClass('');
 			document.querySelector('body').style.overflow = 'auto';
 		}
 	}
@@ -76,8 +50,8 @@ function HeaderBar() {
 	}
 
 	return (
-		// <div className="HeaderBar">
 		<header className="sticky top-0 z-10 flex h-[67px] w-full overflow-hidden bg-white px-5 py-0 text-center text-sm md:columns-3 md:px-24">
+			{/* Desktop view */}
 			<div className="flex w-full columns-5">
 				<div className="logo-area h-[67px] w-1/2 cursor-pointer columns-2 text-left text-2xl ease-in md:w-[300px] md:text-center">
 					<Link href="/" className="block h-full w-[300px]">
@@ -120,9 +94,9 @@ function HeaderBar() {
 								管理後台
 							</Link>
 							<span>|</span>
-							<Link className="mx-2" href="/">
+							<button className="mx-2" onClick={clickLogout}>
 								登出
-							</Link>
+							</button>
 						</>
 					) : (
 						<>
@@ -141,9 +115,9 @@ function HeaderBar() {
 			{/* Mobile View */}
 			<div
 				className="mobile-menu-area absolute right-5 top-4 bg-white md:hidden"
-				onClick={(o) => triggerMobileMenu()}
+				onClick={triggerMobileMenu}
 			>
-				<div className={`trigger-button ${triggerButtonClass}`}>
+				<div className={`trigger-button`}>
 					<p></p>
 					<div
 						className={`bar1 my-[6px] h-[3px] w-[35px] bg-black transition duration-300 ease-linear ${
@@ -163,11 +137,14 @@ function HeaderBar() {
 				</div>
 			</div>
 			<div
-				className={`overlay fixed left-0 top-[66px] z-10 h-0 w-full overflow-x-hidden bg-white ease-in md:hidden ${
+				className={`overlay fixed left-0 top-[66px] z-10 h-0 w-full overflow-x-hidden bg-white duration-300 ease-out md:hidden  ${
 					isMobileMenuOpened && 'h-full'
 				}`}
 			>
-				<div className="overlay-content relative mt-7 w-full py-5 pl-5 text-left text-lg">
+				<div
+					className="overlay-content relative mt-7 w-full py-5 pl-5 text-left text-lg"
+					onClick={triggerMobileMenu}
+				>
 					<ul>
 						{isLoggedIn ? (
 							<>
@@ -175,8 +152,7 @@ function HeaderBar() {
 									<Link href="/manage">管理後台</Link>
 								</li>
 								<li className="leading-[3rem]">
-									<Link href="/">登出</Link>
-									{/* TODO: logout */}
+									<button onClick={clickLogout}>登出</button>
 								</li>
 							</>
 						) : (
@@ -185,9 +161,7 @@ function HeaderBar() {
 									<Link href="invitation">註冊</Link>
 								</li>
 								<li className="leading-[3rem]">
-									<Link href="login" className="">
-										登入
-									</Link>
+									<Link href="login">登入</Link>
 								</li>
 							</>
 						)}
@@ -198,7 +172,6 @@ function HeaderBar() {
 				</div>
 			</div>
 		</header>
-		// </div>
 	);
 }
 

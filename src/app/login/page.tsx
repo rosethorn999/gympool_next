@@ -9,6 +9,7 @@ import { redirect, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import TextBox from '../components/TextBox';
 import Button from '../components/Button';
+import Cookies from 'js-cookie';
 
 function Login() {
 	// const dispatch = useDispatch();
@@ -47,6 +48,8 @@ function Login() {
 			const user = req.data.user;
 			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
 			// dispatch(login({ token, user }));
+			Cookies.set('token', token);
+			Cookies.set('user', user);
 			SetSpinnerClose();
 			router.push('/');
 		} catch (error: any) {
