@@ -11,7 +11,7 @@ declare global {
 }
 
 async function Home() {
-	const records = await getRecords();
+	const records = await getRecords({ county: '全部區域' });
 	const countyScatter = await getCountyScatter();
 	const borderColors = [
 		'border-sunflower',

@@ -34,10 +34,12 @@ async function getCountyScatter() {
 	return countyScatter;
 }
 
-async function getRecords() {
+async function getRecords({ county = '全部區域', title }: { county?: string; title?: string }) {
 	// const isMobileWidth = window.innerWidth <= 480;
 	const _page_size = 15; // isMobileWidth ? 7 : 15; // mobile show 7 items, pc 15 items
-	const url = '/record/?page_size=' + _page_size;
+	let url = `/record/?page_size=${_page_size}`;
+	if (county !== '全部區域') url = `${url}&county=${county}`;
+	if (title !== '') url = `${url}&title=${title}`;
 	const records = await basicRequest.get<IRecord[]>(url).then((response: any) => {
 		const { count, results } = response.data;
 		return results;

@@ -10,9 +10,11 @@ import Link from 'next/link';
 import TextBox from '../components/TextBox';
 import Button from '../components/Button';
 import Cookies from 'js-cookie';
+import { useState } from 'react';
 
 function Login() {
 	// const dispatch = useDispatch();
+	const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 	const router = useRouter();
 	const validate = (values: any) => {
 		const errors: any = {};
@@ -42,15 +44,16 @@ function Login() {
 	});
 	async function clickLogin(values: any) {
 		SetSpinnerOpen();
+		setSubmitButtonDisabled(true);
 		try {
 			const req = await basicRequest.post('/login/', values);
-			const token = 'jwt ' + req.data.token;
+			SetSpinnerClose();
 			const user = req.data.user;
 			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
+			const token = `jwt ${req.data.token}`;
 			// dispatch(login({ token, user }));
 			Cookies.set('token', token);
 			Cookies.set('user', user);
-			SetSpinnerClose();
 			router.push('/');
 		} catch (error: any) {
 			const title = error.response.status.toString();
@@ -65,6 +68,7 @@ function Login() {
 			console.error(error);
 		}
 		SetSpinnerClose();
+		setSubmitButtonDisabled(false);
 	}
 	function social_register(values: any) {
 		SetSpinnerOpen();
@@ -158,7 +162,7 @@ function Login() {
 					<Link href="/forget-password">忘記密碼?</Link>
 				</div>
 				<div className="button-box mt-12">
-					<Button type="submit" disabled={!formik.isValid}>
+					<Button type="submit" disabled={!formik.isValid || submitButtonDisabled}>
 						送出
 					</Button>
 				</div>

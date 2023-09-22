@@ -9,7 +9,7 @@ import { IRecord } from '@/app/type/type';
 
 async function RecordDetail({ params }: any) {
 	const recordId = params.id;
-	const records = await getRecords(); // TODO: get relate data
+	const records = await getRecords({}); // TODO: get relate data
 	const record = await getRecord(recordId);
 
 	const {

@@ -5,15 +5,14 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { redirect } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 function HeaderBar() {
 	const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
 	const [search, setSearch] = useState('');
+	const [isLoggedIn, setIsLoggedIn] = useState();
 	const token = Cookies.get('token');
 
-	const [isLoggedIn, setIsLoggedIn] = useState();
 	useEffect(() => {
 		setIsLoggedIn(!!token);
 	}, []);
@@ -82,7 +81,7 @@ function HeaderBar() {
 					/>
 					<a
 						className="search-btn inline-block md:h-8 md:w-16 md:rounded-r-2xl md:border-y md:border-r md:border-whisper md:bg-transparent md:p-0 md:text-center md:align-middle md:text-lg md:leading-8 md:text-nightRider"
-						href={`/records?search=${search.trim()}`}
+						href={`/records/?q=${search.trim()}`}
 					>
 						<FontAwesomeIcon icon={faMagnifyingGlass} />
 					</a>
