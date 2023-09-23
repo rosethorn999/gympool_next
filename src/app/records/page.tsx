@@ -33,7 +33,10 @@ async function Record({ params, searchParams }: any) {
 	// const [districts, setDistricts] = useState<any[]>([]);
 	// TODO expiry_date is a key feature, should be set as order
 
-	const records: IRecord[] = await getRecords({ county: searchParams?.city });
+	const records: IRecord[] = await getRecords({
+		county: searchParams?.city,
+		q: searchParams?.q,
+	});
 	const selection = {
 		zipCode,
 		gym_types: selections[0].list,

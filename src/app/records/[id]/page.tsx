@@ -112,7 +112,7 @@ async function RecordDetail({ params }: any) {
 					<div className="bottom-box mb-24 w-full rounded border border-whisper ">
 						<div className="header h-10 bg-whisper px-5 leading-10">備註</div>
 						<div className="h-36 overflow-auto ">
-							<div className="remark p-4 text-sm">{remark}</div>
+							<div className="remark p-4 text-sm">{remark || '(無備註)'}</div>
 						</div>
 					</div>
 					<h2 className="mb-12 text-4xl">附近其他的商品</h2>
