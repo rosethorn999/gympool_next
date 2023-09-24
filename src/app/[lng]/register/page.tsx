@@ -6,13 +6,14 @@ import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextBox from '../components/TextBox';
 import Link from 'next/link';
-import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslation } from '@/app/i18n/client';
 
 export default function Page({ params: { lng } }: any) {
+	const { t } = useTranslation(lng, 'register');
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const invitation_id = searchParams.get('id');
-	if (!invitation_id) redirect('/');
 
 	const validate = (values: any) => {
 		const errors: any = {};
@@ -108,18 +109,25 @@ export default function Page({ params: { lng } }: any) {
 		SetSpinnerClose();
 	}
 	return (
-		<div className="Register container text-center">
+		<div className="Register h-full w-full py-12 text-center md:px-5">
 			{formik.errors.invitation_id ? (
-				<p>邀請碼錯誤, 請參考電子信箱內的網址並重試</p>
+				<>
+					<h1 className="mb-5">{t('inviteCodeIncorrectPleaseRetryTheLinkInMail')}</h1>
+					<Link href={`/${lng}/`}>
+						<Button>{t('backToHome')}</Button>
+					</Link>
+				</>
 			) : (
 				<div>
-					<p>填妥以下資訊來完成註冊</p>
+					<h1 className="mb-3">
+						{t('CompleteYourRegistrationByFillingOutTheFollowingInformation')}
+					</h1>
 					<form onSubmit={formik.handleSubmit}>
 						<div className="form-group mb-3 block w-full">
 							<TextBox
 								name="email"
 								extraclass={`${formik.errors.email ? 'is-invalid' : ''}`}
-								placeholder="電子信箱"
+								placeholder={t('email')}
 								onChange={formik.handleChange}
 								value={formik.values.email}
 							/>
@@ -129,7 +137,7 @@ export default function Page({ params: { lng } }: any) {
 								name="username"
 								type="text"
 								extraclass={`${formik.errors.username ? 'is-invalid' : ''}`}
-								placeholder="使用者名稱"
+								placeholder={t('username')}
 								onChange={formik.handleChange}
 								value={formik.values.username}
 							/>
@@ -139,7 +147,7 @@ export default function Page({ params: { lng } }: any) {
 								name="password"
 								type="password"
 								extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
-								placeholder="密碼"
+								placeholder={t('password')}
 								onChange={formik.handleChange}
 								value={formik.values.password}
 							/>
@@ -149,7 +157,7 @@ export default function Page({ params: { lng } }: any) {
 								name="password2"
 								type="password"
 								extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
-								placeholder="確認密碼"
+								placeholder={t('confirmPassword')}
 								onChange={formik.handleChange}
 								value={formik.values.password2}
 							/>
@@ -159,7 +167,7 @@ export default function Page({ params: { lng } }: any) {
 								name="last_name"
 								type="text"
 								extraclass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
-								placeholder="姓"
+								placeholder={t('lastName')}
 								onChange={formik.handleChange}
 								value={formik.values.last_name}
 							/>
@@ -169,22 +177,22 @@ export default function Page({ params: { lng } }: any) {
 								name="first_name"
 								type="text"
 								extraclass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
-								placeholder="名"
+								placeholder={t('firstName')}
 								onChange={formik.handleChange}
 								value={formik.values.first_name}
 							/>
 						</div>
 
 						<div className="form-group mb-3 block w-full">
-							要深入了解 GymPool 如何收集、使用、分享及保護你的個人資料，請詳閱 GymPool 的
+							{t('GymPoolUsesCookiesForFurtherDetailsPleaseReadOur')}&nbsp;
 							<Link href={`/${lng}/privacy-policy`} target="_blank" className="text-gympoolBlue">
-								隱私權政策
+								{t('privacyPolicy')}
 							</Link>
 						</div>
 
 						<div className="button-box">
 							<Button type="submit" disabled={!formik.isValid}>
-								送出
+								{t('submit')}
 							</Button>
 						</div>
 					</form>

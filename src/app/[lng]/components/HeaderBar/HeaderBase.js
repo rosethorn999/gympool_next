@@ -34,26 +34,7 @@ export const HeaderBase = ({ t, lng }) => {
 		redirect(`/${lng}/`);
 	}
 	function clickLangSwitcher() {
-		// {languages
-		// .filter((l) => lng !== l)
-		// .map((l, index) => {
-		// 	return (
-		// 		<span key={l}>
-		// 			{index > 0 && ' or '}
-		// 			<Link href={`/${l}`}>{l}</Link>
-		// 		</span>
-		// 	);
-		// })}
-		console.log(
-			languages,
-			lng,
-			languages.indexOf(lng),
-			(languages.indexOf(lng) + 1) % languages.length
-		);
 		const switchToLang = languages[(languages.indexOf(lng) + 1) % languages.length];
-		console.log(lng);
-		console.log(switchToLang);
-		// redirect(`/${switchToLang}/`);
 		router.push(`/${switchToLang}/`);
 	}
 	function triggerMobileMenu(toStatus = false) {
@@ -82,7 +63,6 @@ export const HeaderBase = ({ t, lng }) => {
 				<div className="logo-area h-[67px] w-1/2 cursor-pointer columns-2 text-left text-2xl ease-in md:w-[300px] md:text-center">
 					<Link href={`/${lng}/`} className="block h-full w-[300px]">
 						<Image
-							// src="/gymPoolLogo.svg"
 							src={gymPoolLogo}
 							width="180"
 							height="180"
@@ -93,7 +73,7 @@ export const HeaderBase = ({ t, lng }) => {
 					</Link>
 				</div>
 				<div className="hidden md:inline-block md:w-2/5 md:text-left">
-					<Link className="md:h-[67px] md:leading-[76px]" href="/records">
+					<Link className="md:h-[67px] md:leading-[76px]" href={`/${lng}/records`}>
 						{t('sell')}
 					</Link>
 				</div>

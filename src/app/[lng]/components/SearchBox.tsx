@@ -5,31 +5,43 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
+import Link from 'next/link';
 
 function TextBox({ lng }: any) {
 	const { t } = useTranslation(lng, 'records');
 	const searchParams = useSearchParams();
 
-	const cities = ['全部區域', '臺北市', '新北市', '臺中市', '臺南市', '高雄市'];
-	const city = searchParams.get('city') || cities[0];
-	const page = searchParams.get('page');
-	const search = searchParams.get('q');
+	const cities = [t('all'), '臺北市', '新北市', '臺中市', '臺南市', '高雄市'];
+	const urlParams = {
+		city: searchParams.get('city') || cities[0],
+		page: Number(searchParams.get('page')) || 0,
+		q: searchParams.get('q'),
+	};
 
-	const [selectedCity, setSelectedCity] = useState(city);
+	const [selectedCity, setSelectedCity] = useState(urlParams.city);
 	const [searchBoxText, setSearchBoxText] = useState('');
 
 	useEffect(() => {
-		if (search) setSearchBoxText(search);
-	}, [search]);
+		if (urlParams.q) setSearchBoxText(urlParams.q);
+	}, [urlParams.q]);
+
 	useEffect(() => {
-		if (selectedCity !== city) {
-			if (selectedCity === cities[0]) {
-				redirect(`/${lng}/records/?q=${search}&page=${page}`);
-			} else {
-				redirect(`/${lng}/records/?q=${search}&city=${selectedCity}&page=${page}`);
+		if (selectedCity !== urlParams.city) {
+			const baseUrl = `/${lng}/records/`;
+			const params = new URLSearchParams();
+			if (selectedCity !== cities[0]) {
+				params.set('city', selectedCity);
 			}
+			if (searchBoxText) {
+				params.set('q', searchBoxText);
+			}
+			if (urlParams.page > 0) {
+				params.set('page', urlParams.page.toFixed());
+			}
+			const urlWithParams = `${baseUrl}/?${params.toString()}`;
+			redirect(urlWithParams);
 		}
-	}, [selectedCity, city]);
+	}, [selectedCity, urlParams.city]);
 
 	return (
 		<>
@@ -44,12 +56,14 @@ function TextBox({ lng }: any) {
 					value={searchBoxText}
 					onChange={(e) => setSearchBoxText(e.target.value)}
 				/>
-				<a
-					className="earch-btn h-8 w-16 rounded-r-2xl border-y border-r border-whisper bg-transparent px-4 text-center text-lg leading-8 md:w-16 md:border-y md:p-0 md:align-middle md:leading-8 md:text-nightRider"
-					href={`/records/?q=${searchBoxText.trim()}&city=${selectedCity}&page=${page}`}
+				<Link
+					className="search-btn h-8 w-16 rounded-r-2xl border-y border-r border-whisper bg-transparent px-4 text-center text-lg leading-8 md:w-16 md:border-y md:p-0 md:align-middle md:leading-8 md:text-nightRider"
+					href={`/${lng}/records/?q=${searchBoxText.trim()}&city=${selectedCity}&page=${
+						urlParams.page
+					}`}
 				>
 					<FontAwesomeIcon icon={faMagnifyingGlass} />
-				</a>
+				</Link>
 			</div>
 			<div className="query-fun block h-8 w-full overflow-auto whitespace-nowrap align-middle md:w-1/3">
 				<select

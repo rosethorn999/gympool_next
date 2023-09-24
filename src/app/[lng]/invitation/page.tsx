@@ -11,8 +11,10 @@ import { useFormik } from 'formik';
 import Link from 'next/link';
 import TextBox from '../components/TextBox';
 import Button from '../components/Button';
+import { useTranslation } from '@/app/i18n/client';
 
-function Invitation() {
+function Page({ params: { lng } }: any) {
+	const { t } = useTranslation(lng, 'invitation');
 	const router = useRouter();
 	// const dispatch = useDispatch();
 	// const history = useHistory();
@@ -154,11 +156,11 @@ function Invitation() {
 	return (
 		<div className="invitation container h-full w-full text-center md:px-5 md:py-12">
 			<form onSubmit={formik.handleSubmit}>
-				<h1 className="mb-3">用電子郵件註冊</h1>
+				<h1 className="mb-3">{t('registerViaEmail')}</h1>
 				<div className="form-group mb-3 block w-full">
 					<TextBox
 						name="email"
-						placeholder={'電子信箱'}
+						placeholder={t('email')}
 						onChange={formik.handleChange}
 						extraclass={
 							formik.errors.email
@@ -169,25 +171,26 @@ function Invitation() {
 					/>
 				</div>
 				<div className="form-group mb-3 block w-full">
-					<Link href="/login">
-						已有帳號? <span className="text-dodgerBlue">直接登入</span>
+					<span>{t('hadAccount')}?</span>
+					<Link href={`/${lng}/login`} className="text-dodgerBlue">
+						{t('loginHere')}
 					</Link>
 				</div>
 				<div className="button-box mt-12">
 					<Button type="submit" disabled={!formik.isValid}>
-						送出
+						{t('submit')}
 					</Button>
 				</div>
 			</form>
 			<h4 className="spreader mb-5 mt-2 w-full border-b pt-12 leading-[0.1em]">
-				<span className="bg-whiteSmoke px-2">OR</span>
+				<span className="bg-whiteSmoke px-2">{t('or')}</span>
 			</h4>
 
 			<div className="button-box mt-12">
-				<Button onClick={() => fbLogin()}>Facebook 登入</Button>
+				<Button onClick={() => fbLogin()}>{t('loginViaFB')}</Button>
 			</div>
 		</div>
 	);
 }
 
-export default Invitation;
+export default Page;

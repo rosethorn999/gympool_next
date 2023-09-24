@@ -1,0 +1,14 @@
+{
+	"inviteCodeIncorrectPleaseRetryTheLinkInMail": "Invitation code is incorrect, please refer to the email address and try again.",
+	"CompleteYourRegistrationByFillingOutTheFollowingInformation": "Complete your registration by filling out the following information",
+	"email": "Email",
+	"username": "User name",
+	"password": "Password",
+	"confirmPassword": "Confirm password",
+	"lastName": "Last name",
+	"firstName": "First name",
+	"GymPoolUsesCookiesForFurtherDetailsPleaseReadOur": "GymPool uses cookies. For further details, please read our",
+	"privacyPolicy": "Privacy Policy",
+	"submit": "Submit",
+	"backToHome": "Back to home"
+}

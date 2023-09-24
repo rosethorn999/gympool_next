@@ -1,1 +1,22 @@
-{ "prevPage": "上一頁", "nextPage": "下一頁", "empty": "無資料", "title": "標題" }
+{
+	"prevPage": "上一頁",
+	"nextPage": "下一頁",
+	"empty": "無資料",
+	"title": "標題",
+	"back": "回上一頁",
+	"sellerInfo": "賣家資訊",
+	"remark": "備註",
+	"nearby": "附近其他的商品",
+	"price": "價格",
+	"monthlyRentalFee": "月費",
+	"processingFee": "轉讓費",
+	"expiryDate": "合約到期日",
+	"createdDate": "建立日期",
+	"storeName": "店名",
+	"soldOut": "已售出",
+	"updateDate": "更新日期",
+	"creator": "刊登會員",
+	"monthly": "/月",
+	"all": "全部區域",
+	"month": "月"
+}

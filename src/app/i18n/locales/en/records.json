@@ -1,1 +1,22 @@
-{ "prevPage": "Prev Page", "nextPage": "Next Page", "empty": "Empty", "title": "Title" }
+{
+	"prevPage": "Prev Page",
+	"nextPage": "Next Page",
+	"empty": "Empty",
+	"title": "Title",
+	"back": "Back",
+	"sellerInfo": "Seller Info",
+	"remark": "Remark",
+	"nearby": "Nearby",
+	"price": "Price",
+	"monthlyRentalFee": "Monthly Rental Fee",
+	"processingFee": "Processing Fee",
+	"expiryDate": "Expired Date",
+	"createdDate": "Posted Date",
+	"storeName": "Store Name",
+	"soldOut": "Sold Out",
+	"updateDate": "update Date",
+	"creator": "Creator",
+	"monthly": "per month",
+	"all": "All",
+	"month": ""
+}

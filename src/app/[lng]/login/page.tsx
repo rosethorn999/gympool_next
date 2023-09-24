@@ -130,7 +130,7 @@ export default function Page({ params: { lng } }: any) {
 	}
 
 	return (
-		<div className="login container h-full w-full py-12 text-center md:px-5">
+		<div className="login h-full w-full py-12 text-center md:px-5">
 			<form onSubmit={formik.handleSubmit}>
 				<h1 className="mb-3">{t('loginViaEmail')}</h1>
 				<div className="form-group mb-3 block w-full">
@@ -161,20 +161,20 @@ export default function Page({ params: { lng } }: any) {
 					/>
 				</div>
 				<div className="form-group mb-3 block w-full">
-					<Link href={`/${lng}/forget-password`}>忘記密碼?</Link>
+					<Link href={`/${lng}/forget-password`}>{t('forgetPassword')}?</Link>
 				</div>
 				<div className="button-box mt-12">
 					<Button type="submit" disabled={!formik.isValid || submitButtonDisabled}>
-						送出
+						{t('submit')}
 					</Button>
 				</div>
 			</form>
 			<h4 className="spreader mb-5 mt-2 w-full border-b pt-12 leading-[0.1em]">
-				<span className="bg-whiteSmoke px-2">OR</span>
+				<span className="bg-whiteSmoke px-2">{t('or')}</span>
 			</h4>
 			<div>
 				<div className="button-box">
-					<Button onClick={fbLogin}>Facebook 登入</Button>
+					<Button onClick={fbLogin}>{t('loginViaFB')}</Button>
 				</div>
 			</div>
 		</div>

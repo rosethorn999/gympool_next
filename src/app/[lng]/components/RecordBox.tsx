@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
+import { useTranslation } from '@/app/i18n';
 
-function RecordBox(props: any) {
-	const { fitXs, handleClick } = props;
+async function RecordBox({ lng, fitXs, handleClick, r }: any) {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { t } = await useTranslation(lng, 'records');
 	const {
 		title,
 		store,
@@ -17,21 +19,22 @@ function RecordBox(props: any) {
 		view = 128,
 		remark,
 		creator,
-	} = props.r;
+	} = r;
+	const currency = 'NTD';
 	const selection = {
 		gym_types: selections[0].list,
 	};
-	const yyyy_mm = () => {
+	const mm_yyyy = () => {
 		let d = new Date(expiry_date);
 		let yyyy = d.getFullYear();
-		let mm = d.getMonth() + 1;
-		return yyyy + '/' + mm + '月';
+		let mm = (d.getMonth() + 1).toFixed().padStart(2, '0');
+		return `${mm}${t('month')}/${yyyy}`;
 	};
-	const yyyy_mm_modify_time = () => {
+	const mm_yyyy_modify_time = () => {
 		let d = new Date(modify_time);
 		let yyyy = d.getFullYear();
-		let mm = d.getMonth() + 1;
-		return yyyy + '/' + mm + '月';
+		let mm = (d.getMonth() + 1).toFixed().padStart(2, '0');
+		return `${mm}${t('month')}/${yyyy}`;
 	};
 	const gym_typeCaption = () => {
 		let v = gym_type;
@@ -76,16 +79,27 @@ function RecordBox(props: any) {
 				>
 					{max30Chr(remark)}
 				</p>
-				<p className={`hidden text-sm md:block ${fitXs && 'md:hidden'}`}>刊登會員：{creator}</p>
+				<p className={`hidden text-sm md:block ${fitXs && 'md:hidden'}`}>
+					{t('creator')}: {creator}
+				</p>
 			</div>
 			<div className={`text-box-right text-right md:py-2 ${fitXs ? '' : 'md:w-3/6 md:flex-auto'}`}>
-				<p className="m-0 text-2xl">NTD ${monthly_rental} / 月</p>
+				<p className="m-0 text-2xl">
+					<span className={`${fitXs ? '' : 'text-dodgerBlue'}`}>
+						{currency} ${monthly_rental}
+					</span>{' '}
+					{t('monthly')}
+				</p>
 				<div>
-					<p className="m-0 text-sm">到期日期: {yyyy_mm()}</p>
+					<p className="m-0 text-sm">
+						{t('expiryDate')}: {mm_yyyy()}
+					</p>
 					<div style={{ clear: 'both' }}></div>
 				</div>
 				<div>
-					<p className="m-0 text-sm">更新日期: {yyyy_mm_modify_time()}</p>
+					<p className="m-0 text-sm">
+						{t('updateDate')}: {mm_yyyy_modify_time()}
+					</p>
 					<div style={{ clear: 'both' }}></div>
 				</div>
 			</div>
@@ -114,5 +128,6 @@ RecordBox.propTypes = {
 	handleClick: PropTypes.func,
 	fitXs: PropTypes.bool,
 	r: PropTypes.object,
+	lng: PropTypes.string,
 };
 export default RecordBox;

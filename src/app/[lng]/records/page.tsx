@@ -125,7 +125,7 @@ const Record = async ({ params: { lng, page: currentPage = 0 }, searchParams }: 
 	return (
 		<div className="records h-full w-full p-5 md:py-0">
 			<div className="list-header my-2 flex flex-row flex-wrap gap-2 md:my-14">
-				<SearchBox />
+				<SearchBox lng={lng} />
 			</div>
 			<div className="record-container flex flex-wrap gap-12">
 				{records === null ? (
@@ -140,7 +140,7 @@ const Record = async ({ params: { lng, page: currentPage = 0 }, searchParams }: 
 					records?.map((r: any, i: number) => {
 						return (
 							<Link key={r.id} className="w-full" href={`/${lng}/records/${r.id}`}>
-								<RecordBox r={r} />
+								<RecordBox r={r} lng={lng} />
 							</Link>
 						);
 					})

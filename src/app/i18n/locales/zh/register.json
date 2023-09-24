@@ -1,0 +1,14 @@
+{
+	"inviteCodeIncorrectPleaseRetryTheLinkInMail": "邀請碼錯誤, 請參考電子信箱內的網址並重試",
+	"CompleteYourRegistrationByFillingOutTheFollowingInformation": "填妥以下資訊來完成註冊",
+	"email": "電子信箱",
+	"username": "使用者名稱",
+	"password": "密碼",
+	"confirmPassword": "確認密碼",
+	"lastName": "姓",
+	"firstName": "名",
+	"GymPoolUsesCookiesForFurtherDetailsPleaseReadOur": "GymPool 使用 cookie。 有關詳細信息，請閱讀我們的",
+	"privacyPolicy": "隱私權政策",
+	"submit": "送出",
+	"backToHome": "返回首頁"
+}
