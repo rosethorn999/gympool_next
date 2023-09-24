@@ -136,7 +136,7 @@ export default function Page({ params: { lng } }: any) {
 				<div className="form-group mb-3 block w-full">
 					<TextBox
 						name="email"
-						placeholder="電子信箱"
+						placeholder={t('email')}
 						onChange={formik.handleChange}
 						extraclass={
 							formik.errors.email
@@ -149,7 +149,7 @@ export default function Page({ params: { lng } }: any) {
 				<div className="form-group mb-3 block w-full">
 					<TextBox
 						name="password"
-						placeholder="密碼"
+						placeholder={t('password')}
 						type="password"
 						onChange={formik.handleChange}
 						extraclass={

@@ -65,7 +65,7 @@ async function RecordBox({ lng, fitXs, handleClick, r }: any) {
 					fitXs ? 'md:hidden' : 'md:h-36 md:flex-none'
 				}`}
 			>
-				<Image src={world_gym} alt="wg" className="h-full w-full" />
+				<Image src={world_gym} width={200} alt="wg" className="h-full w-full" />
 			</div>
 
 			<div className={`text-box-left text-left md:py-2 ${fitXs ? '' : 'md:w-2/6 md:flex-auto'}`}>

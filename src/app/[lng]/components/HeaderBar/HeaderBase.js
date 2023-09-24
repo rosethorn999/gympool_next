@@ -87,12 +87,12 @@ export const HeaderBase = ({ t, lng }) => {
 						className="search-text-box box-border inline-block h-8 max-w-[calc(100%-10rem)] border-y border-l border-whisper p-1 align-middle md:w-[calc(100%-4rem)]"
 						onChange={handleChange}
 					/>
-					<a
-						className="search-btn inline-block md:h-8 md:w-16 md:rounded-r-2xl md:border-y md:border-r md:border-whisper md:bg-transparent md:p-0 md:text-center md:align-middle md:text-lg md:leading-8 md:text-nightRider"
+					<Link
+						className="search-btn inline-block opacity-70 hover:opacity-100 md:h-8 md:w-16 md:rounded-r-2xl md:border-y md:border-r md:border-whisper md:bg-transparent md:p-0 md:text-center md:align-middle md:text-lg md:leading-8 md:text-nightRider"
 						href={`/${lng}/records/?q=${search.trim()}`}
 					>
 						<FontAwesomeIcon icon={faMagnifyingGlass} />
-					</a>
+					</Link>
 				</div>
 				<div className="login-area hidden md:inline-block md:h-[67px] md:w-1/5 md:pr-2 md:text-right md:leading-[76px]">
 					{isLoggedIn ? (

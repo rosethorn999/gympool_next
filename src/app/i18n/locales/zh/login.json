@@ -1,6 +1,8 @@
 {
 	"loginViaEmail": "用電子郵件登入",
 	"submit": "送出",
+	"email": "電子信箱",
+	"password": "密碼",
 	"or": "或是",
 	"forgetPassword": "忘記密碼",
 	"loginViaFB": "Facebook 登入"

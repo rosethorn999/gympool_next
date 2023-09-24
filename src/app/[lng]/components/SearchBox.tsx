@@ -57,7 +57,7 @@ function TextBox({ lng }: any) {
 					onChange={(e) => setSearchBoxText(e.target.value)}
 				/>
 				<Link
-					className="search-btn h-8 w-16 rounded-r-2xl border-y border-r border-whisper bg-transparent px-4 text-center text-lg leading-8 md:w-16 md:border-y md:p-0 md:align-middle md:leading-8 md:text-nightRider"
+					className="search-btn h-8 w-16 rounded-r-2xl border-y border-r border-whisper bg-transparent px-4 text-center text-lg leading-8 opacity-70 hover:opacity-100 md:w-16 md:border-y md:p-0 md:align-middle md:leading-8 md:text-nightRider"
 					href={`/${lng}/records/?q=${searchBoxText.trim()}&city=${selectedCity}&page=${
 						urlParams.page
 					}`}

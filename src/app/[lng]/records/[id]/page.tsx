@@ -85,8 +85,14 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 									{creator}
 								</Link>
 								<div className="flex flex-wrap gap-2">
-									<FontAwesomeIcon icon={faMessage} className="cursor-pointer text-3xl" />
-									<FontAwesomeIcon icon={faEnvelope} className="cursor-pointer text-3xl" />
+									<FontAwesomeIcon
+										icon={faMessage}
+										className="cursor-pointer text-3xl opacity-70 hover:opacity-100"
+									/>
+									<FontAwesomeIcon
+										icon={faEnvelope}
+										className="cursor-pointer text-3xl opacity-70 hover:opacity-100"
+									/>
 								</div>
 							</div>
 						</div>

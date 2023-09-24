@@ -1,5 +1,7 @@
 {
 	"loginViaEmail": "Login via Email",
+	"email": "Email",
+	"password": "Password",
 	"submit": "Submit",
 	"or": "OR",
 	"forgetPassword": "Forget Password",
