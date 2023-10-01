@@ -22,7 +22,7 @@ basicRequest.interceptors.request.use(
 );
 
 async function getCountyScatter() {
-	const url = '/group-by-county/';
+	const url = '/records/group-by-county';
 	const countyScatter = await basicRequest.get<IRecord[]>(url).then((response: any) => {
 		let list = response.data;
 		list.splice(4, list.length);
@@ -34,25 +34,33 @@ async function getCountyScatter() {
 	return countyScatter;
 }
 
-async function getRecords({ county = '全部區域', q = '' }: { county?: string; q?: string }) {
-	// const isMobileWidth = window.innerWidth <= 480;
-	const _page_size = 15; // isMobileWidth ? 7 : 15; // mobile show 7 items, pc 15 items
-	let url = `/record/?page_size=${_page_size}`;
+async function getRecords({
+	page_size = 10,
+	page = 1,
+	county = '全部區域',
+	q = '',
+}: {
+	page_size?: number;
+	page?: number;
+	county?: string;
+	q?: string;
+}) {
+	let url = `/records?page_size=${page_size}`;
+	if (page > 0) url = `${url}&page=${page}`;
 	if (county !== '全部區域') url = `${url}&county=${county}`;
 	if (q !== '') url = `${url}&q=${q}`;
 	const records = await basicRequest.get<IRecord[]>(url).then((response: any) => {
-		const { count, results } = response.data;
-		return results;
+		return response.data;
 	});
 	return records;
 }
 
 async function getRecord(id: number) {
-	const url = `/record/${id}`;
-	const records = await basicRequest.get<IRecord>(url).then((response: any) => {
+	const url = `/records/${id}`;
+	const record = await basicRequest.get<IRecord>(url).then((response: any) => {
 		return response.data;
 	});
-	return records;
+	return record;
 }
 export { host, getRecords, getCountyScatter, getRecord };
 export default basicRequest;

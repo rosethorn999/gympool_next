@@ -14,7 +14,13 @@ declare global {
 const Page = async ({ params: { lng } }: any) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng);
-	const records = await getRecords({ county: '全部區域' });
+	// // const isMobileWidth = window.innerWidth <= 480;
+	// const _page_size = 15; // isMobileWidth ? 7 : 15; // mobile show 7 items, pc 15 items
+	const { results: records, count: recordCount }: { count: number; results: IRecord[] } =
+		await getRecords({
+			page_size: 10,
+			county: '全部區域',
+		});
 	const countyScatter = await getCountyScatter();
 	const borderColors = [
 		'border-sunflower',
@@ -22,7 +28,6 @@ const Page = async ({ params: { lng } }: any) => {
 		'border-grassGreen',
 		'border-dodgerBlue',
 	];
-	const recordCount = records.length;
 
 	return (
 		<main className="w-full bg-white">
@@ -46,7 +51,7 @@ const Page = async ({ params: { lng } }: any) => {
 										className={`m-5 mb-10 inline-block h-28 w-28 rounded-full border-2 pt-2 text-xl ${borderColors[i]}`}
 									>
 										<Link
-											href={`/${lng}/records?city=${item.county}`}
+											href={`/${lng}/records?county=${item.county}`}
 											className="leading-7 text-nightRider hover:text-gympoolBlue"
 										>
 											{t(item.county)}

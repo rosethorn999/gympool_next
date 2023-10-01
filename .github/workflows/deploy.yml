@@ -9,6 +9,7 @@ env:
   IMAGE: 'rosethorn999/nextjs-docker'
   TAG: 'latest'
   CONTAINER_NAME: 'next80'
+
 jobs:
   build:
     runs-on: ubuntu-latest

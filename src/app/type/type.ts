@@ -6,7 +6,7 @@ export interface IRecord {
 	title: string;
 	monthly_rental: number;
 	id: string;
-	remark: string;
+	description: string;
 	creator: string;
 	gym_type: number;
 	store: string;

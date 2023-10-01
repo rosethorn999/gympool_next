@@ -10,7 +10,7 @@ import { IRecord } from '@/app/type/type';
 import { useTranslation } from '@/app/i18n';
 
 export async function generateStaticParams() {
-	const records: IRecord[] = await getRecords({});
+	const { results: records }: { results: IRecord[] } = await getRecords({});
 	const ids = records.map((o) => {
 		return { id: o.id.toString() };
 	});
@@ -20,7 +20,9 @@ export async function generateStaticParams() {
 export default async function Page({ params: { lng, id: recordId } }: any) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng, 'records');
-	const nearByRecords = await getRecords({}); // TODO: get relate data
+	const { results: nearByRecords }: { count: number; results: IRecord[] } = await getRecords({
+		page_size: 4,
+	}); // TODO: get relate data
 	const record = await getRecord(recordId);
 	const currency = 'NTD';
 	const {
@@ -31,7 +33,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		county,
 		district,
 		expiry_date,
-		remark,
+		description,
 		features,
 		processing_fee,
 		create_time,
@@ -136,9 +138,9 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 						</div>
 					</div>
 					<div className="bottom-box mb-24 w-full rounded border border-whisper ">
-						<div className="header h-10 bg-whisper px-5 leading-10">{t('remark')}</div>
-						<div className={`h-36 overflow-auto ${!remark && 'h-14'}`}>
-							<div className="remark p-4 text-sm">{remark || `(${t('empty')})`}</div>
+						<div className="header h-10 bg-whisper px-5 leading-10">{t('description')}</div>
+						<div className={`h-36 overflow-auto ${!description && 'h-14'}`}>
+							<div className="description p-4 text-sm">{description || `(${t('empty')})`}</div>
 						</div>
 					</div>
 					<h2 className="mb-12 text-4xl">{t('nearby')}</h2>

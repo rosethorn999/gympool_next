@@ -13,12 +13,12 @@ function TextBox({ lng }: any) {
 
 	const cities = [t('all'), '臺北市', '新北市', '臺中市', '臺南市', '高雄市'];
 	const urlParams = {
-		city: searchParams.get('city') || cities[0],
-		page: Number(searchParams.get('page')) || 0,
+		county: searchParams.get('county') || cities[0],
+		page: Number(searchParams.get('page')) || 1,
 		q: searchParams.get('q'),
 	};
 
-	const [selectedCity, setSelectedCity] = useState(urlParams.city);
+	const [selectedCounty, setSelectedCounty] = useState(urlParams.county);
 	const [searchBoxText, setSearchBoxText] = useState('');
 
 	useEffect(() => {
@@ -26,22 +26,22 @@ function TextBox({ lng }: any) {
 	}, [urlParams.q]);
 
 	useEffect(() => {
-		if (selectedCity !== urlParams.city) {
-			const baseUrl = `/${lng}/records/`;
+		if (selectedCounty !== urlParams.county) {
+			const baseUrl = `/${lng}/records`;
 			const params = new URLSearchParams();
-			if (selectedCity !== cities[0]) {
-				params.set('city', selectedCity);
+			if (selectedCounty !== cities[0]) {
+				params.set('county', selectedCounty);
 			}
 			if (searchBoxText) {
 				params.set('q', searchBoxText);
 			}
-			if (urlParams.page > 0) {
+			if (urlParams.page > 1) {
 				params.set('page', urlParams.page.toFixed());
 			}
 			const urlWithParams = `${baseUrl}/?${params.toString()}`;
 			redirect(urlWithParams);
 		}
-	}, [selectedCity, urlParams.city]);
+	}, [selectedCounty, urlParams.county]);
 
 	return (
 		<>
@@ -58,9 +58,10 @@ function TextBox({ lng }: any) {
 				/>
 				<Link
 					className="search-btn h-8 w-16 rounded-r-2xl border-y border-r border-whisper bg-transparent px-4 text-center text-lg leading-8 opacity-70 hover:opacity-100 md:w-16 md:border-y md:p-0 md:align-middle md:leading-8 md:text-nightRider"
-					href={`/${lng}/records/?q=${searchBoxText.trim()}&city=${selectedCity}&page=${
-						urlParams.page
-					}`}
+					href={`/${lng}/records
+					${`?q=${searchBoxText.trim()}`}
+					${selectedCounty !== cities[0] ? `&county=${selectedCounty}` : ''}
+					${urlParams.page > 1 ? `&page=${urlParams.page}` : ''}`}
 				>
 					<FontAwesomeIcon icon={faMagnifyingGlass} />
 				</Link>
@@ -68,17 +69,17 @@ function TextBox({ lng }: any) {
 			<div className="query-fun block h-8 w-full overflow-auto whitespace-nowrap align-middle md:w-1/3">
 				<select
 					className="country-tab-container h-full w-full list-none rounded-2xl border-whisper"
-					onChange={(e) => setSelectedCity(e.target.value)}
-					defaultValue={selectedCity}
+					onChange={(e) => setSelectedCounty(e.target.value)}
+					defaultValue={selectedCounty}
 				>
-					{cities.map((cityName) => {
+					{cities.map((countyName) => {
 						return (
 							<option
-								key={cityName}
-								value={cityName}
+								key={countyName}
+								value={countyName}
 								className="country-tab inline-block cursor-pointer px-2 text-center"
 							>
-								{cityName}
+								{countyName}
 							</option>
 						);
 					})}

@@ -3,7 +3,6 @@
 @tailwind utilities;
 /* root css */
 :root {
-	--whisper: #e6e6e6;
 	--pattens-blue: #dee2e6;
 	--summerSky: #40a7ff;
 	--codGrey: #30363b;

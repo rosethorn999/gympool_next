@@ -17,7 +17,7 @@ async function RecordBox({ lng, fitXs, handleClick, r }: any) {
 		monthly_rental,
 		modify_time,
 		view = 128,
-		remark,
+		description,
 		creator,
 	} = r;
 	const currency = 'NTD';
@@ -74,10 +74,10 @@ async function RecordBox({ lng, fitXs, handleClick, r }: any) {
 					{gym_typeCaption()} {store}
 				</p>
 				<p
-					id="remark"
+					id="description"
 					className={`m-0 hidden text-sm text-charcoal md:block ${fitXs && 'md:hidden'}`}
 				>
-					{max30Chr(remark)}
+					{max30Chr(description)}
 				</p>
 				<p className={`hidden text-sm md:block ${fitXs && 'md:hidden'}`}>
 					{t('creator')}: {creator}
@@ -120,7 +120,7 @@ RecordBox.defaultProps = {
 		expiry_date: '',
 		monthly_rental: '',
 		processing_fee: '',
-		remark: '',
+		description: '',
 		view: 0,
 	},
 };

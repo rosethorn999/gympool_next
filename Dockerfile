@@ -4,7 +4,7 @@ ARG NODE=node:lts-alpine
 FROM ${NODE} AS deps
 WORKDIR /app
 COPY package*.json .
-RUN npm install
+RUN npm install --production
 
 # ====================
 FROM ${NODE} AS builder
