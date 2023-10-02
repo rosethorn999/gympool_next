@@ -2,7 +2,9 @@ import axios from 'axios';
 import { IRecord } from '../../app/type/type';
 import Cookies from 'js-cookie';
 // let host = process.env.REACT_APP_HOST;
-const host = 'https://gympool-stg.nodm.app/api/';
+// const host = 'http://localhost:8000';
+const host = 'https://gympool-stg-fastapi.nodm.app/api/';
+// TODO: load from config
 
 const basicRequest = axios.create({
 	baseURL: host,

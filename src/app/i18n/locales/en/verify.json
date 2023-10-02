@@ -1,0 +1,10 @@
+{
+	"linkWillBeSentToYourMailbox": "The link will be sent to your mailbox.",
+	"email": "Email",
+	"submit": "Submit",
+	"back": "Back",
+	"backToHome": "Back to home",
+	"VERIFIED": "The user has been verified successfully.",
+	"VERIFY_USER_BAD_TOKEN": "The user verification failed due to an invalid token.",
+	"VERIFY_USER_ALREADY_VERIFIED": "The user has already been verified. please login."
+}

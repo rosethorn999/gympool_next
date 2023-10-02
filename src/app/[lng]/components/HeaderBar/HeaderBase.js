@@ -107,7 +107,7 @@ export const HeaderBase = ({ t, lng }) => {
 						</>
 					) : (
 						<>
-							<Link className="mx-2" href={`/${lng}/invitation`}>
+							<Link className="mx-2" href={`/${lng}/register`}>
 								{t('register')}
 							</Link>
 							<span>|</span>

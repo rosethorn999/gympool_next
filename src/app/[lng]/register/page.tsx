@@ -6,41 +6,25 @@ import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextBox from '../components/TextBox';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 
 export default function Page({ params: { lng } }: any) {
 	const { t } = useTranslation(lng, 'register');
 	const router = useRouter();
-	const searchParams = useSearchParams();
-	const invitation_id = searchParams.get('id');
 
 	const validate = (values: any) => {
 		const errors: any = {};
 
-		if (!values.invitation_id) {
-			errors.invitation_id = 'Required';
-		} else if (
-			!/^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$/i.test(values.invitation_id)
-		) {
-			errors.invitation_id = 'Invalid invitation_id';
-		}
 		if (!values.email) {
 			errors.email = 'Required';
 		} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
 			errors.email = 'Invalid email address';
 		}
-		if (!values.username) {
-			errors.username = 'Required';
-		} else if (values.username.length > 15) {
-			errors.username = 'Must be 15 characters or less';
-		}
-		if (!values.password || !values.password2) {
+		if (!values.password) {
 			errors.password = 'Required';
 		} else if (values.password.length < 8) {
 			errors.password = 'Too short';
-		} else if (values.password !== values.password2) {
-			errors.password = 'Two password not align';
 		}
 		if (!values.last_name) {
 			errors.last_name = 'Required';
@@ -57,11 +41,8 @@ export default function Page({ params: { lng } }: any) {
 	};
 	const formik = useFormik({
 		initialValues: {
-			invitation_id,
 			email: '',
-			username: '',
 			password: '',
-			password2: '',
 			first_name: '',
 			last_name: '',
 		},
@@ -72,7 +53,7 @@ export default function Page({ params: { lng } }: any) {
 	});
 
 	async function createUser(values: any) {
-		let url = '/user/';
+		let url = '/auth/register';
 		SetSpinnerOpen();
 		try {
 			const req = await basicRequest.post(url, values);
@@ -110,94 +91,63 @@ export default function Page({ params: { lng } }: any) {
 	}
 	return (
 		<div className="Register h-full w-full py-12 text-center md:px-5">
-			{formik.errors.invitation_id ? (
-				<>
-					<h1 className="mb-5">{t('inviteCodeIncorrectPleaseRetryTheLinkInMail')}</h1>
-					<Link href={`/${lng}/`}>
-						<Button>{t('backToHome')}</Button>
-					</Link>
-				</>
-			) : (
-				<div>
-					<h1 className="mb-3">
-						{t('CompleteYourRegistrationByFillingOutTheFollowingInformation')}
-					</h1>
-					<form onSubmit={formik.handleSubmit}>
-						<div className="form-group mb-3 block w-full">
-							<TextBox
-								name="email"
-								extraclass={`${formik.errors.email ? 'is-invalid' : ''}`}
-								placeholder={t('email')}
-								onChange={formik.handleChange}
-								value={formik.values.email}
-							/>
-						</div>
-						<div className="form-group mb-3 block w-full">
-							<TextBox
-								name="username"
-								type="text"
-								extraclass={`${formik.errors.username ? 'is-invalid' : ''}`}
-								placeholder={t('username')}
-								onChange={formik.handleChange}
-								value={formik.values.username}
-							/>
-						</div>
-						<div className="form-group mb-3 block w-full">
-							<TextBox
-								name="password"
-								type="password"
-								extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
-								placeholder={t('password')}
-								onChange={formik.handleChange}
-								value={formik.values.password}
-							/>
-						</div>
-						<div className="form-group mb-3 block w-full">
-							<TextBox
-								name="password2"
-								type="password"
-								extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
-								placeholder={t('confirmPassword')}
-								onChange={formik.handleChange}
-								value={formik.values.password2}
-							/>
-						</div>
-						<div className="form-group mb-3 block w-full">
-							<TextBox
-								name="last_name"
-								type="text"
-								extraclass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
-								placeholder={t('lastName')}
-								onChange={formik.handleChange}
-								value={formik.values.last_name}
-							/>
-						</div>
-						<div className="form-group mb-3 block w-full">
-							<TextBox
-								name="first_name"
-								type="text"
-								extraclass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
-								placeholder={t('firstName')}
-								onChange={formik.handleChange}
-								value={formik.values.first_name}
-							/>
-						</div>
+			<div>
+				<h1 className="mb-3">{t('CompleteYourRegistrationByFillingOutTheFollowingInformation')}</h1>
+				<form onSubmit={formik.handleSubmit}>
+					<div className="form-group mb-3 block w-full">
+						<TextBox
+							name="email"
+							extraclass={`${formik.errors.email ? 'is-invalid' : ''}`}
+							placeholder={t('email')}
+							onChange={formik.handleChange}
+							value={formik.values.email}
+						/>
+					</div>
+					<div className="form-group mb-3 block w-full">
+						<TextBox
+							name="password"
+							type="password"
+							extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
+							placeholder={t('password')}
+							onChange={formik.handleChange}
+							value={formik.values.password}
+						/>
+					</div>
+					<div className="form-group mb-3 block w-full">
+						<TextBox
+							name="last_name"
+							type="text"
+							extraclass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
+							placeholder={t('lastName')}
+							onChange={formik.handleChange}
+							value={formik.values.last_name}
+						/>
+					</div>
+					<div className="form-group mb-3 block w-full">
+						<TextBox
+							name="first_name"
+							type="text"
+							extraclass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
+							placeholder={t('firstName')}
+							onChange={formik.handleChange}
+							value={formik.values.first_name}
+						/>
+					</div>
 
-						<div className="form-group mb-3 block w-full">
-							{t('GymPoolUsesCookiesForFurtherDetailsPleaseReadOur')}&nbsp;
-							<Link href={`/${lng}/privacy-policy`} target="_blank" className="text-gympoolBlue">
-								{t('privacyPolicy')}
-							</Link>
-						</div>
+					<div className="form-group mb-3 block w-full">
+						{t('GymPoolUsesCookiesForFurtherDetailsPleaseReadOur')}&nbsp;
+						<Link href={`/${lng}/privacy-policy`} target="_blank" className="text-gympoolBlue">
+							{t('privacyPolicy')}
+						</Link>
+					</div>
 
-						<div className="button-box">
-							<Button type="submit" disabled={!formik.isValid}>
-								{t('submit')}
-							</Button>
-						</div>
-					</form>
-				</div>
-			)}
+					<div className="button-box">
+						<Button type="submit" disabled={!formik.isValid}>
+							{t('submit')}
+						</Button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }

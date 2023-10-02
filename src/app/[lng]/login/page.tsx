@@ -21,10 +21,10 @@ export default function Page({ params: { lng } }: any) {
 	const validate = (values: any) => {
 		const errors: any = {};
 
-		if (!values.email) {
-			errors.email = 'Required';
-		} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-			errors.email = 'Invalid email address';
+		if (!values.username) {
+			errors.username = 'Required';
+		} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
+			errors.username = 'Invalid username address';
 		}
 		if (!values.password) {
 			errors.password = 'Required';
@@ -36,7 +36,7 @@ export default function Page({ params: { lng } }: any) {
 	};
 	const formik = useFormik({
 		initialValues: {
-			email: '',
+			username: '',
 			password: '',
 		},
 		validate,
@@ -47,30 +47,40 @@ export default function Page({ params: { lng } }: any) {
 	async function clickLogin(values: any) {
 		SetSpinnerOpen();
 		setSubmitButtonDisabled(true);
+		const url = '/auth/jwt/login';
 		try {
-			const req = await basicRequest.post('/login/', values);
+			var bodyFormData = new FormData();
+			bodyFormData.set('username', values.username);
+			bodyFormData.set('password', values.password);
+			const req = await basicRequest.post(url, bodyFormData);
 			SetSpinnerClose();
-			const user = req.data.user;
-			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
-			const token = `jwt ${req.data.token}`;
-			// dispatch(login({ token, user }));
+			const { access_token, token_type } = req.data;
+			const token = `${token_type} ${access_token}`;
 			Cookies.set('token', token);
+
+			const { data: user } = await basicRequest.get('/users/me');
+			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
 			Cookies.set('user', user);
+
+			// dispatch(login({ token, user }));
 			router.push(`/${lng}/`);
 		} catch (error: any) {
-			const title = error.response.status.toString();
-			let msg = JSON.stringify(error.response.data);
-			if (error.response.status === 400) {
-				msg = error.response.data.non_field_errors?.[0].replace(
-					'Unable to log in with provided credentials.',
-					'無法使用此帳號密碼登入'
-				);
+			SetSpinnerClose();
+			setSubmitButtonDisabled(false);
+
+			const title = error.response?.status.toString();
+			let msg = error.response?.data?.detail;
+			const isNotVerified =
+				error.response?.status === 400 &&
+				error.response?.data?.detail === 'LOGIN_USER_NOT_VERIFIED';
+			if (isNotVerified) {
+				msg = t('LOGIN_USER_NOT_VERIFIED');
+				await Swal.fire(title, msg, 'error');
+				router.push(`/${lng}/verify`);
+			} else {
+				Swal.fire(title, msg, 'error');
 			}
-			Swal.fire(title, msg, 'error');
-			console.error(error);
 		}
-		SetSpinnerClose();
-		setSubmitButtonDisabled(false);
 	}
 	function social_register(values: any) {
 		SetSpinnerOpen();
@@ -135,15 +145,15 @@ export default function Page({ params: { lng } }: any) {
 				<h1 className="mb-3">{t('loginViaEmail')}</h1>
 				<div className="form-group mb-3 block w-full">
 					<TextBox
-						name="email"
+						name="username"
 						placeholder={t('email')}
 						onChange={formik.handleChange}
 						extraclass={
-							formik.errors.email
+							formik.errors.username
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''
 						}
-						value={formik.values.email}
+						value={formik.values.username}
 					/>
 				</div>
 				<div className="form-group mb-3 block w-full">

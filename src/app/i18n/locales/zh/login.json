@@ -5,5 +5,6 @@
 	"password": "密碼",
 	"or": "或是",
 	"forgetPassword": "忘記密碼",
-	"loginViaFB": "Facebook 登入"
+	"loginViaFB": "Facebook 登入",
+	"LOGIN_USER_NOT_VERIFIED": "帳號未認證完成, 點擊確認後將導引到認證頁面"
 }

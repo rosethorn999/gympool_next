@@ -1,0 +1,10 @@
+{
+	"linkWillBeSentToYourMailbox": "連結將會寄到你的信箱",
+	"email": "電子信箱",
+	"submit": "送出",
+	"backToHome": "返回首頁",
+	"back": "回上一頁",
+	"VERIFIED": "驗證成功",
+	"VERIFY_USER_BAD_TOKEN": "驗證錯誤, TOKEN 錯誤",
+	"VERIFY_USER_ALREADY_VERIFIED": "已驗證用戶, 請登入"
+}
