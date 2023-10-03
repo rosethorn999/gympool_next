@@ -9,6 +9,8 @@ env:
   IMAGE: 'rosethorn999/gympool_frontend_nextjs'
   TAG: 'latest'
   CONTAINER_NAME: 'next3000'
+  CONTAINER_PORT: 3000
+  API_HOST: 'https://gympool-stg-fastapi.nodm.app/'
 
 jobs:
   build:
@@ -50,8 +52,8 @@ jobs:
           service: ${{ env.CONTAINER_NAME }}
           image: ${{ env.IMAGE }}:${{ env.TAG }}
           env_vars: |
-            PORT=3000
-            API_HOST=https://gympool-stg-fastapi.nodm.app/
+            PORT=${{ env.CONTAINER_PORT }}
+            API_HOST=${{ env.API_HOST }}
 
       - name: 'Use output'
         run: 'curl "${{ steps.deploy.outputs.url }}"'

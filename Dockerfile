@@ -1,10 +1,11 @@
 ARG NODE=node:lts-alpine
+ARG API_HOST=https://gympool-stg-fastapi.nodm.app/
 
 # ====================
 FROM ${NODE} AS deps
 WORKDIR /app
 COPY package*.json .
-RUN npm install --production
+RUN npm install --omit=dev
 
 # ====================
 FROM ${NODE} AS builder
@@ -12,6 +13,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
+ARG API_HOST
+ENV API_HOST $API_HOST
 RUN npm run build
 
 # ====================
@@ -26,6 +29,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 ENV NODE_ENV production
+ARG API_HOST
+ENV API_HOST $API_HOST
 ENV PORT 3000
 EXPOSE 3000
 CMD ["node", "server.js"]
