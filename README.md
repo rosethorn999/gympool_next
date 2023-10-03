@@ -37,7 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ```shell
 # build
-$ docker build -t nextjs-docker:latest .
+$ docker build -t gympool_frontend_nextjs:latest .
 # run
-$ docker run -p 3000:3000 --name next3000 nextjs-docker:latest
+$ docker run -p 3000:3000 --name next3000 gympool_frontend_nextjs:latest
 ```
