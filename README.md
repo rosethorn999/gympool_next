@@ -37,7 +37,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ```shell
 # build
-$ docker build -t gympool_frontend_nextjs:latest .
+$ docker build -t rosethorn999/gympool_frontend_nextjs:latest .
 # run
-$ docker run -p 3000:3000 --name next3000 gympool_frontend_nextjs:latest
+$ docker run -p 3000:3000 --name next3000 rosethorn999/gympool_frontend_nextjs:latest
+```
+
+## Example for .env.local or .env.production file
+
+```
+NEXT_PUBLIC_API_HOST=https://gympool-stg-fastapi.nodm.app/
 ```

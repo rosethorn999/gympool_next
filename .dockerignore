@@ -7,3 +7,4 @@ README.md
 .git
 .prettierrc
 .eslintrc.json
+.env*

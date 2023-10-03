@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { IRecord } from '../../app/type/type';
 import Cookies from 'js-cookie';
-const host = process.env.API_HOST;
+const host = process.env.NEXT_PUBLIC_API_HOST;
 // const host = 'http://localhost:8000';
 // const host = 'https://gympool-stg-fastapi.nodm.app/';
 
