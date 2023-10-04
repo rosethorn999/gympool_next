@@ -10,5 +10,9 @@
 	"GymPoolUsesCookiesForFurtherDetailsPleaseReadOur": "GymPool uses cookies. For further details, please read our",
 	"privacyPolicy": "Privacy Policy",
 	"submit": "Submit",
-	"backToHome": "Back to home"
+	"backToHome": "Back to home",
+
+	"REGISTER_USER_ALREADY_EXISTS": "User already exists",
+	"Password should not contain e-mail": "Password should not contain e-mail",
+	"Password should be at least 8 characters": "Password should be at least 8 characters"
 }

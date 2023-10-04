@@ -60,31 +60,31 @@ export default function Page({ params: { lng } }: any) {
 			const msg = `${values.email} 已經可以使用`;
 			SetSpinnerClose();
 			await Swal.fire('完成', msg, 'success');
-			router.push('/login');
+			router.push(`/${lng}/login`);
 		} catch (error: any) {
-			let msgs: string[] = [];
-			if (error.response.status === 400) {
-				let msg = error.response.data;
-				const keys = Object.keys(msg);
-				const commonMsg: any = {
-					'This password is too common.': '密碼太過於常見',
-					'This password is entirely numeric.': '密碼需由數字與英文組成',
-					'user with this username already exists.': '此使用者名稱已被註冊',
-					'invitation not exist.': '連結錯誤, 請重開邀請信中連結',
-					'user with this email already exists.': '此電子信箱已被註冊',
-				};
-				keys.forEach((key) => {
-					msg[key].forEach((msg: any) => {
-						msgs.push(commonMsg[msg] || msg);
-					});
-				});
-			}
-			const title = error.response.status.toString();
-			if (msgs.length > 0) {
-				Swal.fire(title, msgs.join('<br>'), 'error');
+			let msg = '';
+			const statusCode: number = error.response.status;
+			const commonMsg: any = {
+				// 'This password is too common.': '密碼太過於常見',
+				// 'This password is entirely numeric.': '密碼需由數字與英文組成',
+				// 'invitation not exist.': '連結錯誤, 請重開邀請信中連結',
+
+				REGISTER_USER_ALREADY_EXISTS: t('REGISTER_USER_ALREADY_EXISTS'),
+			};
+			if (statusCode === 400) {
+				msg = error.response.data?.detail;
+				if (typeof msg === 'string') {
+					msg = msg in commonMsg ? commonMsg[msg] : msg;
+				} else {
+					msg = error.response.data?.detail?.reason;
+					if (typeof msg === 'string') msg = t(msg);
+				}
 			} else {
-				Swal.fire(title, JSON.stringify(error.response.data), 'error');
+				msg = JSON.stringify(error.response.data?.detail);
 			}
+
+			const title = statusCode.toString();
+			Swal.fire(title, msg, 'error');
 			console.error(error);
 		}
 		SetSpinnerClose();

@@ -10,5 +10,9 @@
 	"GymPoolUsesCookiesForFurtherDetailsPleaseReadOur": "GymPool 使用 cookie。 有關詳細信息，請閱讀我們的",
 	"privacyPolicy": "隱私權政策",
 	"submit": "送出",
-	"backToHome": "返回首頁"
+	"backToHome": "返回首頁",
+
+	"REGISTER_USER_ALREADY_EXISTS": "此使用者名稱已被註冊",
+	"Password should not contain e-mail": "密碼不得包含帳號",
+	"Password should be at least 8 characters": "密碼最少需要八個字元"
 }
