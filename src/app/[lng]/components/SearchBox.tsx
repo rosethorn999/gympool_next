@@ -8,7 +8,7 @@ import { useTranslation } from '@/app/i18n/client';
 import Link from 'next/link';
 
 function TextBox({ lng }: any) {
-	const { t } = useTranslation(lng, 'records');
+	const { t } = useTranslation(lng, 'contracts');
 	const searchParams = useSearchParams();
 
 	const cities = [t('all'), '臺北市', '新北市', '臺中市', '臺南市', '高雄市'];
@@ -27,7 +27,7 @@ function TextBox({ lng }: any) {
 
 	useEffect(() => {
 		if (selectedCounty !== urlParams.county) {
-			const baseUrl = `/${lng}/records`;
+			const baseUrl = `/${lng}/contracts`;
 			const params = new URLSearchParams();
 			if (selectedCounty !== cities[0]) {
 				params.set('county', selectedCounty);
@@ -58,7 +58,7 @@ function TextBox({ lng }: any) {
 				/>
 				<Link
 					className="search-btn h-8 w-16 rounded-r-2xl border-y border-r border-whisper bg-transparent px-4 text-center text-lg leading-8 opacity-70 hover:opacity-100 md:w-16 md:border-y md:p-0 md:align-middle md:leading-8 md:text-nightRider"
-					href={`/${lng}/records
+					href={`/${lng}/contracts
 					${`?q=${searchBoxText.trim()}`}
 					${selectedCounty !== cities[0] ? `&county=${selectedCounty}` : ''}
 					${urlParams.page > 1 ? `&page=${urlParams.page}` : ''}`}

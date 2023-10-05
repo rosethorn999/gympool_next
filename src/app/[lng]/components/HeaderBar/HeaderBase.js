@@ -73,7 +73,7 @@ export const HeaderBase = ({ t, lng }) => {
 					</Link>
 				</div>
 				<div className="hidden md:inline-block md:w-2/5 md:text-left">
-					<Link className="md:h-[67px] md:leading-[76px]" href={`/${lng}/records`}>
+					<Link className="md:h-[67px] md:leading-[76px]" href={`/${lng}/contracts`}>
 						{t('sell')}
 					</Link>
 				</div>
@@ -89,7 +89,7 @@ export const HeaderBase = ({ t, lng }) => {
 					/>
 					<Link
 						className="search-btn inline-block opacity-70 hover:opacity-100 md:h-8 md:w-16 md:rounded-r-2xl md:border-y md:border-r md:border-whisper md:bg-transparent md:p-0 md:text-center md:align-middle md:text-lg md:leading-8 md:text-nightRider"
-						href={`/${lng}/records/?q=${search.trim()}`}
+						href={`/${lng}/contracts/?q=${search.trim()}`}
 					>
 						<FontAwesomeIcon icon={faMagnifyingGlass} />
 					</Link>
@@ -180,7 +180,7 @@ export const HeaderBase = ({ t, lng }) => {
 							</>
 						)}
 						<li className="leading-[3rem]">
-							<Link href="/records">會籍轉讓</Link>
+							<Link href="/contracts">會籍轉讓</Link>
 						</li>
 					</ul>
 				</div>

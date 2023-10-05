@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import selections from '../../../../../public/selections.json';
 import Image from 'next/image';
-import RecordBox from '@/app/[lng]/components/RecordBox';
+import ContractBox from '@/app/[lng]/components/ContractBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import { getRecords, getRecord } from '@/app/apis/api';
-import { IRecord } from '@/app/type/type';
+import { getContracts, getContract } from '@/app/apis/api';
+import { IContract } from '@/app/type/type';
 import { useTranslation } from '@/app/i18n';
 
 export async function generateStaticParams() {
-	const { results: records }: { results: IRecord[] } = await getRecords({});
-	const ids = records.map((o) => {
+	const { results: contracts }: { results: IContract[] } = await getContracts({});
+	const ids = contracts.map((o) => {
 		return { id: o.id.toString() };
 	});
 	return ids;
@@ -19,11 +19,11 @@ export async function generateStaticParams() {
 
 export default async function Page({ params: { lng, id: recordId } }: any) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { t } = await useTranslation(lng, 'records');
-	const { results: nearByRecords }: { count: number; results: IRecord[] } = await getRecords({
+	const { t } = await useTranslation(lng, 'contracts');
+	const { results: nearByContracts }: { count: number; results: IContract[] } = await getContracts({
 		page_size: 4,
 	}); // TODO: get relate data
-	const record = await getRecord(recordId);
+	const contract = await getContract(recordId);
 	const currency = 'NTD';
 	const {
 		title,
@@ -39,7 +39,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		create_time,
 		creator,
 		inventory,
-	} = record;
+	} = contract;
 	const selection = {
 		gym_types: selections[0].list,
 		features: selections[1].list,
@@ -65,11 +65,11 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		<div className="recordDetail bg-white">
 			<div className="h-full p-5 md:py-0">
 				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
-					<Link href="/records">
+					<Link href="/contracts">
 						<FontAwesomeIcon icon={faArrowLeft} /> {t('back')}
 					</Link>
 				</div>
-				<div className="record-container mb-24 md:mb-48">
+				<div className="contract-container mb-24 md:mb-48">
 					<div className="upper-box mb-24 w-full gap-4 md:flex">
 						<div className="left-box md:w-1/2">
 							<h1 className="text-4xl font-bold">{title}</h1>
@@ -109,7 +109,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								</p>
 							</div>
 
-							<div className="record-date-block mb-7">
+							<div className="contract-date-block mb-7">
 								<h5 className="text-lg font-medium">{t('expiryDate')}</h5>
 								<h4 className="text-2xl"> {expiry_date}</h4>
 								<p className="text-lg">
@@ -123,7 +123,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 									(o) => features.some((f) => f === o.val) && <span key={o.val}>{o.name} </span>
 								)}
 							</p> */}
-							<div className="record-price">
+							<div className="contract-price">
 								<h5 className="text-lg font-medium">{t('price')}</h5>
 								<h6 className="blue text-3xl font-medium text-dodgerBlue">
 									{currency} ${price()}
@@ -145,11 +145,11 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 					</div>
 					<h2 className="mb-12 text-4xl">{t('nearby')}</h2>
 					<div className="mb-8 flex flex-row flex-wrap justify-start gap-x-5 gap-y-10">
-						{nearByRecords.map((r: IRecord, i: number) => {
+						{nearByContracts.map((r: IContract, i: number) => {
 							return (
 								<div className="h-48 w-full md:w-80" key={r.id}>
 									<Link href={`./${r.id}`}>
-										<RecordBox r={r} fitXs={true} />
+										<ContractBox r={r} fitXs={true} />
 									</Link>
 								</div>
 							);

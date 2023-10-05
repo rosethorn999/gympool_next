@@ -1,8 +1,7 @@
-// import { useState } from "react";
 import Link from 'next/link';
-import RecordBox from './components/RecordBox';
-import { getRecords, getCountyScatter } from '../../app/apis/api';
-import { IRecord } from '../../app/type/type';
+import ContractBox from './components/ContractBox';
+import { getContracts, getCountyScatter } from '../../app/apis/api';
+import { IContract } from '../../app/type/type';
 import { useTranslation } from '../i18n';
 
 declare global {
@@ -16,8 +15,8 @@ const Page = async ({ params: { lng } }: any) => {
 	const { t } = await useTranslation(lng);
 	// // const isMobileWidth = window.innerWidth <= 480;
 	// const _page_size = 15; // isMobileWidth ? 7 : 15; // mobile show 7 items, pc 15 items
-	const { results: records, count: recordCount }: { count: number; results: IRecord[] } =
-		await getRecords({
+	const { results: contracts, count: recordCount }: { count: number; results: IContract[] } =
+		await getContracts({
 			page_size: 10,
 			county: '全部區域',
 		});
@@ -51,7 +50,7 @@ const Page = async ({ params: { lng } }: any) => {
 										className={`m-5 mb-10 inline-block h-28 w-28 rounded-full border-2 pt-2 text-xl ${borderColors[i]}`}
 									>
 										<Link
-											href={`/${lng}/records?county=${item.county}`}
+											href={`/${lng}/contracts?county=${item.county}`}
 											className="leading-7 text-nightRider hover:text-gympoolBlue"
 										>
 											{t(item.county)}
@@ -65,7 +64,7 @@ const Page = async ({ params: { lng } }: any) => {
 					</div>
 					<p className="mb-4">
 						{t('browse')}&nbsp;
-						<Link href={`/${lng}/records`} className=" text-grassGreen hover:text-gympoolBlue">
+						<Link href={`/${lng}/contracts`} className=" text-grassGreen hover:text-gympoolBlue">
 							{t('allItems')}
 						</Link>
 					</p>
@@ -74,11 +73,11 @@ const Page = async ({ params: { lng } }: any) => {
 			<div className="px-5 py-8 text-3xl md:py-24 md:text-2xl ">
 				<h5 className="py-8">{t('newArrivals')}</h5>
 				<div className="mb-8 flex flex-row flex-wrap justify-start gap-x-5 gap-y-10">
-					{records.map((r: IRecord, i: number) => {
+					{contracts.map((r: IContract, i: number) => {
 						return (
 							<div className="h-48 w-full md:w-80" key={r.id}>
-								<Link href={`records/${r.id}`}>
-									<RecordBox r={r} fitXs={true} />
+								<Link href={`contracts/${r.id}`}>
+									<ContractBox r={r} fitXs={true} />
 								</Link>
 							</div>
 						);
@@ -86,7 +85,7 @@ const Page = async ({ params: { lng } }: any) => {
 				</div>
 				<div className="h-36 text-center text-lg leading-9">
 					{t('browse')}&nbsp;
-					<Link router-link="true" className="text-gympoolBlue" href={`/${lng}/records`}>
+					<Link router-link="true" className="text-gympoolBlue" href={`/${lng}/contracts`}>
 						{t('allItems')}
 					</Link>
 				</div>

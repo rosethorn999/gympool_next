@@ -2,7 +2,7 @@ export interface ICountry {
 	county: string;
 	count: number;
 }
-export interface IRecord {
+export interface IContract {
 	title: string;
 	monthly_rental: number;
 	id: string;
@@ -17,4 +17,7 @@ export interface IRecord {
 	processing_fee: number;
 	create_time: string;
 	inventory: number;
+}
+export interface IUser {
+	id: string;
 }
