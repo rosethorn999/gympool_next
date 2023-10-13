@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import ContractBox from './components/ContractBox';
+import { ContractBox } from './components/ContractBox';
 import { getContracts, getCountyScatter } from '../../app/apis/api';
-import { IContract } from '../../app/type/type';
+import { Contract, Pagination } from '../../app/type/type';
 import { useTranslation } from '../i18n';
 
 declare global {
@@ -15,11 +15,10 @@ const Page = async ({ params: { lng } }: any) => {
 	const { t } = await useTranslation(lng);
 	// // const isMobileWidth = window.innerWidth <= 480;
 	// const _page_size = 15; // isMobileWidth ? 7 : 15; // mobile show 7 items, pc 15 items
-	const { results: contracts, count: recordCount }: { count: number; results: IContract[] } =
-		await getContracts({
-			page_size: 10,
-			county: '全部區域',
-		});
+	const { results: contracts, count: recordCount }: Pagination<Contract> = await getContracts({
+		page_size: 10,
+		county: '全部區域',
+	});
 	const countyScatter = await getCountyScatter();
 	const borderColors = [
 		'border-sunflower',
@@ -73,11 +72,11 @@ const Page = async ({ params: { lng } }: any) => {
 			<div className="px-5 py-8 text-3xl md:py-24 md:text-2xl ">
 				<h5 className="py-8">{t('newArrivals')}</h5>
 				<div className="mb-8 flex flex-row flex-wrap justify-start gap-x-5 gap-y-10">
-					{contracts.map((r: IContract, i: number) => {
+					{contracts.map((r: Contract, i: number) => {
 						return (
 							<div className="h-48 w-full md:w-80" key={r.id}>
 								<Link href={`contracts/${r.id}`}>
-									<ContractBox r={r} fitXs={true} />
+									<ContractBox lng={lng} r={r} fitXs={true} />
 								</Link>
 							</div>
 						);
@@ -95,3 +94,4 @@ const Page = async ({ params: { lng } }: any) => {
 };
 
 export default Page;
+export const revalidate = 3600;

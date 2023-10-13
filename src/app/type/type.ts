@@ -1,8 +1,8 @@
-export interface ICountry {
+export type Country = {
 	county: string;
 	count: number;
-}
-export interface IContract {
+};
+export type Contract = {
 	title: string;
 	monthly_rental: number;
 	id: string;
@@ -17,7 +17,25 @@ export interface IContract {
 	processing_fee: number;
 	create_time: string;
 	inventory: number;
-}
-export interface IUser {
+};
+export type User = {
 	id: string;
-}
+	email: string;
+	is_active: boolean;
+	is_superuser: boolean;
+	is_verified: boolean;
+	first_name: string;
+	last_name: string;
+	facebook_id: string;
+	line_id: string;
+	county: string;
+	district: string;
+	modify_time: string;
+	birth_date: string;
+	mobile: string;
+	create_time: string;
+};
+export type Pagination<T> = {
+	count: number;
+	results: T[];
+};

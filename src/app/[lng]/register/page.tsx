@@ -93,40 +93,40 @@ export default function Page({ params: { lng } }: any) {
 		<div className="Register h-full w-full py-12 text-center md:px-5">
 			<h1 className="mb-3">{t('CompleteYourRegistrationByFillingOutTheFollowingInformation')}</h1>
 			<form onSubmit={formik.handleSubmit}>
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group mx-auto mb-3 block w-1/3">
 					<TextBox
 						name="email"
-						extraclass={`${formik.errors.email ? 'is-invalid' : ''}`}
+						extraClass={`${formik.errors.email ? 'is-invalid' : ''}`}
 						placeholder={t('email')}
 						onChange={formik.handleChange}
 						value={formik.values.email}
 					/>
 				</div>
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group mx-auto mb-3 block  w-1/3">
 					<TextBox
 						name="password"
 						type="password"
-						extraclass={`${formik.errors.password ? 'is-invalid' : ''}`}
+						extraClass={`${formik.errors.password ? 'is-invalid' : ''}`}
 						placeholder={t('password')}
 						onChange={formik.handleChange}
 						value={formik.values.password}
 					/>
 				</div>
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group mx-auto mb-3 block w-1/3">
 					<TextBox
 						name="last_name"
 						type="text"
-						extraclass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
+						extraClass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
 						placeholder={t('lastName')}
 						onChange={formik.handleChange}
 						value={formik.values.last_name}
 					/>
 				</div>
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group mx-auto mb-3 block w-1/3">
 					<TextBox
 						name="first_name"
 						type="text"
-						extraclass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
+						extraClass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
 						placeholder={t('firstName')}
 						onChange={formik.handleChange}
 						value={formik.values.first_name}

@@ -18,5 +18,10 @@
 	"creator": "Creator",
 	"monthly": "per month",
 	"all": "All",
-	"month": ""
+	"month": "Month",
+	"expired": "Expired",
+	"invalid": "Invalid",
+	"Membership": "Membership",
+	"County": "County",
+	"District": "District"
 }

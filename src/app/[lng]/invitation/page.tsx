@@ -162,7 +162,7 @@ function Page({ params: { lng } }: any) {
 						name="email"
 						placeholder={t('email')}
 						onChange={formik.handleChange}
-						extraclass={
+						extraClass={
 							formik.errors.email
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''

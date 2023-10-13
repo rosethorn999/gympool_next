@@ -18,5 +18,10 @@
 	"creator": "刊登會員",
 	"monthly": "/月",
 	"all": "全部區域",
-	"month": "月"
+	"month": "月",
+	"expired": "過期",
+	"invalid": "無法計算",
+	"Membership": "會籍",
+	"County": "縣市",
+	"District": "行政區"
 }

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faLanguage } from '@fortawesome/free-solid-svg-icons';
-import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { languages } from '../../../i18n/settings';
 import { useRouter } from 'next/navigation';
@@ -19,19 +18,13 @@ export const HeaderBase = ({ t, lng }) => {
 
 	useEffect(() => {
 		setIsLoggedIn(!!token);
-	}, []);
-	// store.subscribe(() => {
-	//   // When state will be updated(in our case, when items will be fetched),
-	//   // we will update local component state and force component to re-render
-	//   // with new data.
-	//   setIsLoggedIn(store.getState().user.user);
-	// });
+	}, [token]);
 
 	function clickLogout() {
 		Cookies.remove('token');
-		Cookies.remove('user');
+		Cookies.remove('user_id');
 		setIsLoggedIn(false);
-		redirect(`/${lng}/`);
+		router.push(`/${lng}/`);
 	}
 	function clickLangSwitcher() {
 		const switchToLang = languages[(languages.indexOf(lng) + 1) % languages.length];
@@ -97,7 +90,7 @@ export const HeaderBase = ({ t, lng }) => {
 				<div className="login-area hidden md:inline-block md:h-[67px] md:w-1/5 md:pr-2 md:text-right md:leading-[76px]">
 					{isLoggedIn ? (
 						<>
-							<Link className="mx-2" href={`/${lng}/setting`}>
+							<Link className="mx-2" href={`/${lng}/setting/my-contracts`}>
 								{t('setting')}
 							</Link>
 							<span>|</span>
@@ -129,7 +122,7 @@ export const HeaderBase = ({ t, lng }) => {
 			{/* Mobile View */}
 			<div
 				className="mobile-menu-area absolute right-5 top-4 bg-white md:hidden"
-				onClick={() => triggerMobileMenu}
+				onClick={triggerMobileMenu}
 			>
 				<div className={`trigger-button`}>
 					<p></p>
@@ -157,7 +150,7 @@ export const HeaderBase = ({ t, lng }) => {
 			>
 				<div
 					className="overlay-content relative mt-7 w-full py-5 pl-5 text-left text-lg"
-					onClick={() => triggerMobileMenu}
+					onClick={triggerMobileMenu}
 				>
 					<ul>
 						{isLoggedIn ? (
@@ -181,6 +174,14 @@ export const HeaderBase = ({ t, lng }) => {
 						)}
 						<li className="leading-[3rem]">
 							<Link href="/contracts">會籍轉讓</Link>
+						</li>
+						<li className="leading-[3rem]">
+							<FontAwesomeIcon
+								size="xl"
+								icon={faLanguage}
+								className="mx-2 cursor-pointer opacity-70 hover:opacity-100"
+								onClick={clickLangSwitcher}
+							/>
 						</li>
 					</ul>
 				</div>

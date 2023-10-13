@@ -11,7 +11,7 @@ export const config = {
 };
 
 export function middleware(request: NextRequest) {
-	console.log(request.url);
+	// console.log(request.url);
 	let lng;
 	if (request.cookies.has(cookieName))
 		lng = acceptLanguage.get(request.cookies.get(cookieName)?.value);

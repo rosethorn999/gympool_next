@@ -1,7 +1,7 @@
 // 'use client';
 import React from 'react';
 // import { useState, useEffect } from 'react';
-import ContractBox from '../components/ContractBox';
+import { ContractBox } from '../components/ContractBox';
 import SearchBox from '../components/SearchBox';
 import loadingGif from '../../../../public/loading.gif';
 import { getContracts } from '../../apis/api';
@@ -9,7 +9,7 @@ import selections from '../../../../public/selections.json';
 import zipCode from '../../../../public/twZipCode.json';
 import Link from 'next/link';
 import Image from 'next/image';
-import { IContract } from '../../type/type';
+import { Contract } from '../../type/type';
 import { useTranslation } from '../../i18n';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrownOpen } from '@fortawesome/free-regular-svg-icons';
@@ -21,7 +21,7 @@ const Contract = async ({ params: { lng }, searchParams }: any) => {
 	const defaultPageSize = 10;
 	// TODO: expiry_date is a key feature, should be set as order
 
-	const { results: contracts, count: recordCount }: { results: IContract[]; count: number } =
+	const { results: contracts, count: recordCount }: { results: Contract[]; count: number } =
 		await getContracts({
 			page: currentPage,
 			county: searchParams?.county,

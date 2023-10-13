@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import selections from '../../../../../public/selections.json';
 import Image from 'next/image';
-import ContractBox from '@/app/[lng]/components/ContractBox';
+import { ContractBox } from '@/app/[lng]/components/ContractBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { getContracts, getContract } from '@/app/apis/api';
-import { IContract } from '@/app/type/type';
+import { Contract, Pagination } from '@/app/type/type';
 import { useTranslation } from '@/app/i18n';
 
 export async function generateStaticParams() {
-	const { results: contracts }: { results: IContract[] } = await getContracts({});
+	const { results: contracts }: Pagination<Contract> = await getContracts({});
 	const ids = contracts.map((o) => {
 		return { id: o.id.toString() };
 	});
@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export default async function Page({ params: { lng, id: recordId } }: any) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng, 'contracts');
-	const { results: nearByContracts }: { count: number; results: IContract[] } = await getContracts({
+	const { results: nearByContracts }: Pagination<Contract> = await getContracts({
 		page_size: 4,
 	}); // TODO: get relate data
 	const contract = await getContract(recordId);
@@ -72,7 +72,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 				<div className="contract-container mb-24 md:mb-48">
 					<div className="upper-box mb-24 w-full gap-4 md:flex">
 						<div className="left-box md:w-1/2">
-							<h1 className="text-4xl font-bold">{title}</h1>
+							<h1 className="mb-4 text-4xl font-bold">{title}</h1>
 							<Image
 								className="main-image w-full rounded-lg border border-whisper"
 								src="/500x300.png"
@@ -111,10 +111,9 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 
 							<div className="contract-date-block mb-7">
 								<h5 className="text-lg font-medium">{t('expiryDate')}</h5>
-								<h4 className="text-2xl"> {expiry_date}</h4>
-								<p className="text-lg">
-									{t('createdDate')}: {create_time}
-								</p>
+								<h4 className="text-2xl">{expiry_date.slice(0, 10)}</h4>
+								<p className="text-lg">{t('createdDate')}</p>
+								<h4 className="text-2xl">{create_time}</h4>
 							</div>
 
 							{/* <p>
@@ -145,11 +144,11 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 					</div>
 					<h2 className="mb-12 text-4xl">{t('nearby')}</h2>
 					<div className="mb-8 flex flex-row flex-wrap justify-start gap-x-5 gap-y-10">
-						{nearByContracts.map((r: IContract, i: number) => {
+						{nearByContracts.map((r: Contract, i: number) => {
 							return (
 								<div className="h-48 w-full md:w-80" key={r.id}>
 									<Link href={`./${r.id}`}>
-										<ContractBox r={r} fitXs={true} />
+										<ContractBox lng={lng} r={r} fitXs={true} />
 									</Link>
 								</div>
 							);

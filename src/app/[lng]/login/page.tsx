@@ -2,8 +2,6 @@
 import Swal from 'sweetalert2';
 import basicRequest from '../../apis/api';
 import { SetSpinnerOpen, SetSpinnerClose } from '../components/Spinner';
-// import { useDispatch } from 'react-redux';
-// import { login } from '../store/user';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -15,7 +13,6 @@ import { useTranslation } from '@/app/i18n/client';
 
 export default function Page({ params: { lng } }: any) {
 	const { t } = useTranslation(lng, 'login');
-	// const dispatch = useDispatch();
 	const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 	const router = useRouter();
 	const validate = (values: any) => {
@@ -60,9 +57,9 @@ export default function Page({ params: { lng } }: any) {
 
 			const { data: user } = await basicRequest.get('/users/me');
 			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
-			Cookies.set('user', user);
+			Cookies.set('user_id', user.id);
 
-			// dispatch(login({ token, user }));
+			router.refresh(); // To make header bar status change
 			router.push(`/${lng}/`);
 		} catch (error: any) {
 			SetSpinnerClose();
@@ -143,12 +140,12 @@ export default function Page({ params: { lng } }: any) {
 		<div className="login h-full w-full py-12 text-center md:px-5">
 			<form onSubmit={formik.handleSubmit}>
 				<h1 className="mb-3">{t('loginViaEmail')}</h1>
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group mx-auto mb-3 block w-1/3">
 					<TextBox
 						name="username"
 						placeholder={t('email')}
 						onChange={formik.handleChange}
-						extraclass={
+						extraClass={
 							formik.errors.username
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''
@@ -156,13 +153,13 @@ export default function Page({ params: { lng } }: any) {
 						value={formik.values.username}
 					/>
 				</div>
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group mx-auto mb-3 block w-1/3">
 					<TextBox
 						name="password"
 						placeholder={t('password')}
 						type="password"
 						onChange={formik.handleChange}
-						extraclass={
+						extraClass={
 							formik.errors.password
 								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
 								: ''

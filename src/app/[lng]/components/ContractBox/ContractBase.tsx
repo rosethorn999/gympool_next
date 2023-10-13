@@ -1,14 +1,11 @@
-import selections from '../../../../public/selections.json';
-import world_gym from '../../../../public/world_gym.jpg';
+import selections from '../../../../../public/selections.json';
+import world_gym from '../../../../../public/world_gym.jpg';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import { useTranslation } from '@/app/i18n';
 
-async function RecordBox({ lng, fitXs, handleClick, r }: any) {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { t } = await useTranslation(lng, 'records');
+export const ContractBase = ({ t, fitXs, r }: any) => {
 	const {
 		title,
 		store,
@@ -55,10 +52,9 @@ async function RecordBox({ lng, fitXs, handleClick, r }: any) {
 	};
 	return (
 		<div
-			className={`record-box box-border block w-full cursor-pointer rounded-xl bg-[linear-gradient(to_right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/world_gym.jpg')] bg-cover p-5 text-white opacity-90 hover:opacity-100 md:gap-5 ${
+			className={`contract-box box-border block h-full w-full cursor-pointer rounded-xl bg-[linear-gradient(to_right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/world_gym.jpg')] bg-cover p-5 text-white opacity-90 hover:opacity-100 md:gap-5 ${
 				fitXs ? 'xs' : 'md:flex md:bg-none md:py-0 md:text-black'
 			}`}
-			onClick={handleClick}
 		>
 			<div
 				className={`image-block hidden rounded-lg md:block md:w-52 md:min-w-[220px] md:overflow-hidden md:border md:border-whisper ${
@@ -85,7 +81,7 @@ async function RecordBox({ lng, fitXs, handleClick, r }: any) {
 			</div>
 			<div className={`text-box-right text-right md:py-2 ${fitXs ? '' : 'md:w-3/6 md:flex-auto'}`}>
 				<p className="m-0 text-2xl">
-					<span className={`${fitXs ? '' : 'text-dodgerBlue'}`}>
+					<span className={`${fitXs ? '' : 'md:text-dodgerBlue'}`}>
 						{currency} ${monthly_rental}
 					</span>{' '}
 					{t('monthly')}
@@ -109,25 +105,10 @@ async function RecordBox({ lng, fitXs, handleClick, r }: any) {
 			</div>
 		</div>
 	);
-}
-
-RecordBox.defaultProps = {
-	fitXs: false,
-	r: {
-		title: '',
-		store: '',
-		gym_type: 1,
-		expiry_date: '',
-		monthly_rental: '',
-		processing_fee: '',
-		description: '',
-		view: 0,
-	},
 };
-RecordBox.propTypes = {
-	handleClick: PropTypes.func,
+
+ContractBase.propTypes = {
 	fitXs: PropTypes.bool,
 	r: PropTypes.object,
-	lng: PropTypes.string,
+	t: PropTypes.func,
 };
-export default RecordBox;

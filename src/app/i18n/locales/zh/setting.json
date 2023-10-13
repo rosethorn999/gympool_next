@@ -1,1 +1,19 @@
-{ "my-contracts": "我的拍賣", "new-contract": "新增商品", "member": "會員中心" }
+{
+	"my-contracts": "我的拍賣",
+	"new-contract": "新增商品",
+	"member": "會員中心",
+	"onlyShowFirst10Contracts": "只顯示前十筆資料",
+	"MemberInfo": "會員資料",
+	"email": "電子信箱",
+	"first_name": "名",
+	"last_name": "姓",
+	"county": "縣市",
+	"birth_date": "生日",
+	"Contact": "聯絡資料",
+	"facebook_id": "臉書 id",
+	"line_id": "Line id",
+	"mobile": "手機號碼",
+	"Security": "安全性",
+	"create_time": "加入日期",
+	"modify_time": "修改日期"
+}

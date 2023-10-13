@@ -1,1 +1,17 @@
-{ "my-contracts": "My contracts", "new-contract": "New contract", "member": "Member" }
+{
+	"my-contracts": "My contracts",
+	"new-contract": "New contract",
+	"member": "Member",
+	"onlyShowFirst10Contracts": "Only show first 10 contracts",
+	"MemberInfo": "Member Info",
+	"email": "Email",
+	"first_name": "First Name",
+	"last_name": "Last Name",
+	"county": "County",
+	"birth_date": "Birthday",
+	"Contact": "Contact Information",
+	"mobile": "Cell phone Number",
+	"Security": "Security",
+	"create_time": "Join Date",
+	"modify_time": "modify Time"
+}
