@@ -170,7 +170,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 
 								formik.setFieldValue('county', county);
 							}}
-							className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white p-2"
+							className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
 						>
 							<option value="null" disabled>
 								{t('County')}
@@ -183,7 +183,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="district"
 							value={formik.values.district}
 							onChange={formik.handleChange}
-							className="w-1/2 rounded-2xl border-2 border-whisper bg-white p-2"
+							className="w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
 						>
 							<option value="null" disabled>
 								{t('District')}

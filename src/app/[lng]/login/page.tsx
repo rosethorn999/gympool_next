@@ -113,27 +113,29 @@ export default function Page({ params: { lng } }: any) {
 			});
 	}
 	function fbLogin() {
-		const payload = { auth_type: 'rerequest', scope: 'email,public_profile', return_scopes: true };
-		window.FB.login(function (loginResponse: any) {
-			if (loginResponse.status === 'connected') {
-				const { grantedScopes, accessToken } = loginResponse.authResponse;
-				if (grantedScopes.includes('email')) {
-					window.FB.api('/me', { fields: 'id,name,email' }, (apiResponse: any) => {
-						apiResponse['password'] = accessToken.substring(0, 12);
-						apiResponse['is_social_login'] = true;
-						apiResponse['username'] = apiResponse['id'];
-						apiResponse['first_name'] = apiResponse['name'];
-						apiResponse[''] = '';
+		// TODO: TBD
+		Swal.fire('TBD', 'TBD', 'error');
+		// const payload = { auth_type: 'rerequest', scope: 'email,public_profile', return_scopes: true };
+		// window.FB.login(function (loginResponse: any) {
+		// 	if (loginResponse.status === 'connected') {
+		// 		const { grantedScopes, accessToken } = loginResponse.authResponse;
+		// 		if (grantedScopes.includes('email')) {
+		// 			window.FB.api('/me', { fields: 'id,name,email' }, (apiResponse: any) => {
+		// 				apiResponse['password'] = accessToken.substring(0, 12);
+		// 				apiResponse['is_social_login'] = true;
+		// 				apiResponse['username'] = apiResponse['id'];
+		// 				apiResponse['first_name'] = apiResponse['name'];
+		// 				apiResponse[''] = '';
 
-						social_register(apiResponse);
-					});
-				} else {
-					Swal.fire('權限不足', '請允許讀取Email資訊', 'error');
-				}
-			} else {
-				Swal.fire('權限不足', '請允許讀取臉書權限', 'error');
-			}
-		}, payload);
+		// 				social_register(apiResponse);
+		// 			});
+		// 		} else {
+		// 			Swal.fire('權限不足', '請允許讀取Email資訊', 'error');
+		// 		}
+		// 	} else {
+		// 		Swal.fire('權限不足', '請允許讀取臉書權限', 'error');
+		// 	}
+		// }, payload);
 	}
 
 	return (
@@ -179,10 +181,8 @@ export default function Page({ params: { lng } }: any) {
 			<h4 className="spreader mb-5 mt-2 w-full border-b pt-12 leading-[0.1em]">
 				<span className="bg-whiteSmoke px-2">{t('or')}</span>
 			</h4>
-			<div>
-				<div className="button-box">
-					<Button onClick={fbLogin}>{t('loginViaFB')}</Button>
-				</div>
+			<div className="button-box">
+				<Button onClick={fbLogin}>{t('loginViaFB')}</Button>
 			</div>
 		</div>
 	);

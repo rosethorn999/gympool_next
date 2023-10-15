@@ -100,5 +100,34 @@ async function getUserMe(abortController?: AbortController) {
 		.catch((error) => {});
 	return user;
 }
-export { host, getContracts, getMyContracts, getCountyScatter, getContract, getUserMe };
+async function getUsers(abortController?: AbortController) {
+	const url = '/users/';
+	const user = await basicRequest
+		.get<User[]>(url, { signal: abortController?.signal })
+		.then((response: any) => {
+			return response.data;
+		})
+		.catch((error) => {});
+	return user;
+}
+async function getUser(id: string, abortController?: AbortController) {
+	const url = `/users/${id}`;
+	const user = await basicRequest
+		.get<User>(url, { signal: abortController?.signal })
+		.then((response: any) => {
+			return response.data;
+		})
+		.catch((error) => {});
+	return user;
+}
+export {
+	host,
+	getContracts,
+	getMyContracts,
+	getCountyScatter,
+	getContract,
+	getUserMe,
+	getUsers,
+	getUser,
+};
 export default basicRequest;

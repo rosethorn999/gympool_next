@@ -7,7 +7,7 @@ export type Contract = {
 	monthly_rental: number;
 	id: string;
 	description: string;
-	creator: string;
+	creator: User;
 	gym_type: number;
 	store: string;
 	county: string;
@@ -16,7 +16,9 @@ export type Contract = {
 	features: number[];
 	processing_fee: number;
 	create_time: string;
+	modify_time: string;
 	inventory: number;
+	view?: number;
 };
 export type User = {
 	id: string;

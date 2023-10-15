@@ -65,7 +65,7 @@ const Contract = async ({ params: { lng }, searchParams }: any) => {
 						{t('empty')} <FontAwesomeIcon size="lg" icon={faFaceFrownOpen} />
 					</div>
 				) : (
-					contracts?.map((r: any, i: number) => {
+					contracts?.map((r: Contract, i: number) => {
 						return (
 							<Link key={r.id} className="w-full" href={`/${lng}/contracts/${r.id}`}>
 								<ContractBox r={r} lng={lng} />

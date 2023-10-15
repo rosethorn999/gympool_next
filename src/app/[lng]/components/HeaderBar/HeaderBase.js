@@ -67,11 +67,11 @@ export const HeaderBase = ({ t, lng }) => {
 				</div>
 				<div className="hidden md:inline-block md:w-2/5 md:text-left">
 					<Link className="md:h-[67px] md:leading-[76px]" href={`/${lng}/contracts`}>
-						{t('sell')}
+						{t('Contracts')}
 					</Link>
 				</div>
 				<div className="md:text-r hidden md:inline-block md:h-[67px] md:w-1/4 md:leading-[76px]">
-					<select className="search-select inline-block h-8 w-20 rounded-l-2xl border-none bg-white md:px-2 md:align-middle md:outline md:outline-1 md:outline-offset-0 md:outline-whisper md:focus-visible:md:outline-1">
+					<select className="search-select inline-block h-8 w-20 rounded-l-2xl border-none bg-white text-center md:px-2 md:align-middle md:outline md:outline-1 md:outline-offset-0 md:outline-whisper md:focus-visible:md:outline-1">
 						<option value="1">{t('title')}</option>
 					</select>
 					<input

@@ -20,10 +20,7 @@ export async function generateStaticParams() {
 export default async function Page({ params: { lng, id: recordId } }: any) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng, 'contracts');
-	const { results: nearByContracts }: Pagination<Contract> = await getContracts({
-		page_size: 4,
-	}); // TODO: get relate data
-	const contract = await getContract(recordId);
+	const contract: Contract = await getContract(recordId);
 	const currency = 'NTD';
 	const {
 		title,
@@ -32,6 +29,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		monthly_rental,
 		county,
 		district,
+		modify_time,
 		expiry_date,
 		description,
 		features,
@@ -40,6 +38,10 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		creator,
 		inventory,
 	} = contract;
+	const { results: nearByContracts }: Pagination<Contract> = await getContracts({
+		county: county,
+		page_size: 4,
+	});
 	const selection = {
 		gym_types: selections[0].list,
 		features: selections[1].list,
@@ -70,7 +72,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 					</Link>
 				</div>
 				<div className="contract-container mb-24 md:mb-48">
-					<div className="upper-box mb-24 w-full gap-4 md:flex">
+					<div className="upper-box mb-24 w-full gap-4 md:flex md:gap-24">
 						<div className="left-box md:w-1/2">
 							<h1 className="mb-4 text-4xl font-bold">{title}</h1>
 							<Image
@@ -83,17 +85,22 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 							<span className="text-persianRed">{inventory <= 0 && <p>{t('soldOut')}</p>}</span>
 							<div className="contacts-box">
 								<p className="text-xl">{t('sellerInfo')}</p>
-								<Link className="text-dodgerBlue" href={`/user/${creator}`}>
-									{creator}
-								</Link>
+								<div>
+									{t('creator')}:&nbsp;
+									<Link className="text-dodgerBlue underline" href={`/user/${creator.id}`}>
+										{creator.first_name}
+									</Link>
+								</div>
 								<div className="flex flex-wrap gap-2">
 									<FontAwesomeIcon
 										icon={faMessage}
 										className="cursor-pointer text-3xl opacity-70 hover:opacity-100"
+										title={creator.mobile}
 									/>
 									<FontAwesomeIcon
 										icon={faEnvelope}
 										className="cursor-pointer text-3xl opacity-70 hover:opacity-100"
+										title={creator.email}
 									/>
 								</div>
 							</div>
@@ -112,8 +119,12 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 							<div className="contract-date-block mb-7">
 								<h5 className="text-lg font-medium">{t('expiryDate')}</h5>
 								<h4 className="text-2xl">{expiry_date.slice(0, 10)}</h4>
-								<p className="text-lg">{t('createdDate')}</p>
-								<h4 className="text-2xl">{create_time}</h4>
+								<p className="text-slateGrey">
+									{t('createdDate')}: {create_time.slice(0, 19)}
+								</p>
+								<p className="text-slateGrey">
+									{t('modifyTime')}: {modify_time?.slice(0, 19)}
+								</p>
 							</div>
 
 							{/* <p>
@@ -127,10 +138,10 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								<h6 className="blue text-3xl font-medium text-dodgerBlue">
 									{currency} ${price()}
 								</h6>
-								<p className="gray font-medium text-nightRider">
+								<p className="gray font-medium text-slateGrey">
 									{t('monthlyRentalFee')}: ${monthly_rental}
 								</p>
-								<p className="gray font-medium text-nightRider">
+								<p className="gray font-medium text-slateGrey">
 									{t('processingFee')}: ${processing_fee}
 								</p>
 							</div>
@@ -143,7 +154,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 						</div>
 					</div>
 					<h2 className="mb-12 text-4xl">{t('nearby')}</h2>
-					<div className="mb-8 flex flex-row flex-wrap justify-start gap-x-5 gap-y-10">
+					<div className="mb-8 flex flex-row flex-wrap justify-start gap-16">
 						{nearByContracts.map((r: Contract, i: number) => {
 							return (
 								<div className="h-48 w-full md:w-80" key={r.id}>

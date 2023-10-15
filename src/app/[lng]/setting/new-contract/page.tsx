@@ -158,7 +158,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										value={formik.values.gym_type}
 										onChange={formik.handleChange}
 										name="gym_type"
-										className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white px-2"
+										className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white px-2 text-center"
 									>
 										<option value={-1} disabled>
 											{t('Membership')}
@@ -188,7 +188,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 
 											formik.setFieldValue('county', county);
 										}}
-										className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white p-2"
+										className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
 									>
 										<option value={-1} disabled>
 											{t('County')}
@@ -201,7 +201,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										name="district"
 										value={formik.values.district}
 										onChange={formik.handleChange}
-										className="w-1/2 rounded-2xl border-2 border-whisper bg-white p-2"
+										className="w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
 									>
 										<option value={-1} disabled>
 											{t('District')}

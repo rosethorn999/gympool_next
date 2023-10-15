@@ -98,7 +98,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 						/>
 					</div>
 					<div className="button-box">
-						<Button>
+						<Button color="pink">
 							<Link href="/">{t('back')}</Link>
 						</Button>
 						&nbsp;

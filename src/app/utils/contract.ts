@@ -31,4 +31,10 @@ function calcProductLife(expiry_date: string, t: Function) {
 
 	return ret;
 }
-export { calcProductLife };
+const maxCharacters = (v: string, num: number = 30) => {
+	if (v && v.length > num - 3) {
+		return v.substring(0, num - 3) + '...';
+	}
+	return v;
+};
+export { calcProductLife, maxCharacters };

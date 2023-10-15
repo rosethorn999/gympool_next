@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
+import { maxCharacters } from '@/app/utils/contract';
+import { Contract } from '@/app/type/type';
 
-export const ContractBase = ({ t, fitXs, r }: any) => {
+export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contract }) => {
 	const {
 		title,
 		store,
@@ -25,13 +27,13 @@ export const ContractBase = ({ t, fitXs, r }: any) => {
 		let d = new Date(expiry_date);
 		let yyyy = d.getFullYear();
 		let mm = (d.getMonth() + 1).toFixed().padStart(2, '0');
-		return `${mm}${t('month')}/${yyyy}`;
+		return `${mm}/${yyyy}`;
 	};
 	const mm_yyyy_modify_time = () => {
-		let d = new Date(modify_time);
+		let d = modify_time ? new Date(modify_time) : new Date();
 		let yyyy = d.getFullYear();
 		let mm = (d.getMonth() + 1).toFixed().padStart(2, '0');
-		return `${mm}${t('month')}/${yyyy}`;
+		return `${mm}/${yyyy}`;
 	};
 	const gym_typeCaption = () => {
 		let v = gym_type;
@@ -44,17 +46,12 @@ export const ContractBase = ({ t, fitXs, r }: any) => {
 			return '無法計算';
 		}
 	};
-	const max30Chr = (v: string) => {
-		if (v && v.length > 27) {
-			return v.substring(0, 27) + '...';
-		}
-		return v;
-	};
 	return (
 		<div
 			className={`contract-box box-border block h-full w-full cursor-pointer rounded-xl bg-[linear-gradient(to_right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/world_gym.jpg')] bg-cover p-5 text-white opacity-90 hover:opacity-100 md:gap-5 ${
 				fitXs ? 'xs' : 'md:flex md:bg-none md:py-0 md:text-black'
 			}`}
+			title={title}
 		>
 			<div
 				className={`image-block hidden rounded-lg md:block md:w-52 md:min-w-[220px] md:overflow-hidden md:border md:border-whisper ${
@@ -65,7 +62,7 @@ export const ContractBase = ({ t, fitXs, r }: any) => {
 			</div>
 
 			<div className={`text-box-left text-left md:py-2 ${fitXs ? '' : 'md:w-2/6 md:flex-auto'}`}>
-				<p className="m-0 text-2xl md:text-xl">{title}</p>
+				<p className="m-0 text-2xl md:text-xl">{maxCharacters(title, 15)}</p>
 				<p className="m-0 text-sm">
 					{gym_typeCaption()} {store}
 				</p>
@@ -73,10 +70,10 @@ export const ContractBase = ({ t, fitXs, r }: any) => {
 					id="description"
 					className={`m-0 hidden text-sm text-charcoal md:block ${fitXs && 'md:hidden'}`}
 				>
-					{max30Chr(description)}
+					{maxCharacters(description)}
 				</p>
 				<p className={`hidden text-sm md:block ${fitXs && 'md:hidden'}`}>
-					{t('creator')}: {creator}
+					{t('creator')}: {creator.first_name}
 				</p>
 			</div>
 			<div className={`text-box-right text-right md:py-2 ${fitXs ? '' : 'md:w-3/6 md:flex-auto'}`}>
@@ -110,5 +107,5 @@ export const ContractBase = ({ t, fitXs, r }: any) => {
 ContractBase.propTypes = {
 	fitXs: PropTypes.bool,
 	r: PropTypes.object,
-	t: PropTypes.func,
+	lng: PropTypes.string,
 };

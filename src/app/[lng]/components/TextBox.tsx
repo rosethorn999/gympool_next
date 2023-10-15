@@ -12,7 +12,6 @@ function TextBox(props: ITextBox) {
 
 	return (
 		<input
-			{...props}
 			disabled={disabled}
 			value={value}
 			name={name}

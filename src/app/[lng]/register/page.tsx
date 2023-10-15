@@ -57,9 +57,9 @@ export default function Page({ params: { lng } }: any) {
 		SetSpinnerOpen();
 		try {
 			const req = await basicRequest.post(url, values);
-			const msg = `${values.email} 已經可以使用`;
+			const msg = `${values.email} Can be login now`;
 			SetSpinnerClose();
-			await Swal.fire('完成', msg, 'success');
+			await Swal.fire('Created', msg, 'success');
 			router.push(`/${lng}/login`);
 		} catch (error: any) {
 			let msg = '';

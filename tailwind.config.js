@@ -11,6 +11,7 @@ module.exports = {
 				pattensBlue: 'var(--pattensBlue)',
 				summerSky: 'var(--summerSky)',
 				codGrey: 'var(--codGrey)',
+				slateGrey: 'var(--slateGrey)',
 				blueCharcoal: 'var(--blueCharcoal)',
 
 				grassGreen: 'var(--grassGreen)',
