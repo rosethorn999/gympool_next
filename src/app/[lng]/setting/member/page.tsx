@@ -170,7 +170,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 
 								formik.setFieldValue('county', county);
 							}}
-							className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
+							className="mr-2 w-1/2 rounded-3xl border-2 border-whisper bg-white p-2 text-center"
 						>
 							<option value="null" disabled>
 								{t('County')}
@@ -183,7 +183,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="district"
 							value={formik.values.district}
 							onChange={formik.handleChange}
-							className="w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
+							className="w-1/2 rounded-3xl border-2 border-whisper bg-white p-2 text-center"
 						>
 							<option value="null" disabled>
 								{t('District')}
@@ -269,15 +269,16 @@ export default function Page({ params: { lng }, searchParams }: any) {
 				<div className="form-group flex flex-wrap py-1">
 					<label className="w-full leading-10 md:w-1/4">{t('create_time')}</label>
 					<div className="control-box w-full md:w-3/4">
-						<span className="leading-10">{formik.values.create_time}</span>
+						<span className="leading-10">{formik.values.create_time.slice(0, 19)}</span>
 					</div>
 				</div>
 				<div className="form-group flex flex-wrap py-1">
 					<label className="w-full leading-10 md:w-1/4">{t('modify_time')}</label>
 					<div className="control-box w-full md:w-3/4">
-						<span className="leading-10">{formik.values.modify_time}</span>
+						<span className="leading-10">{formik.values.modify_time.slice(0, 19)}</span>
 					</div>
 				</div>
+				{/* TODO: last_login_time */}
 				{/* <div className="form-group">
 					<label>上次登入時間</label>
 					<div className="control-box">

@@ -43,25 +43,26 @@ export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contr
 		if (selected.length > 0) {
 			return selected[0].name;
 		} else {
-			return '無法計算';
+			return t('invalid');
 		}
 	};
 	const price = () => {
 		let d = new Date(expiry_date).getTime();
 		let now = new Date().getTime();
 
-		const monthCount = Math.round(Math.abs(d - now) / 1000 / 60 / 60 / 24 / 30);
-		return monthly_rental * monthCount + processing_fee;
+		const monthCount = Math.round(Math.min(d - now, 0) / 1000 / 60 / 60 / 24 / 30);
+		const v = monthCount > 0 ? monthly_rental * monthCount + processing_fee : 0;
+		return v;
 	};
 	return (
 		<div
-			className={`contract-box box-border block h-full w-full cursor-pointer rounded-xl bg-[linear-gradient(to_right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/world_gym.jpg')] bg-cover p-5 text-white opacity-90 hover:opacity-100 md:gap-5 ${
+			className={`contract-box box-border block h-full w-full cursor-pointer rounded-3xl bg-[linear-gradient(to_right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/world_gym.jpg')] bg-cover p-5 text-white opacity-90 hover:opacity-100 md:gap-5 ${
 				fitXs ? 'xs' : 'md:flex md:bg-none md:py-0 md:text-black'
 			}`}
 			title={title}
 		>
 			<div
-				className={`image-block hidden rounded-lg md:block md:w-52 md:min-w-[220px] md:overflow-hidden md:border md:border-whisper ${
+				className={`image-block hidden rounded-3xl md:block md:w-52 md:min-w-[220px] md:overflow-hidden md:border md:border-whisper ${
 					fitXs ? 'md:hidden' : 'md:h-36 md:flex-none'
 				}`}
 			>

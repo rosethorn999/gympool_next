@@ -140,9 +140,9 @@ export default function Page({ params: { lng } }: any) {
 
 	return (
 		<div className="login h-full w-full py-12 text-center md:px-5">
-			<form onSubmit={formik.handleSubmit}>
-				<h1 className="mb-3">{t('loginViaEmail')}</h1>
-				<div className="form-group mx-auto mb-3 block w-1/3">
+			<form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
+				<h1>{t('loginViaEmail')}</h1>
+				<div className="form-group mx-auto">
 					<TextBox
 						name="username"
 						placeholder={t('email')}
@@ -155,7 +155,7 @@ export default function Page({ params: { lng } }: any) {
 						value={formik.values.username}
 					/>
 				</div>
-				<div className="form-group mx-auto mb-3 block w-1/3">
+				<div className="form-group mx-auto">
 					<TextBox
 						name="password"
 						placeholder={t('password')}
@@ -169,10 +169,12 @@ export default function Page({ params: { lng } }: any) {
 						value={formik.values.password}
 					/>
 				</div>
-				<div className="form-group mb-3 block w-full">
-					<Link href={`/${lng}/forget-password`}>{t('forgetPassword')}?</Link>
+				<div className="form-group block w-full">
+					<Link className="text-gympoolBlue" href={`/${lng}/forget-password`}>
+						{t('forgetPassword')}?
+					</Link>
 				</div>
-				<div className="button-box mt-12">
+				<div className="button-box">
 					<Button type="submit" disabled={!formik.isValid || submitButtonDisabled}>
 						{t('submit')}
 					</Button>

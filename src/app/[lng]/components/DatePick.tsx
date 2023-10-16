@@ -113,7 +113,7 @@ function DatePick({
 			</h1> */}
 			<div className="w-1/3">
 				<select
-					className="yyyy h-10 w-full rounded-2xl border-2 border-whisper bg-white px-2 text-center leading-10"
+					className="yyyy h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
 					name="yyyy"
 					onChange={handleChange}
 					value={yyyy}
@@ -130,7 +130,7 @@ function DatePick({
 			</div>
 			<div className="w-1/3">
 				<select
-					className="mm h-10 w-full rounded-2xl border-2 border-whisper bg-white px-2 text-center leading-10"
+					className="mm h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
 					name="mm"
 					onChange={handleChange}
 					value={mm}
@@ -147,7 +147,7 @@ function DatePick({
 			</div>
 			<div className="w-1/3">
 				<select
-					className="dd  h-10 w-full rounded-2xl border-2 border-whisper bg-white px-2 text-center leading-10"
+					className="dd  h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
 					name="dd"
 					onChange={handleChange}
 					value={dd}

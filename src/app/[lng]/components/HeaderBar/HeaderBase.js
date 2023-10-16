@@ -156,24 +156,24 @@ export const HeaderBase = ({ t, lng }) => {
 						{isLoggedIn ? (
 							<>
 								<li className="leading-[3rem]">
-									<Link href="/manage">管理後台</Link>
+									<Link href={`/${lng}/setting/my-contracts`}>{t('setting')}</Link>
 								</li>
 								<li className="leading-[3rem]">
-									<button onClick={clickLogout}>登出</button>
+									<button onClick={clickLogout}>{t('logOut')}</button>
 								</li>
 							</>
 						) : (
 							<>
 								<li className="leading-[3rem]">
-									<Link href="invitation">註冊</Link>
+									<Link href={`/${lng}/register`}>{t('register')}</Link>
 								</li>
 								<li className="leading-[3rem]">
-									<Link href="login">登入</Link>
+									<Link href={`/${lng}/login`}>{t('logIn')}</Link>
 								</li>
 							</>
 						)}
 						<li className="leading-[3rem]">
-							<Link href="/contracts">會籍轉讓</Link>
+							<Link href={`/${lng}/contracts`}>{t('Contracts')}</Link>
 						</li>
 						<li className="leading-[3rem]">
 							<FontAwesomeIcon

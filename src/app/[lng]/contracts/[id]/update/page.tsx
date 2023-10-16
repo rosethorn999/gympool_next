@@ -75,10 +75,10 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		if (!values.store) {
 			errors.store = 'Required';
 		}
-		if (!values.county) {
+		if (!selection.zipCode.map((o) => o.name).includes(values.county)) {
 			errors.county = 'Required';
 		}
-		if (!values.district) {
+		if (!districts.map((o) => o.val).includes(values.district)) {
 			errors.district = 'Required';
 		}
 		if (!values.expiry_date) {
@@ -133,8 +133,8 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		if (d) {
 			let now = new Date().getTime();
 
-			const monthCount = Math.round(Math.abs(d - now) / 1000 / 60 / 60 / 24 / 30);
-			const v = monthly_rental * monthCount + processing_fee;
+			const monthCount = Math.round(Math.max(d - now, 0) / 1000 / 60 / 60 / 24 / 30);
+			const v = monthCount > 0 ? monthly_rental * monthCount + processing_fee : 0;
 			setPrice(v);
 		}
 	}
@@ -150,12 +150,12 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			<div className="h-full p-5 md:py-0">
 				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
 					<div onClick={() => router.back()}>
-						<FontAwesomeIcon icon={faArrowLeft} /> {t('back')}
+						<FontAwesomeIcon icon={faArrowLeft} /> {t('Back')}
 					</div>
 				</div>
 				<form onSubmit={formik.handleSubmit} className="contract-container mb-24 md:mb-48">
-					<div className="upper-box mb-24 w-full gap-4 md:flex">
-						<div className="left-box md:w-1/2">
+					<div className="upper-box mb-24 flex w-full flex-col gap-4 md:flex-row md:gap-24">
+						<div className="left-box w-full md:w-1/2">
 							<TextBox
 								name="title"
 								extraClass={`mb-4 w-full text-4xl ${formik.errors.title ? 'is-invalid' : ''}`}
@@ -164,7 +164,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 								value={formik.values.title}
 							/>
 							<Image
-								className="main-image w-full rounded-lg border border-whisper"
+								className="main-image w-full rounded-3xl border border-whisper"
 								src="/500x300.png"
 								alt="mainPic"
 								width="500"
@@ -179,19 +179,22 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										id="1"
 										onChange={formik.handleChange}
 									/>
-									Not {t('soldOut')}
+									&nbsp;
+									{t('NotSoldOut')}
 								</label>
 								&nbsp;
 								<label htmlFor="0">
 									<input
-										value={formik.values.inventory}
+										value={0}
 										name="inventory"
 										type="radio"
 										id="0"
 										onChange={formik.handleChange}
 									/>
-									{t('soldOut')}
+									&nbsp;
+									{t('SoldOut')}
 								</label>
+								{/* FIXME: init inventory value not work */}
 							</div>
 						</div>
 						<div className="right-box w-full md:w-1/2">
@@ -202,7 +205,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										value={formik.values.gym_type}
 										onChange={formik.handleChange}
 										name="gym_type"
-										className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white px-2 text-center"
+										className="mr-2 w-1/2 rounded-3xl border-2 border-whisper bg-white px-2 text-center"
 									>
 										<option value="-1" disabled>
 											{t('Membership')}
@@ -232,7 +235,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 
 											formik.setFieldValue('county', county);
 										}}
-										className="mr-2 w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
+										className="mr-2 w-1/2 rounded-3xl border-2 border-whisper bg-white p-2 text-center"
 									>
 										<option value="null" disabled>
 											{t('County')}
@@ -245,7 +248,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										name="district"
 										value={formik.values.district}
 										onChange={formik.handleChange}
-										className="w-1/2 rounded-2xl border-2 border-whisper bg-white p-2 text-center"
+										className="w-1/2 rounded-3xl border-2 border-whisper bg-white p-2 text-center"
 									>
 										<option value="null" disabled>
 											{t('District')}
@@ -321,7 +324,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 							</div>
 						</div>
 					</div>
-					<div className="bottom-box mb-24 w-full rounded border border-whisper ">
+					<div className="bottom-box mb-24 w-full rounded-3xl border border-whisper ">
 						<div className="header h-10 bg-whisper px-5 leading-10">{t('description')}</div>
 						<div className="h-fit">
 							<div className="description p-4 text-sm">
@@ -338,11 +341,11 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 					</div>
 					<div className="button-box text-center">
 						<Button color="pink" type="button" onClick={() => router.back()}>
-							{t('cancel')}
+							{t('Cancel')}
 						</Button>
 						&nbsp;
 						<Button type="submit" disabled={!formik.isValid}>
-							{t('save')}
+							{t('Update')}
 						</Button>
 					</div>
 				</form>

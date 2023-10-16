@@ -92,8 +92,8 @@ export default function Page({ params: { lng } }: any) {
 	return (
 		<div className="Register h-full w-full py-12 text-center md:px-5">
 			<h1 className="mb-3">{t('CompleteYourRegistrationByFillingOutTheFollowingInformation')}</h1>
-			<form onSubmit={formik.handleSubmit}>
-				<div className="form-group mx-auto mb-3 block w-1/3">
+			<form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
+				<div className="form-group mx-auto">
 					<TextBox
 						name="email"
 						extraClass={`${formik.errors.email ? 'is-invalid' : ''}`}
@@ -102,7 +102,7 @@ export default function Page({ params: { lng } }: any) {
 						value={formik.values.email}
 					/>
 				</div>
-				<div className="form-group mx-auto mb-3 block  w-1/3">
+				<div className="form-group mx-auto">
 					<TextBox
 						name="password"
 						type="password"
@@ -112,7 +112,7 @@ export default function Page({ params: { lng } }: any) {
 						value={formik.values.password}
 					/>
 				</div>
-				<div className="form-group mx-auto mb-3 block w-1/3">
+				<div className="form-group mx-auto">
 					<TextBox
 						name="last_name"
 						type="text"
@@ -122,7 +122,7 @@ export default function Page({ params: { lng } }: any) {
 						value={formik.values.last_name}
 					/>
 				</div>
-				<div className="form-group mx-auto mb-3 block w-1/3">
+				<div className="form-group mx-auto">
 					<TextBox
 						name="first_name"
 						type="text"
@@ -133,7 +133,7 @@ export default function Page({ params: { lng } }: any) {
 					/>
 				</div>
 
-				<div className="form-group mb-3 block w-full">
+				<div className="form-group w-full">
 					{t('GymPoolUsesCookiesForFurtherDetailsPleaseReadOur')}&nbsp;
 					<Link href={`/${lng}/privacy-policy`} target="_blank" className="text-gympoolBlue">
 						{t('privacyPolicy')}

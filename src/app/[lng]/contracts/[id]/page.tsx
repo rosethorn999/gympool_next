@@ -50,8 +50,9 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		let d = new Date(expiry_date).getTime();
 		let now = new Date().getTime();
 
-		const monthCount = Math.round(Math.abs(d - now) / 1000 / 60 / 60 / 24 / 30);
-		return monthly_rental * monthCount + processing_fee;
+		const monthCount = Math.round(Math.max(d - now, 0) / 1000 / 60 / 60 / 24 / 30);
+		const v = monthCount > 0 ? monthly_rental * monthCount + processing_fee : 0;
+		return v;
 	};
 	const gym_typeCaption = (v: any) => {
 		let selected = selection.gym_types.filter(function (item: any) {
@@ -60,7 +61,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		if (selected.length > 0) {
 			return selected[0].name;
 		} else {
-			return '無法計算';
+			return t('invalid');
 		}
 	};
 	return (
@@ -68,21 +69,21 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 			<div className="h-full p-5 md:py-0">
 				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
 					<Link href="/contracts">
-						<FontAwesomeIcon icon={faArrowLeft} /> {t('back')}
+						<FontAwesomeIcon icon={faArrowLeft} /> {t('Back')}
 					</Link>
 				</div>
 				<div className="contract-container mb-24 md:mb-48">
-					<div className="upper-box mb-24 w-full gap-4 md:flex md:gap-24">
-						<div className="left-box md:w-1/2">
+					<div className="upper-box mb-24 flex w-full flex-col gap-4 md:flex-row md:gap-24">
+						<div className="left-box w-full md:w-1/2">
 							<h1 className="mb-4 text-4xl font-bold">{title}</h1>
 							<Image
-								className="main-image w-full rounded-lg border border-whisper"
+								className="main-image w-full rounded-3xl border border-whisper"
 								src="/500x300.png"
 								alt="mainPic"
 								width="500"
 								height="300"
 							/>
-							<span className="text-persianRed">{inventory <= 0 && <p>{t('soldOut')}</p>}</span>
+							<span className="text-persianRed">{inventory <= 0 && <p>{t('SoldOut')}</p>}</span>
 							<div className="contacts-box">
 								<p className="text-xl">{t('sellerInfo')}</p>
 								<div>
@@ -151,7 +152,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 							</div>
 						</div>
 					</div>
-					<div className="bottom-box mb-24 w-full rounded border border-whisper ">
+					<div className="bottom-box mb-24 w-full rounded-3xl border border-whisper ">
 						<div className="header h-10 bg-whisper px-5 leading-10">{t('description')}</div>
 						<div className={`h-36 overflow-auto ${!description && 'h-14'}`}>
 							<div className="description p-4 text-sm">{description || `(${t('empty')})`}</div>

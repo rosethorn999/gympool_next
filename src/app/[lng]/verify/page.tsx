@@ -89,7 +89,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 					<div className="form-group mb-14 block">
 						<input
 							name="email"
-							className={`text-box mx-auto my-0 h-10 w-1/3 min-w-[250px] rounded-2xl border border-whisper p-5 leading-10 ${
+							className={`text-box mx-auto my-0 h-10 w-1/3 min-w-[250px] rounded-3xl border border-whisper p-5 leading-10 ${
 								formik.errors.email ? 'is-invalid' : null
 							}`}
 							placeholder={t('email')}
@@ -99,11 +99,11 @@ export default function Page({ params: { lng }, searchParams }: any) {
 					</div>
 					<div className="button-box">
 						<Button color="pink">
-							<Link href="/">{t('back')}</Link>
+							<Link href="/">{t('Back')}</Link>
 						</Button>
 						&nbsp;
 						<Button type="submit" disabled={!formik.isValid}>
-							{t('submit')}
+							{t('Submit')}
 						</Button>
 					</div>
 				</form>

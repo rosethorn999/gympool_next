@@ -45,7 +45,7 @@ function TextBox({ lng }: any) {
 
 	return (
 		<>
-			<div className="search-bar relative flex w-full rounded-xl align-middle md:w-1/2 ">
+			<div className="search-bar relative flex w-full rounded-3xl align-middle md:w-1/2 ">
 				<select className="search-select inline-block h-8 w-20 rounded-l-2xl border-none bg-white px-2 text-center align-middle outline outline-1 outline-offset-0 outline-whisper focus-visible:outline-1 md:p-1 md:pl-2">
 					<option value="1">{t('title')}</option>
 				</select>
@@ -68,7 +68,7 @@ function TextBox({ lng }: any) {
 			</div>
 			<div className="query-fun block h-8 w-full overflow-auto whitespace-nowrap align-middle md:w-1/3">
 				<select
-					className="country-tab-container h-full w-full list-none rounded-2xl border-whisper text-center"
+					className="country-tab-container h-full w-full list-none rounded-3xl border-whisper text-center"
 					onChange={(e) => setSelectedCounty(e.target.value)}
 					defaultValue={selectedCounty}
 				>
