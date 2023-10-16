@@ -50,7 +50,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		let d = new Date(expiry_date).getTime();
 		let now = new Date().getTime();
 
-		const monthCount = Math.round((d - now) / 1000 / 60 / 60 / 24 / 30);
+		const monthCount = Math.round(Math.abs(d - now) / 1000 / 60 / 60 / 24 / 30);
 		return monthly_rental * monthCount + processing_fee;
 	};
 	const gym_typeCaption = (v: any) => {
@@ -94,12 +94,16 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								<div className="flex flex-wrap gap-2">
 									<FontAwesomeIcon
 										icon={faMessage}
-										className="cursor-pointer text-3xl opacity-70 hover:opacity-100"
+										className={`text-3xl opacity-70 ${
+											creator.mobile ? 'cursor-pointer hover:opacity-100' : 'opacity-20'
+										}`}
 										title={creator.mobile}
 									/>
 									<FontAwesomeIcon
 										icon={faEnvelope}
-										className="cursor-pointer text-3xl opacity-70 hover:opacity-100"
+										className={`text-3xl opacity-70 ${
+											creator.email ? 'cursor-pointer hover:opacity-100' : 'opacity-20'
+										}`}
 										title={creator.email}
 									/>
 								</div>

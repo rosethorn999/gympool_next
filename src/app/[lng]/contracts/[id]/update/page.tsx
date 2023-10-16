@@ -133,7 +133,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		if (d) {
 			let now = new Date().getTime();
 
-			const monthCount = Math.round((d - now) / 1000 / 60 / 60 / 24 / 30);
+			const monthCount = Math.round(Math.abs(d - now) / 1000 / 60 / 60 / 24 / 30);
 			const v = monthly_rental * monthCount + processing_fee;
 			setPrice(v);
 		}

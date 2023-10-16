@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import { maxCharacters } from '@/app/utils/contract';
 import { Contract } from '@/app/type/type';
+import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contract }) => {
 	const {
@@ -16,8 +16,8 @@ export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contr
 		monthly_rental,
 		modify_time,
 		view = 128,
-		description,
 		creator,
+		processing_fee,
 	} = r;
 	const currency = 'NTD';
 	const selection = {
@@ -46,6 +46,13 @@ export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contr
 			return '無法計算';
 		}
 	};
+	const price = () => {
+		let d = new Date(expiry_date).getTime();
+		let now = new Date().getTime();
+
+		const monthCount = Math.round(Math.abs(d - now) / 1000 / 60 / 60 / 24 / 30);
+		return monthly_rental * monthCount + processing_fee;
+	};
 	return (
 		<div
 			className={`contract-box box-border block h-full w-full cursor-pointer rounded-xl bg-[linear-gradient(to_right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/world_gym.jpg')] bg-cover p-5 text-white opacity-90 hover:opacity-100 md:gap-5 ${
@@ -61,42 +68,64 @@ export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contr
 				<Image src={world_gym} width={200} alt="wg" className="h-full w-full" />
 			</div>
 
-			<div className={`text-box-left text-left md:py-2 ${fitXs ? '' : 'md:w-2/6 md:flex-auto'}`}>
-				<p className="m-0 text-2xl md:text-xl">{maxCharacters(title, 15)}</p>
-				<p className="m-0 text-sm">
+			<div
+				className={`text-box-left flex flex-wrap py-2 text-left md:gap-2 ${
+					fitXs ? 'md:gap-0' : 'md:w-2/6 md:flex-auto'
+				}`}
+			>
+				<div className="m-0 w-full overflow-hidden text-ellipsis whitespace-nowrap text-2xl md:text-xl">
+					{title}
+				</div>
+				<div className="m-0 text-sm">
 					{gym_typeCaption()} {store}
-				</p>
-				<p
-					id="description"
-					className={`m-0 hidden text-sm text-charcoal md:block ${fitXs && 'md:hidden'}`}
-				>
-					{maxCharacters(description)}
-				</p>
-				<p className={`hidden text-sm md:block ${fitXs && 'md:hidden'}`}>
+				</div>
+				<div className={`hidden w-full text-sm md:block ${fitXs && 'md:hidden'}`}>
 					{t('creator')}: {creator.first_name}
-				</p>
+				</div>
+				<div className={`hidden w-full flex-wrap gap-2 md:flex ${fitXs && 'md:hidden'}`}>
+					<FontAwesomeIcon
+						icon={faMessage}
+						className={`cursor-pointer text-3xl ${creator.mobile ? '' : 'opacity-20'}`}
+						title={creator.mobile}
+					/>
+					<FontAwesomeIcon
+						icon={faEnvelope}
+						className={`cursor-pointer text-3xl ${creator.email ? '' : 'opacity-20'}`}
+						title={creator.email}
+					/>
+				</div>
 			</div>
-			<div className={`text-box-right text-right md:py-2 ${fitXs ? '' : 'md:w-3/6 md:flex-auto'}`}>
-				<p className="m-0 text-2xl">
+			<div
+				className={`text-box-right flex flex-wrap py-2 text-right md:gap-2 ${
+					fitXs ? 'md:gap-0' : 'md:w-3/6 md:flex-auto'
+				}`}
+			>
+				<div className={`m-0 hidden w-full text-2xl md:block ${fitXs ? 'hidden md:hidden' : ''}`}>
 					<span className={`${fitXs ? '' : 'md:text-dodgerBlue'}`}>
-						{currency} ${monthly_rental}
-					</span>{' '}
-					{t('monthly')}
-				</p>
-				<div>
+						{currency} ${price()}
+					</span>
+				</div>
+				<div
+					className={`w-full text-2xl md:text-slateGrey ${
+						fitXs ? 'text-2xl md:text-2xl md:text-white' : 'md:text-base md:text-slateGrey'
+					}`}
+				>
+					{currency} ${monthly_rental}&nbsp;{t('Monthly')}
+				</div>
+				<div className="w-full">
 					<p className="m-0 text-sm">
 						{t('expiryDate')}: {mm_yyyy()}
 					</p>
 					<div style={{ clear: 'both' }}></div>
 				</div>
-				<div>
+				<div className="w-full">
 					<p className="m-0 text-sm">
 						{t('updateDate')}: {mm_yyyy_modify_time()}
 					</p>
 					<div style={{ clear: 'both' }}></div>
 				</div>
 			</div>
-			<div className={`view-count text-sm ${fitXs ? 'hidden' : 'md:hidden'}`}>
+			<div className={`view-count hidden text-sm`}>
 				<FontAwesomeIcon icon={faEye} />
 				&nbsp; {view}
 			</div>

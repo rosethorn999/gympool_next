@@ -1,12 +1,8 @@
-// 'use client';
 import React from 'react';
-// import { useState, useEffect } from 'react';
 import { ContractBox } from '../components/ContractBox';
 import SearchBox from '../components/SearchBox';
 import loadingGif from '../../../../public/loading.gif';
 import { getContracts } from '../../apis/api';
-import selections from '../../../../public/selections.json';
-import zipCode from '../../../../public/twZipCode.json';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Contract } from '../../type/type';
@@ -19,7 +15,6 @@ const Contract = async ({ params: { lng }, searchParams }: any) => {
 	const { t } = await useTranslation(lng, 'contracts');
 	const currentPage = Number(searchParams.page) || 1;
 	const defaultPageSize = 10;
-	// TODO: expiry_date is a key feature, should be set as order
 
 	const { results: contracts, count: recordCount }: { results: Contract[]; count: number } =
 		await getContracts({
@@ -27,26 +22,6 @@ const Contract = async ({ params: { lng }, searchParams }: any) => {
 			county: searchParams?.county,
 			q: searchParams?.q,
 		});
-	const selection = {
-		zipCode,
-		gym_types: selections[0].list,
-	};
-	// useEffect(() => {
-	// 	let ret: any[] = [];
-	// 	let selectedDistricts = selection.zipCode.find((item: any) => item.name === filter.county);
-
-	// 	if (selectedDistricts) {
-	// 		ret = selectedDistricts.districts;
-	// 	}
-	// 	setDistricts(ret);
-	// }, [filter.county, selection.zipCode]);
-
-	// function handleFilterChange(event: any) {
-	// 	setFilter({ ...filter, [event.target.name]: event.target.value });
-	// }
-	// function handleSorterChange(event: any) {
-	// 	setOrdering({ ...ordering, [event.target.name]: event.target.value });
-	// }
 
 	return (
 		<div className="contracts h-full w-full p-5 md:py-0">
