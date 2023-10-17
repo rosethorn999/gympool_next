@@ -78,7 +78,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		if (!selection.zipCode.map((o) => o.name).includes(values.county)) {
 			errors.county = 'Required';
 		}
-		if (!districts.map((o) => o.val).includes(values.district)) {
+		if (!districts.map((o) => o.name).includes(values.district)) {
 			errors.district = 'Required';
 		}
 		if (!values.expiry_date) {
@@ -158,7 +158,8 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 						<div className="left-box w-full md:w-1/2">
 							<TextBox
 								name="title"
-								extraClass={`mb-4 w-full text-4xl ${formik.errors.title ? 'is-invalid' : ''}`}
+								extraClass={`mb-4 w-full text-4xl`}
+								isInvalid={'title' in formik.errors}
 								placeholder={t('title')}
 								onChange={formik.handleChange}
 								value={formik.values.title}
@@ -200,12 +201,12 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 						<div className="right-box w-full md:w-1/2">
 							<div className="mb-7">
 								<h5 className="text-lg font-medium">{t('storeName')}</h5>
-								<div className="mb-2 flex text-2xl">
+								<div className="mb-2 flex flex-col gap-2 text-2xl md:flex-row">
 									<select
 										value={formik.values.gym_type}
 										onChange={formik.handleChange}
 										name="gym_type"
-										className="mr-2 w-1/2 rounded-3xl border-2 border-whisper bg-white px-2 text-center"
+										className="mr-2 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center md:w-1/2"
 									>
 										<option value="-1" disabled>
 											{t('Membership')}
@@ -219,13 +220,14 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									<TextBox
 										name="store"
 										type="text"
-										extraClass={`w-1/2 ${formik.errors.store ? 'is-invalid' : ''}`}
+										extraClass={`w-full md:w-1/2`}
+										isInvalid={'store' in formik.errors}
 										placeholder={t('store')}
 										onChange={formik.handleChange}
 										value={formik.values.store}
 									/>
 								</div>
-								<div className="flex text-lg">
+								<div className="flex flex-col gap-2 text-lg md:flex-row">
 									<select
 										name="county"
 										value={formik.values.county}
@@ -235,7 +237,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 
 											formik.setFieldValue('county', county);
 										}}
-										className="mr-2 w-1/2 rounded-3xl border-2 border-whisper bg-white p-2 text-center"
+										className="w-full rounded-3xl border-2 border-whisper bg-white p-2 text-center md:w-1/2"
 									>
 										<option value="null" disabled>
 											{t('County')}
@@ -248,7 +250,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										name="district"
 										value={formik.values.district}
 										onChange={formik.handleChange}
-										className="w-1/2 rounded-3xl border-2 border-whisper bg-white p-2 text-center"
+										className="w-full rounded-3xl  border-2 border-whisper bg-white p-2 text-center md:w-1/2"
 									>
 										<option value="null" disabled>
 											{t('District')}
@@ -304,7 +306,8 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									<TextBox
 										name="monthly_rental"
 										type="number"
-										extraClass={`w-auto ${formik.errors.monthly_rental ? 'is-invalid' : ''}`}
+										extraClass={`w-auto`}
+										isInvalid={'monthly_rental' in formik.errors}
 										placeholder={t('monthly_rental')}
 										onChange={formik.handleChange}
 										value={formik.values.monthly_rental}
@@ -315,7 +318,8 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									<TextBox
 										name="processing_fee"
 										type="number"
-										extraClass={`w-auto ${formik.errors.processing_fee ? 'is-invalid' : ''}`}
+										extraClass={`w-auto`}
+										isInvalid={'processing_fee' in formik.errors}
 										placeholder={t('processing_fee')}
 										onChange={formik.handleChange}
 										value={formik.values.processing_fee}
@@ -327,10 +331,10 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 					<div className="bottom-box mb-24 w-full rounded-3xl border border-whisper ">
 						<div className="header h-10 bg-whisper px-5 leading-10">{t('description')}</div>
 						<div className="h-fit">
-							<div className="description p-4 text-sm">
+							<div className="description text-sm">
 								<textarea
 									rows={4}
-									className="w-full"
+									className="w-full border-2 border-whisper p-4  shadow-dodgerBlueWith25Opacity focus:border-mayaBlue focus-visible:outline-none"
 									name="description"
 									placeholder="..."
 									onChange={formik.handleChange}

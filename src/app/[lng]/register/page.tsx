@@ -96,7 +96,7 @@ export default function Page({ params: { lng } }: any) {
 				<div className="form-group mx-auto">
 					<TextBox
 						name="email"
-						extraClass={`${formik.errors.email ? 'is-invalid' : ''}`}
+						isInvalid={'email' in formik.errors}
 						placeholder={t('email')}
 						onChange={formik.handleChange}
 						value={formik.values.email}
@@ -106,7 +106,7 @@ export default function Page({ params: { lng } }: any) {
 					<TextBox
 						name="password"
 						type="password"
-						extraClass={`${formik.errors.password ? 'is-invalid' : ''}`}
+						isInvalid={'password' in formik.errors}
 						placeholder={t('password')}
 						onChange={formik.handleChange}
 						value={formik.values.password}
@@ -116,7 +116,7 @@ export default function Page({ params: { lng } }: any) {
 					<TextBox
 						name="last_name"
 						type="text"
-						extraClass={`${formik.errors.last_name ? 'is-invalid' : ''}`}
+						isInvalid={'last_name' in formik.errors}
 						placeholder={t('lastName')}
 						onChange={formik.handleChange}
 						value={formik.values.last_name}
@@ -126,7 +126,7 @@ export default function Page({ params: { lng } }: any) {
 					<TextBox
 						name="first_name"
 						type="text"
-						extraClass={`${formik.errors.first_name ? 'is-invalid' : ''}`}
+						isInvalid={'first_name' in formik.errors}
 						placeholder={t('firstName')}
 						onChange={formik.handleChange}
 						value={formik.values.first_name}

@@ -105,13 +105,13 @@ function DatePick({
 		}
 	}
 	return (
-		<div className="DatePick flex w-full gap-2">
+		<div className="DatePick flex w-full flex-col gap-2 md:flex-row">
 			{/* <h1 className={`text-red-700 ${isDebug ? 'block' : 'hidden'}`}>
 				{yyyy}
 				{mm}
 				{dd}
 			</h1> */}
-			<div className="w-1/3">
+			<div className="w-full md:w-1/3">
 				<select
 					className="yyyy h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
 					name="yyyy"
@@ -128,7 +128,7 @@ function DatePick({
 					))}
 				</select>
 			</div>
-			<div className="w-1/3">
+			<div className="w-full md:w-1/3">
 				<select
 					className="mm h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
 					name="mm"
@@ -145,7 +145,7 @@ function DatePick({
 					))}
 				</select>
 			</div>
-			<div className="w-1/3">
+			<div className="w-full md:w-1/3">
 				<select
 					className="dd  h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
 					name="dd"

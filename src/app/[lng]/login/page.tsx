@@ -147,12 +147,8 @@ export default function Page({ params: { lng } }: any) {
 						name="username"
 						placeholder={t('email')}
 						onChange={formik.handleChange}
-						extraClass={
-							formik.errors.username
-								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-								: ''
-						}
 						value={formik.values.username}
+						isInvalid={'username' in formik.errors}
 					/>
 				</div>
 				<div className="form-group mx-auto">
@@ -161,12 +157,8 @@ export default function Page({ params: { lng } }: any) {
 						placeholder={t('password')}
 						type="password"
 						onChange={formik.handleChange}
-						extraClass={
-							formik.errors.password
-								? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-								: ''
-						}
 						value={formik.values.password}
+						isInvalid={'password' in formik.errors}
 					/>
 				</div>
 				<div className="form-group block w-full">

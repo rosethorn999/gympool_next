@@ -133,11 +133,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="first_name"
 							placeholder={t('first_name')}
 							onChange={formik.handleChange}
-							extraClass={
-								formik.errors.first_name
-									? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-									: ''
-							}
+							isInvalid={'first_name' in formik.errors}
 							value={formik.values.first_name}
 						/>
 					</div>
@@ -149,11 +145,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="last_name"
 							placeholder={t('last_name')}
 							onChange={formik.handleChange}
-							extraClass={
-								formik.errors.last_name
-									? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-									: ''
-							}
+							isInvalid={'last_name' in formik.errors}
 							value={formik.values.last_name}
 						/>
 					</div>
@@ -222,11 +214,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="facebook_id"
 							placeholder={t('facebook_id')}
 							onChange={formik.handleChange}
-							extraClass={
-								formik.errors.facebook_id
-									? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-									: ''
-							}
+							isInvalid={'facebook_id' in formik.errors}
 							value={formik.values.facebook_id}
 						/>
 					</div>
@@ -238,11 +226,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="line_id"
 							placeholder={t('line_id')}
 							onChange={formik.handleChange}
-							extraClass={
-								formik.errors.line_id
-									? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-									: ''
-							}
+							isInvalid={'line_id' in formik.errors}
 							value={formik.values.line_id}
 						/>
 					</div>
@@ -254,11 +238,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 							name="mobile"
 							placeholder={t('mobile')}
 							onChange={formik.handleChange}
-							extraClass={
-								formik.errors.mobile
-									? 'is-invalid border-bloodred focus:border-bloodredWith25Opacity'
-									: ''
-							}
+							isInvalid={'mobile' in formik.errors}
 							value={formik.values.mobile}
 						/>
 					</div>

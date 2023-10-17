@@ -7,7 +7,7 @@ import { redirect, useSearchParams } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 import Link from 'next/link';
 
-function TextBox({ lng }: any) {
+export default function SearchBox({ lng }: any) {
 	const { t } = useTranslation(lng, 'contracts');
 	const searchParams = useSearchParams();
 
@@ -88,5 +88,3 @@ function TextBox({ lng }: any) {
 		</>
 	);
 }
-
-export default TextBox;

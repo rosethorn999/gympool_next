@@ -8,6 +8,7 @@ import { SetSpinnerClose, SetSpinnerOpen } from '../components/Spinner';
 import Button from '../components/Button';
 import { useTranslation } from '@/app/i18n/client';
 import { useEffect, useState } from 'react';
+import TextBox from '../components/TextBox';
 
 export default function Page({ params: { lng }, searchParams }: any) {
 	const { t } = useTranslation(lng, 'verify');
@@ -87,11 +88,10 @@ export default function Page({ params: { lng }, searchParams }: any) {
 				<form onSubmit={formik.handleSubmit}>
 					<p>{t('linkWillBeSentToYourMailbox')}</p>
 					<div className="form-group mb-14 block">
-						<input
+						<TextBox
 							name="email"
-							className={`text-box mx-auto my-0 h-10 w-1/3 min-w-[250px] rounded-3xl border border-whisper p-5 leading-10 ${
-								formik.errors.email ? 'is-invalid' : null
-							}`}
+							extraClass={`text-box mx-auto my-0 h-10 w-1/3 min-w-[250px] rounded-3xl border border-whisper p-5 leading-10`}
+							isInvalid={'email' in formik.errors}
 							placeholder={t('email')}
 							onChange={formik.handleChange}
 							value={formik.values.email}
