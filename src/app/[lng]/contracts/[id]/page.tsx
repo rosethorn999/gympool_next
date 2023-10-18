@@ -74,8 +74,8 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 				</div>
 				<div className="contract-container mb-24 md:mb-48">
 					<div className="upper-box mb-24 flex w-full flex-col gap-4 md:flex-row md:gap-24">
-						<div className="left-box w-full md:w-1/2">
-							<h1 className="mb-4 text-4xl font-bold">{title}</h1>
+						<div className="left-box flex w-full flex-col gap-4 md:w-2/5">
+							<h1 className="mb-8 text-4xl font-bold">{title}</h1>
 							<Image
 								className="main-image w-full rounded-3xl border border-whisper"
 								src="/500x300.png"
@@ -84,7 +84,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								height="300"
 							/>
 							<span className="text-persianRed">{inventory <= 0 && <p>{t('SoldOut')}</p>}</span>
-							<div className="contacts-box">
+							<div className="contacts-box flex flex-col gap-5">
 								<p className="text-xl">{t('sellerInfo')}</p>
 								<div>
 									{t('creator')}:&nbsp;
@@ -110,8 +110,8 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								</div>
 							</div>
 						</div>
-						<div className="right-box w-full md:w-1/2">
-							<div className="mb-7">
+						<div className="right-box flex w-full flex-col gap-7 md:w-3/5">
+							<div>
 								<h5 className="text-lg font-medium">{t('storeName')}</h5>
 								<h3 className="text-3xl font-medium">
 									{gym_typeCaption(gym_type)} {store}
@@ -121,7 +121,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								</p>
 							</div>
 
-							<div className="contract-date-block mb-7">
+							<div className="contract-date-block">
 								<h5 className="text-lg font-medium">{t('expiryDate')}</h5>
 								<h4 className="text-2xl">{expiry_date.slice(0, 10)}</h4>
 								<p className="text-slateGrey">
@@ -150,12 +150,12 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 									{t('processingFee')}: ${processing_fee}
 								</p>
 							</div>
-						</div>
-					</div>
-					<div className="bottom-box mb-24 w-full rounded-3xl border border-whisper ">
-						<div className="header h-10 bg-whisper px-5 leading-10">{t('description')}</div>
-						<div className={`h-36 overflow-auto ${!description && 'h-14'}`}>
-							<div className="description p-4 text-sm">{description || `(${t('empty')})`}</div>
+							<div className="rounded-3xl">
+								<h5 className="text-lg font-medium">{t('description')}</h5>
+								<div className={`h-36 overflow-auto  text-sm ${!description && 'h-14'}`}>
+									{description || `(${t('empty')})`}
+								</div>
+							</div>
 						</div>
 					</div>
 					<h2 className="mb-12 text-4xl">{t('nearby')}</h2>

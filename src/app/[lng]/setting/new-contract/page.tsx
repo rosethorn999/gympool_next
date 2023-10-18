@@ -139,10 +139,10 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			<div className="h-full p-5 md:py-0">
 				<form onSubmit={formik.handleSubmit} className="contract-container mb-24 md:mb-48">
 					<div className="upper-box mb-24 flex w-full flex-col gap-4 md:flex-row md:gap-24">
-						<div className="left-box w-full md:w-1/2">
+						<div className="left-box flex w-full flex-col gap-4 md:w-2/5">
 							<TextBox
 								name="title"
-								extraClass={`mb-4 w-full text-4xl`}
+								extraClass={`mb-8 w-full text-4xl`}
 								isInvalid={'title' in formik.errors}
 								placeholder={t('title')}
 								onChange={formik.handleChange}
@@ -156,8 +156,8 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 								height="300"
 							/>
 						</div>
-						<div className="right-box w-full md:w-1/2">
-							<div className="mb-7">
+						<div className="right-box flex w-full flex-col gap-7 md:w-3/5">
+							<div>
 								<h5 className="text-lg font-medium">{t('storeName')}</h5>
 								<div className="mb-2 flex flex-col gap-2 text-2xl md:flex-row">
 									<select
@@ -236,7 +236,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 								</div>
 							</div>
 
-							<div className="contract-date-block mb-7">
+							<div className="contract-date-block">
 								<h5 className="text-lg font-medium">
 									{t('expiryDate')} ({productLife}):
 								</h5>
@@ -290,20 +290,18 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									/>
 								</p>
 							</div>
-						</div>
-					</div>
-					<div className="bottom-box mb-24 w-full rounded-3xl border border-whisper ">
-						<div className="header h-10 bg-whisper px-5 leading-10">{t('description')}</div>
-						<div className="h-fit">
-							<div className="description text-sm">
-								<textarea
-									rows={4}
-									className="w-full border-2 border-whisper p-4  shadow-dodgerBlueWith25Opacity focus:border-mayaBlue focus-visible:outline-none"
-									name="description"
-									placeholder="..."
-									onChange={formik.handleChange}
-									value={formik.values.description}
-								></textarea>
+							<div>
+								<h5 className="text-lg font-medium">{t('description')}</h5>
+								<div className="description h-fit text-sm">
+									<textarea
+										rows={4}
+										className="w-full rounded-3xl border-2 border-whisper p-4  shadow-dodgerBlueWith25Opacity focus:border-mayaBlue focus-visible:outline-none"
+										name="description"
+										placeholder="..."
+										onChange={formik.handleChange}
+										value={formik.values.description}
+									></textarea>
+								</div>
 							</div>
 						</div>
 					</div>
