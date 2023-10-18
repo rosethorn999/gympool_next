@@ -29,8 +29,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 	const [districts, setDistricts] = useState<any[]>([]);
 	const [price, setPrice] = useState(0);
 	const [productLife, setProductLife] = useState('');
-
-	function loadDistrictList(county: string) {
+	const loadDistrictList = (county: string): void => {
 		let ret: any[] = [];
 		let selectedDistricts = selection.zipCode.filter((item) => {
 			return item.name === county;
@@ -40,7 +39,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			ret = selectedDistricts[0].districts;
 		}
 		setDistricts(ret);
-	}
+	};
 	useEffect(() => {
 		const loadContract = async (abortController: AbortController) => {
 			const results: Contract = await getContract(recordId, abortController);
@@ -54,7 +53,13 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		loadContract(abortController);
 		return () => abortController.abort();
 	}, []);
-
+	useEffect(() => {
+		const isDistrictValid = !districts.map((o) => o.name).includes(formik.values.district);
+		if (districts.length > 0 && isDistrictValid) {
+			formik.setFieldValue('district', districts[0].name);
+			formik.validateField('district');
+		}
+	}, [districts]);
 	const validate = (values: Contract) => {
 		const errors: any = {};
 

@@ -106,6 +106,12 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			formik.values.processing_fee
 		);
 	}, [formik.values.monthly_rental, formik.values.expiry_date, formik.values.processing_fee]);
+	useEffect(() => {
+		if (districts.length > 0) {
+			formik.setFieldValue('district', districts[0].name);
+			formik.validateField('district');
+		}
+	}, [districts]);
 	async function createContract(values: any) {
 		try {
 			const user_id = Cookies.get('user_id');
