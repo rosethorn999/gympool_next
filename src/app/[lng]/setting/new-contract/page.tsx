@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
 import TextBox from '../../components/TextBox';
 import Button from '@/app/[lng]/components/Button';
 import Cookies from 'js-cookie';
-import { calcProductLife } from '@/app/utils/contract';
+import { calcProductLife, isDateValid } from '@/app/utils/contract';
+import { Contract, User } from '../../../type/type';
 
 export default function Page({ params: { lng, id: recordId } }: any) {
 	const { t } = useTranslation(lng, 'contracts');
@@ -38,7 +39,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		}
 		setDistricts(ret);
 	}
-	const validate = (values: any) => {
+	const validate = (values: Contract) => {
 		const errors: any = {};
 
 		if (!values.title) {
@@ -49,7 +50,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		} else if (values.monthly_rental > 10000) {
 			errors.monthly_rental = 'Invalid monthly_rental';
 		}
-		if (selection.gym_types.map((o) => o.val).includes(values.gym_type)) {
+		if (!selection.gym_types.map((o) => o.val).includes(values.gym_type)) {
 			errors.gym_type = 'Required';
 		}
 		if (!values.store) {
@@ -61,8 +62,11 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		if (!districts.map((o) => o.name).includes(values.district)) {
 			errors.district = 'Required';
 		}
-		if (!values.expiry_date) {
+		if (!isDateValid(values.expiry_date)) {
 			errors.expiry_date = 'Required';
+		}
+		if (values.monthly_rental <= 0) {
+			errors.monthly_rental = 'Invalid monthly_rental';
 		}
 		if (values.processing_fee > 10000) {
 			errors.processing_fee = 'Invalid processing_fee';
@@ -70,21 +74,26 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 
 		return errors;
 	};
+	const initialValues: Contract = {
+		id: '',
+		creator: {} as User,
+		modify_time: '',
+
+		title: '',
+		monthly_rental: 0,
+		processing_fee: 0,
+		expiry_date: '',
+		description: '',
+		create_time: '',
+		county: '',
+		district: '',
+		gym_type: -1,
+		store: '',
+		inventory: 1,
+		features: [],
+	};
 	const formik = useFormik({
-		initialValues: {
-			title: '',
-			monthly_rental: 0,
-			processing_fee: 0,
-			expiry_date: '',
-			description: '',
-			create_time: '',
-			county: -1,
-			district: -1,
-			gym_type: -1,
-			store: '',
-			inventory: 1,
-			features: [],
-		},
+		initialValues,
 		validate,
 		onSubmit: (values) => {
 			createContract(values);
@@ -134,7 +143,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 							<TextBox
 								name="title"
 								extraClass={`mb-4 w-full text-4xl`}
-								isInvalid={'errors' in formik.errors}
+								isInvalid={'title' in formik.errors}
 								placeholder={t('title')}
 								onChange={formik.handleChange}
 								value={formik.values.title}
@@ -153,9 +162,15 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 								<div className="mb-2 flex flex-col gap-2 text-2xl md:flex-row">
 									<select
 										value={formik.values.gym_type}
-										onChange={formik.handleChange}
 										name="gym_type"
-										className="mr-2 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center md:w-1/2"
+										className={`mr-2 w-full rounded-3xl border-2 bg-white px-2 text-center shadow-dodgerBlueWith25Opacity focus-visible:outline-none md:w-1/2 ${
+											'gym_type' in formik.errors
+												? 'border-bloodred focus:border-bloodredWith25Opacity'
+												: 'border-whisper focus:border-mayaBlue'
+										}`}
+										onChange={({ target: { value } }) => {
+											formik.setFieldValue('gym_type', parseInt(value));
+										}}
 									>
 										<option value={-1} disabled>
 											{t('Membership')}
@@ -170,7 +185,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										name="store"
 										type="text"
 										extraClass={`w-1/2`}
-										isInvalid={'storeName' in formik.errors}
+										isInvalid={'store' in formik.errors}
 										placeholder={t('storeName')}
 										onChange={formik.handleChange}
 										value={formik.values.store}
@@ -180,13 +195,15 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									<select
 										name="county"
 										value={formik.values.county}
-										onChange={(e) => {
-											const county = e.target.value;
-											loadDistrictList(county);
-
-											formik.setFieldValue('county', county);
+										onChange={({ target: { value } }) => {
+											loadDistrictList(value);
+											formik.setFieldValue('county', value);
 										}}
-										className="w-full rounded-3xl border-2 border-whisper bg-white p-2 text-center md:w-1/2"
+										className={`w-full rounded-3xl border-2 bg-white p-2 text-center md:w-1/2 ${
+											'county' in formik.errors
+												? 'border-bloodred focus:border-bloodredWith25Opacity'
+												: 'border-whisper focus:border-mayaBlue'
+										}`}
 									>
 										<option value={-1} disabled>
 											{t('County')}
@@ -199,14 +216,18 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 										name="district"
 										value={formik.values.district}
 										onChange={formik.handleChange}
-										className="w-full rounded-3xl border-2 border-whisper bg-white p-2 text-center md:w-1/2"
+										className={`w-full rounded-3xl border-2 bg-white p-2 text-center md:w-1/2 ${
+											'district' in formik.errors
+												? 'border-bloodred focus:border-bloodredWith25Opacity'
+												: 'border-whisper focus:border-mayaBlue'
+										}`}
 									>
 										<option value={-1} disabled>
 											{t('District')}
 										</option>
 										{districts.map((district) => {
 											return (
-												<option key={district.zip} value={district.name}>
+												<option key={`${district.zip}-${district.name}`} value={district.name}>
 													{district.name}
 												</option>
 											);
@@ -223,6 +244,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									<DatePick
 										lng={lng}
 										// name="expiry_date"
+										isInvalid={'expiry_date' in formik.errors}
 										handleDateChange={(v: string) => {
 											formik.setFieldValue('expiry_date', v);
 											const productLife = calcProductLife(v, t);

@@ -1,17 +1,16 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from '@/app/i18n/client';
-function DatePick({
-	lng,
-	isFullYYYY = false,
-	handleDateChange,
-	initValue,
-}: {
+
+type DatePickProps = {
 	lng: string;
 	isFullYYYY?: boolean;
 	handleDateChange: Function;
 	initValue?: string;
-}) {
+	isInvalid?: boolean;
+};
+function DatePick(props: DatePickProps) {
+	const { lng, isFullYYYY = false, handleDateChange, initValue, isInvalid = false } = props;
 	const { t } = useTranslation(lng, 'contracts');
 	const isDebug = false;
 	type TimeSelection = { yyyy: string[]; mm: string[]; dd: string[] };
@@ -113,7 +112,11 @@ function DatePick({
 			</h1> */}
 			<div className="w-full md:w-1/3">
 				<select
-					className="yyyy h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
+					className={`yyyy h-10 w-full rounded-3xl border-2 bg-white px-2 text-center leading-10 ${
+						isInvalid
+							? 'border-bloodred focus:border-bloodredWith25Opacity'
+							: 'border-whisper focus:border-mayaBlue'
+					} `}
 					name="yyyy"
 					onChange={handleChange}
 					value={yyyy}
@@ -130,7 +133,11 @@ function DatePick({
 			</div>
 			<div className="w-full md:w-1/3">
 				<select
-					className="mm h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
+					className={`mm h-10 w-full rounded-3xl border-2 bg-white px-2 text-center leading-10 ${
+						isInvalid
+							? 'border-bloodred focus:border-bloodredWith25Opacity'
+							: 'border-whisper focus:border-mayaBlue'
+					} `}
 					name="mm"
 					onChange={handleChange}
 					value={mm}
@@ -147,7 +154,11 @@ function DatePick({
 			</div>
 			<div className="w-full md:w-1/3">
 				<select
-					className="dd  h-10 w-full rounded-3xl border-2 border-whisper bg-white px-2 text-center leading-10"
+					className={`dd h-10 w-full rounded-3xl border-2 bg-white px-2 text-center leading-10 ${
+						isInvalid
+							? 'border-bloodred focus:border-bloodredWith25Opacity'
+							: 'border-whisper focus:border-mayaBlue'
+					} `}
 					name="dd"
 					onChange={handleChange}
 					value={dd}

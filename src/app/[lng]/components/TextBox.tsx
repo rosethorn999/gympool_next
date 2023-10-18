@@ -1,4 +1,4 @@
-interface ITextBox {
+type TextBoxProps = {
 	name: string;
 	extraClass?: string;
 	type?: string;
@@ -7,8 +7,8 @@ interface ITextBox {
 	onChange: any;
 	disabled?: boolean;
 	isInvalid?: boolean;
-}
-function TextBox(props: ITextBox) {
+};
+function TextBox(props: TextBoxProps) {
 	const {
 		name,
 		extraClass = '',

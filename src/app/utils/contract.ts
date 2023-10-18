@@ -31,10 +31,14 @@ function calcProductLife(expiry_date: string, t: Function) {
 
 	return ret;
 }
-const maxCharacters = (v: string, num: number = 30) => {
+const maxCharacters = (v: string, num: number = 30): string => {
 	if (v && v.length > num - 3) {
 		return v.substring(0, num - 3) + '...';
 	}
 	return v;
 };
-export { calcProductLife, maxCharacters };
+const isDateValid = (dateStr: string): boolean => {
+	return !isNaN(new Date(dateStr).valueOf());
+};
+
+export { calcProductLife, maxCharacters, isDateValid };
