@@ -8,7 +8,6 @@ import { useTranslation } from '@/app/i18n/client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { SetSpinnerClose, SetSpinnerOpen } from '../../components/Spinner';
 import DatePick from '../../components/DatePick';
 import Swal from 'sweetalert2';
 import TextBox from '../../components/TextBox';
@@ -99,14 +98,12 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		);
 	}, [formik.values.monthly_rental, formik.values.expiry_date, formik.values.processing_fee]);
 	async function createContract(values: any) {
-		const user_id = Cookies.get('user_id');
-		let url = `/users/${user_id}/contracts`;
-		SetSpinnerOpen();
 		try {
+			const user_id = Cookies.get('user_id');
+			const url = `/users/${user_id}/contracts`;
 			const {
 				data: { id },
 			} = await basicRequest.post(url, values);
-			SetSpinnerClose();
 			const msg = `${values.title} 已經建立`;
 			await Swal.fire('完成', msg, 'success');
 			router.push(`/${lng}/contracts/${id}`);
@@ -117,7 +114,6 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			Swal.fire(title, msg, 'error');
 			console.error(error);
 		}
-		SetSpinnerClose();
 	}
 	function calcPrice(monthly_rental: number, expiry_date: Date, processing_fee: number) {
 		let d = new Date(expiry_date).getTime();

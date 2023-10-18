@@ -4,7 +4,6 @@ import basicRequest from '../../apis/api';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { SetSpinnerClose, SetSpinnerOpen } from '../components/Spinner';
 import Button from '../components/Button';
 import { useTranslation } from '@/app/i18n/client';
 import { useEffect, useState } from 'react';
@@ -21,7 +20,6 @@ export default function Page({ params: { lng }, searchParams }: any) {
 		const abortController = new AbortController();
 
 		if (tokenInSearchParams !== '') {
-			SetSpinnerOpen();
 			const url = '/auth/verify';
 			const req = basicRequest
 				.post(url, { token: tokenInSearchParams }, { signal: abortController.signal })
@@ -38,7 +36,6 @@ export default function Page({ params: { lng }, searchParams }: any) {
 					await Swal.fire(title, msg, 'error');
 					setVerifyResult(msg);
 				});
-			SetSpinnerClose();
 		}
 		return () => abortController.abort();
 	}, [tokenInSearchParams]);
@@ -64,18 +61,15 @@ export default function Page({ params: { lng }, searchParams }: any) {
 		},
 	});
 	async function requestVerifyToken(values: any) {
-		SetSpinnerOpen();
 		try {
 			const url = '/auth/request-verify-token';
 			const req = await basicRequest.post(url, values);
-			SetSpinnerClose();
 			const title = t(req.status.toString());
 			const msg = t('linkWillBeSentToYourMailbox');
 			await Swal.fire(title, msg, 'success');
 
 			router.push('/');
 		} catch (error: any) {
-			SetSpinnerClose();
 			const title = error.response?.status.toString();
 			let msg = error.response?.data?.detail;
 			Swal.fire(title, msg, 'error');

@@ -4,7 +4,6 @@ import basicRequest from '../../apis/api';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { SetSpinnerClose, SetSpinnerOpen } from '../components/Spinner';
 import Button from '../components/Button';
 import TextBox from '../components/TextBox';
 
@@ -32,8 +31,6 @@ function RequestResetPassword() {
 		},
 	});
 	function resetPassword(values: any) {
-		SetSpinnerOpen();
-
 		const url = '/password-reset/';
 		basicRequest
 			.post(url, values)
@@ -52,9 +49,6 @@ function RequestResetPassword() {
 				}
 				Swal.fire(title, msg, 'error');
 				console.error(error);
-			})
-			.finally(() => {
-				SetSpinnerClose();
 			});
 	}
 	return (

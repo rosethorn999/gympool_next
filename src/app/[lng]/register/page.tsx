@@ -1,7 +1,6 @@
 'use client';
 import Swal from 'sweetalert2';
 import basicRequest from '../../apis/api';
-import { SetSpinnerOpen, SetSpinnerClose } from '../components/Spinner';
 import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextBox from '../components/TextBox';
@@ -53,12 +52,11 @@ export default function Page({ params: { lng } }: any) {
 	});
 
 	async function createUser(values: any) {
-		let url = '/auth/register';
-		SetSpinnerOpen();
 		try {
+			const url = '/auth/register';
 			const req = await basicRequest.post(url, values);
 			const msg = `${values.email} Can be login now`;
-			SetSpinnerClose();
+
 			await Swal.fire('Created', msg, 'success');
 			router.push(`/${lng}/login`);
 		} catch (error: any) {
@@ -87,7 +85,6 @@ export default function Page({ params: { lng } }: any) {
 			Swal.fire(title, msg, 'error');
 			console.error(error);
 		}
-		SetSpinnerClose();
 	}
 	return (
 		<div className="Register h-full w-full py-12 text-center md:px-5">

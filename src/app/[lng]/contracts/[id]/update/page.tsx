@@ -11,7 +11,6 @@ import { useTranslation } from '@/app/i18n/client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { SetSpinnerClose, SetSpinnerOpen } from '../../../components/Spinner';
 import Swal from 'sweetalert2';
 import TextBox from '../../../components/TextBox';
 import Button from '@/app/[lng]/components/Button';
@@ -44,14 +43,12 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 	}
 	useEffect(() => {
 		const loadContract = async (abortController: AbortController) => {
-			SetSpinnerOpen();
 			const results: Contract = await getContract(recordId, abortController);
 			if (results) {
 				formik.setValues(results);
 				const county = results.county;
 				loadDistrictList(county);
 			}
-			SetSpinnerClose();
 		};
 		const abortController = new AbortController();
 		loadContract(abortController);
@@ -111,11 +108,9 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		},
 	});
 	async function updateContract(values: any) {
-		let url = `/contracts/${values.id}`;
-		SetSpinnerOpen();
 		try {
+			const url = `/contracts/${values.id}`;
 			const req = await basicRequest.put(url, values);
-			SetSpinnerClose();
 			const msg = `${values.title} 已經更新`;
 			await Swal.fire('完成', msg, 'success');
 			router.push(`/${lng}/${url}`);
@@ -126,7 +121,6 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			Swal.fire(title, msg, 'error');
 			console.error(error);
 		}
-		SetSpinnerClose();
 	}
 	function calcPrice(monthly_rental: number, expiry_date: Date, processing_fee: number) {
 		let d = new Date(expiry_date).getTime();

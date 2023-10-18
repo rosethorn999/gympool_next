@@ -1,7 +1,6 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { SetSpinnerClose, SetSpinnerOpen } from '../../components/Spinner';
 import basicRequest, { getUserMe } from '@/app/apis/api';
 import Swal from 'sweetalert2';
 import { useTranslation } from '@/app/i18n/client';
@@ -75,14 +74,12 @@ export default function Page({ params: { lng }, searchParams }: any) {
 
 	useEffect(() => {
 		const loadContract = async (abortController: AbortController) => {
-			SetSpinnerOpen();
 			const results: User = await getUserMe(abortController);
 			if (results) {
 				formik.setValues(results);
 				const county = results.county;
 				loadDistrictList(county);
 			}
-			SetSpinnerClose();
 		};
 		const abortController = new AbortController();
 		loadContract(abortController);
@@ -90,12 +87,10 @@ export default function Page({ params: { lng }, searchParams }: any) {
 	}, []);
 
 	async function updateUser(values: any) {
-		let url = '/users/me';
-		SetSpinnerOpen();
 		try {
+			const url = '/users/me';
 			const req = await basicRequest.patch(url, values);
 			const msg = `${values.email} 修改完成`;
-			SetSpinnerClose();
 			await Swal.fire('完成', msg, 'success');
 			router.refresh();
 		} catch (error: any) {
@@ -113,7 +108,6 @@ export default function Page({ params: { lng }, searchParams }: any) {
 			Swal.fire(title, msg, 'error');
 			console.error(error);
 		}
-		SetSpinnerClose();
 	}
 
 	return (

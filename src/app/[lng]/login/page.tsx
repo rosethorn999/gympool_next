@@ -1,7 +1,6 @@
 'use client';
 import Swal from 'sweetalert2';
 import basicRequest from '../../apis/api';
-import { SetSpinnerOpen, SetSpinnerClose } from '../components/Spinner';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -42,15 +41,15 @@ export default function Page({ params: { lng } }: any) {
 		},
 	});
 	async function clickLogin(values: any) {
-		SetSpinnerOpen();
 		setSubmitButtonDisabled(true);
-		const url = '/auth/jwt/login';
+
 		try {
+			const url = '/auth/jwt/login';
 			var bodyFormData = new FormData();
 			bodyFormData.set('username', values.username);
 			bodyFormData.set('password', values.password);
 			const req = await basicRequest.post(url, bodyFormData);
-			SetSpinnerClose();
+
 			const { access_token, token_type } = req.data;
 			const token = `${token_type} ${access_token}`;
 			Cookies.set('token', token);
@@ -62,9 +61,6 @@ export default function Page({ params: { lng } }: any) {
 			router.refresh(); // To make header bar status change
 			router.push(`/${lng}/`);
 		} catch (error: any) {
-			SetSpinnerClose();
-			setSubmitButtonDisabled(false);
-
 			const title = error.response?.status.toString();
 			let msg = error.response?.data?.detail;
 			const isNotVerified =
@@ -77,11 +73,11 @@ export default function Page({ params: { lng } }: any) {
 			} else {
 				Swal.fire(title, msg, 'error');
 			}
+		} finally {
+			setSubmitButtonDisabled(false);
 		}
 	}
 	function social_register(values: any) {
-		SetSpinnerOpen();
-
 		const url = '/user/';
 		basicRequest
 			.post(url, values)
@@ -107,9 +103,6 @@ export default function Page({ params: { lng } }: any) {
 					}
 					console.error(error);
 				}
-			})
-			.finally(() => {
-				SetSpinnerClose();
 			});
 	}
 	function fbLogin() {

@@ -10,7 +10,6 @@ import Link from 'next/link';
 import { useTranslation } from '@/app/i18n/client';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { SetSpinnerClose, SetSpinnerOpen } from '../../components/Spinner';
 
 export default function Page({ params: { lng }, searchParams }: any) {
 	const { t } = useTranslation(lng, 'setting');
@@ -18,11 +17,9 @@ export default function Page({ params: { lng }, searchParams }: any) {
 
 	const [contracts, setContracts] = useState<Contract[]>([]);
 	const getMyContractsRequest = async (abortController: AbortController) => {
-		SetSpinnerOpen();
 		const payload = { page: 1, user_id };
 		const results = await getMyContracts(payload, abortController);
 		setContracts(results);
-		SetSpinnerClose();
 	};
 	useEffect(() => {
 		const abortController = new AbortController();

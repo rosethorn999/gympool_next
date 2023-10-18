@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { Contract, User } from '../../app/type/type';
 import Cookies from 'js-cookie';
+import { SetSpinnerClose, SetSpinnerOpen } from '../[lng]/components/Spinner';
 const host = process.env.NEXT_PUBLIC_API_HOST;
 // const host = 'http://localhost:8000';
 // const host = 'https://gympool-stg-fastapi.nodm.app/';
 
+const isCRC = typeof window !== 'undefined';
 const basicRequest = axios.create({
 	baseURL: host,
 });
@@ -16,9 +18,29 @@ basicRequest.interceptors.request.use(
 		if (token) {
 			config.headers['Authorization'] = token;
 		}
+		if (isCRC) {
+			SetSpinnerOpen();
+		}
 		return config;
 	},
 	(error) => {
+		if (isCRC) {
+			SetSpinnerClose();
+		}
+		return Promise.reject(error);
+	}
+);
+basicRequest.interceptors.response.use(
+	(response) => {
+		if (isCRC) {
+			SetSpinnerClose();
+		}
+		return response;
+	},
+	(error) => {
+		if (isCRC) {
+			SetSpinnerClose();
+		}
 		return Promise.reject(error);
 	}
 );
