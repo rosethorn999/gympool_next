@@ -106,7 +106,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		district: '',
 		gym_type: 0,
 		store: '',
-		inventory: 0,
+		inventory: 1,
 		features: [],
 	};
 	const formik = useFormik({
@@ -175,30 +175,35 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 								height="300"
 							/>
 							<div className="text-persianRed">
-								<label htmlFor="1">
+								<label>
 									<input
 										value={1}
-										name="inventory"
+										// defaultChecked={formik.values.inventory === 1}
+										checked={formik.values.inventory === 1}
+										// name="inventory"
 										type="radio"
-										id="1"
-										onChange={formik.handleChange}
+										onChange={({ target: { checked } }) =>
+											formik.setFieldValue('inventory', checked ? 1 : 0)
+										}
 									/>
 									&nbsp;
 									{t('NotSoldOut')}
 								</label>
 								&nbsp;
-								<label htmlFor="0">
+								<label>
 									<input
 										value={0}
-										name="inventory"
+										// defaultChecked={formik.values.inventory === 0}
+										checked={formik.values.inventory === 0}
+										// name="inventory"
 										type="radio"
-										id="0"
-										onChange={formik.handleChange}
+										onChange={({ target: { checked } }) =>
+											formik.setFieldValue('inventory', checked ? 0 : 1)
+										}
 									/>
 									&nbsp;
 									{t('SoldOut')}
 								</label>
-								{/* FIXME: init inventory value not work */}
 							</div>
 						</div>
 						<div className="right-box w-full md:w-1/2">
@@ -237,7 +242,6 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 									/>
 								</div>
 								<div className="flex flex-col gap-2 text-lg md:flex-row">
-									{/* FIXME: initial value not work */}
 									<select
 										name="county"
 										value={formik.values.county}
