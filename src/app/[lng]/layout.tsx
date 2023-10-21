@@ -8,8 +8,8 @@ import { HeaderBar } from './components/HeaderBar/client';
 import FooterBar from './components/FooterBar';
 import { Spinner } from './components/Spinner';
 import { dir } from 'i18next';
-
 import { languages } from '../i18n/settings';
+import { ReCaptchaProvider } from 'next-recaptcha-v3';
 
 export async function generateStaticParams() {
 	return languages.map((lng: string) => ({ lng }));
@@ -33,12 +33,14 @@ export default function RootLayout({
 	return (
 		<html lang={lng} dir={dir(lng)}>
 			<body className={inter.className}>
-				<Spinner />
-				<HeaderBar lng={lng} />
-				<div className="min-h-[calc(100vh-250px)] w-full bg-white">
-					<div className="container mx-auto">{children}</div>
-				</div>
-				<FooterBar lng={lng} />
+				<ReCaptchaProvider>
+					<Spinner />
+					<HeaderBar lng={lng} />
+					<div className="min-h-[calc(100vh-250px)] w-full bg-white">
+						<div className="container mx-auto">{children}</div>
+					</div>
+					<FooterBar lng={lng} />
+				</ReCaptchaProvider>
 			</body>
 		</html>
 	);

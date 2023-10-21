@@ -11,7 +11,6 @@ import TextBox from '../components/TextBox';
 
 export default function Page({ params: { lng }, searchParams }: any) {
 	const { t } = useTranslation(lng, 'verify');
-	// TODO: Add captcha
 	const router = useRouter();
 	const [verifyResult, setVerifyResult] = useState('');
 	const tokenInSearchParams = searchParams.token || '';

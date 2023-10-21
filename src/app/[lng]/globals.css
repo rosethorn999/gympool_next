@@ -31,3 +31,6 @@
 	--pattensBlue: #dee2e6;
 	--navyBlue: #0058e5;
 }
+.grecaptcha-badge {
+	visibility: hidden;
+}
