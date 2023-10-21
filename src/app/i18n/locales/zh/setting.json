@@ -15,5 +15,6 @@
 	"mobile": "手機號碼",
 	"Security": "安全性",
 	"create_time": "加入日期",
-	"modify_time": "修改日期"
+	"modify_time": "修改日期",
+	"last_login": "上次登入時間"
 }

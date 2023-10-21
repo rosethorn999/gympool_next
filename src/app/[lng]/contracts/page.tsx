@@ -10,7 +10,7 @@ import { useTranslation } from '../../i18n';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrownOpen } from '@fortawesome/free-regular-svg-icons';
 
-const Contract = async ({ params: { lng }, searchParams }: any) => {
+const Page = async ({ params: { lng }, searchParams }: any) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng, 'contracts');
 	const currentPage = Number(searchParams.page) || 1;
@@ -72,4 +72,5 @@ const Contract = async ({ params: { lng }, searchParams }: any) => {
 	);
 };
 
-export default Contract;
+export default Page;
+export const revalidate = 3600;

@@ -156,7 +156,7 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 	return (
 		<div className="recordDetail bg-white">
 			<div className="h-full p-5 md:py-0">
-				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
+				<div className="controller sticky top-[67px] cursor-pointer bg-white pb-6 pt-12">
 					<div onClick={() => router.back()}>
 						<FontAwesomeIcon icon={faArrowLeft} /> {t('Back')}
 					</div>

@@ -65,6 +65,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 
 			modify_time: '',
 			create_time: '',
+			last_login: '',
 		},
 		validate,
 		onSubmit: (values) => {
@@ -252,21 +253,12 @@ export default function Page({ params: { lng }, searchParams }: any) {
 						<span className="leading-10">{formik.values.modify_time.slice(0, 19)}</span>
 					</div>
 				</div>
-				{/* TODO: last_login_time */}
-				{/* <div className="form-group">
-					<label>上次登入時間</label>
-					<div className="control-box">
-						<div className="control-box">
-							<input
-								type="text"
-								name="last_login"
-								value={formik.values.last_login_time}
-								onChange={formik.handleChange}
-								disabled
-							/>
-						</div>
+				<div className="form-group flex flex-wrap py-1">
+					<label className="w-full leading-10 md:w-1/4">{t('last_login')}</label>
+					<div className="control-box w-full md:w-3/4">
+						<span className="leading-10">{formik.values.last_login?.slice(0, 19)}</span>
 					</div>
-				</div> */}
+				</div>
 			</div>
 			<div className="button-box mt-4 text-right">
 				<Button type="submit" disabled={!formik.isValid}>

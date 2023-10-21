@@ -67,7 +67,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 	return (
 		<div className="recordDetail bg-white">
 			<div className="h-full p-5 md:py-0">
-				<div className="controller sticky top-14 cursor-pointer bg-white pb-6 pt-12">
+				<div className="controller sticky top-[67px] z-10 cursor-pointer bg-white pb-6 pt-12">
 					<Link href="/contracts">
 						<FontAwesomeIcon icon={faArrowLeft} /> {t('Back')}
 					</Link>
@@ -92,7 +92,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 										{creator.first_name}
 									</Link>
 								</div>
-								<div className="flex flex-wrap gap-2">
+								<div className="z-0 flex flex-wrap gap-2">
 									<FontAwesomeIcon
 										icon={faMessage}
 										className={`text-3xl opacity-70 ${
@@ -175,3 +175,5 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 		</div>
 	);
 }
+
+export const revalidate = 3600;

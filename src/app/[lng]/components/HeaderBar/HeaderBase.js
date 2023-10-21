@@ -57,8 +57,8 @@ export const HeaderBase = ({ t, lng }) => {
 					<Link href={`/${lng}/`} className="block h-full w-[300px]">
 						<Image
 							src={gymPoolLogo}
-							width="180"
-							height="180"
+							width="200"
+							height="auto"
 							id="brandIcon"
 							alt="brandLogo"
 							className="align-middle"

@@ -36,6 +36,7 @@ export type User = {
 	birth_date: string;
 	mobile: string;
 	create_time: string;
+	last_login: string;
 };
 export type Pagination<T> = {
 	count: number;
