@@ -31,6 +31,18 @@ function calcProductLife(expiry_date: string, t: Function) {
 
 	return ret;
 }
+const calcProductPrice = (
+	expiry_date: string,
+	monthly_rental: number = 0,
+	processing_fee: number = 0
+): number => {
+	let d = new Date(expiry_date).getTime();
+	let now = new Date().getTime();
+
+	const monthCount = Math.round(Math.max(d - now, 0) / 1000 / 60 / 60 / 24 / 30);
+	const v = monthCount > 0 ? monthly_rental * monthCount + processing_fee : 0;
+	return v;
+};
 const maxCharacters = (v: string, num: number = 30): string => {
 	if (v && v.length > num - 3) {
 		return v.substring(0, num - 3) + '...';
@@ -41,4 +53,4 @@ const isDateValid = (dateStr: string): boolean => {
 	return !isNaN(new Date(dateStr).valueOf());
 };
 
-export { calcProductLife, maxCharacters, isDateValid };
+export { calcProductLife, calcProductPrice, maxCharacters, isDateValid };

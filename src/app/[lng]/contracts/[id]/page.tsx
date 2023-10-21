@@ -3,11 +3,13 @@ import selections from '../../../../../public/selections.json';
 import Image from 'next/image';
 import { ContractBox } from '@/app/[lng]/components/ContractBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faCommentSms, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faFacebookMessenger, faLine } from '@fortawesome/free-brands-svg-icons';
 import { getContracts, getContract } from '@/app/apis/api';
 import { Contract, Pagination } from '@/app/types/type';
 import { useTranslation } from '@/app/i18n';
+import { calcProductPrice } from '@/app/utils/contract';
 
 export async function generateStaticParams() {
 	const { results: contracts }: Pagination<Contract> = await getContracts({});
@@ -45,14 +47,6 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 	const selection = {
 		gym_types: selections[0].list,
 		features: selections[1].list,
-	};
-	const price = () => {
-		let d = new Date(expiry_date).getTime();
-		let now = new Date().getTime();
-
-		const monthCount = Math.round(Math.max(d - now, 0) / 1000 / 60 / 60 / 24 / 30);
-		const v = monthCount > 0 ? monthly_rental * monthCount + processing_fee : 0;
-		return v;
 	};
 	const gym_typeCaption = (v: any) => {
 		let selected = selection.gym_types.filter(function (item: any) {
@@ -94,16 +88,38 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								</div>
 								<div className="z-0 flex flex-wrap gap-2">
 									<FontAwesomeIcon
-										icon={faMessage}
-										className={`text-3xl opacity-70 ${
-											creator.mobile ? 'cursor-pointer hover:opacity-100' : 'opacity-20'
+										icon={faLine}
+										className={`text-3xl ${
+											creator.line_id
+												? 'cursor-pointer opacity-70 hover:opacity-100'
+												: 'opacity-20 hover:cursor-not-allowed'
+										}`}
+										title={creator.line_id}
+									/>
+									<FontAwesomeIcon
+										icon={faFacebookMessenger}
+										className={`text-3xl ${
+											creator.facebook_id
+												? 'cursor-pointer opacity-70 hover:opacity-100'
+												: 'opacity-20 hover:cursor-not-allowed'
+										}`}
+										title={creator.facebook_id}
+									/>
+									<FontAwesomeIcon
+										icon={faCommentSms}
+										className={`text-3xl ${
+											creator.mobile
+												? 'cursor-pointer opacity-70 hover:opacity-100'
+												: 'opacity-20 hover:cursor-not-allowed'
 										}`}
 										title={creator.mobile}
 									/>
 									<FontAwesomeIcon
 										icon={faEnvelope}
-										className={`text-3xl opacity-70 ${
-											creator.email ? 'cursor-pointer hover:opacity-100' : 'opacity-20'
+										className={`text-3xl ${
+											creator.email
+												? 'cursor-pointer opacity-70 hover:opacity-100'
+												: 'opacity-20 hover:cursor-not-allowed'
 										}`}
 										title={creator.email}
 									/>
@@ -141,7 +157,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 							<div className="contract-price">
 								<h5 className="text-lg font-medium">{t('price')}</h5>
 								<h6 className="blue text-3xl font-medium text-dodgerBlue">
-									{currency} ${price()}
+									{currency} ${calcProductPrice(expiry_date, monthly_rental, processing_fee)}
 								</h6>
 								<p className="gray font-medium text-slateGrey">
 									{t('monthlyRentalFee')}: ${monthly_rental}

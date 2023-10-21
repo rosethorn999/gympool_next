@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import TextBox from '../../components/TextBox';
 import Button from '@/app/[lng]/components/Button';
 import Cookies from 'js-cookie';
-import { calcProductLife, isDateValid } from '@/app/utils/contract';
+import { calcProductLife, calcProductPrice, isDateValid } from '@/app/utils/contract';
 import { Contract, User } from '../../../types/type';
 
 export default function Page({ params: { lng, id: recordId } }: any) {
@@ -100,11 +100,12 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 		},
 	});
 	useEffect(() => {
-		calcPrice(
+		const p = calcProductPrice(
+			formik.values.expiry_date,
 			formik.values.monthly_rental,
-			new Date(formik.values.expiry_date),
 			formik.values.processing_fee
 		);
+		setPrice(p);
 	}, [formik.values.monthly_rental, formik.values.expiry_date, formik.values.processing_fee]);
 	useEffect(() => {
 		if (districts.length > 0) {
@@ -128,16 +129,6 @@ export default function Page({ params: { lng, id: recordId } }: any) {
 			const title = statusCode.toString();
 			Swal.fire(title, msg, 'error');
 			console.error(error);
-		}
-	}
-	function calcPrice(monthly_rental: number, expiry_date: Date, processing_fee: number) {
-		let d = new Date(expiry_date).getTime();
-		if (d) {
-			let now = new Date().getTime();
-
-			const monthCount = Math.round(Math.max(d - now, 0) / 1000 / 60 / 60 / 24 / 30);
-			const v = monthCount > 0 ? monthly_rental * monthCount + processing_fee : 0;
-			setPrice(v);
 		}
 	}
 	return (
