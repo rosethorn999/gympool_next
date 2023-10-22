@@ -4,6 +4,8 @@
 	"help": "Help",
 	"successStory": "Success Story",
 	"motivation": "Motivation",
-	"faq": "FAQ",
-	"fanPage": "Fan Page"
+	"fanPage": "Fan Page",
+	"FAQ": "FAQ",
+	"PrivacyPolicy": "Privacy Policy",
+	"TermsOfService": "Terms Of Service"
 }

@@ -132,7 +132,7 @@ export default function Page({ params: { lng } }: any) {
 
 				<div className="form-group w-full">
 					{t('GymPoolUsesCookiesForFurtherDetailsPleaseReadOur')}&nbsp;
-					<Link href={`/${lng}/privacy-policy`} target="_blank" className="text-gympoolBlue">
+					<Link href={`/${lng}/privacy`} target="_blank" className="text-gympoolBlue">
 						{t('privacyPolicy')}
 					</Link>
 				</div>

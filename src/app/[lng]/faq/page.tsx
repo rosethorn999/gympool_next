@@ -1,5 +1,8 @@
-function Faq() {
-	return <h1>faq</h1>;
+export default function Page() {
+	return (
+		<>
+			<h1>Who you are?</h1>
+			<p>Gympool-STG</p>
+		</>
+	);
 }
-
-export default Faq;

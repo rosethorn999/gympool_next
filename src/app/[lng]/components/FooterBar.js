@@ -36,7 +36,23 @@ const FooterBar = async ({ lng }) => {
 								href="/faq"
 								className="mb-2 text-sm leading-6 text-pattensBlue hover:text-white"
 							>
-								{t('faq')}
+								{t('FAQ')}
+							</Link>
+						</li>
+						<li>
+							<Link
+								href="/privacy"
+								className="mb-2 text-sm leading-6 text-pattensBlue hover:text-white"
+							>
+								{t('PrivacyPolicy')}
+							</Link>
+						</li>
+						<li>
+							<Link
+								href="/terms"
+								className="mb-2 text-sm leading-6 text-pattensBlue hover:text-white"
+							>
+								{t('TermsOfService')}
 							</Link>
 						</li>
 					</ul>
