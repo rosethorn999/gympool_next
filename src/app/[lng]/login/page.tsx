@@ -1,6 +1,6 @@
 'use client';
 import Swal from 'sweetalert2';
-import basicRequest from '../../apis/api';
+import basicRequest, { getUserMe } from '../../apis/api';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -55,8 +55,7 @@ export default function Page({ params: { lng } }: any) {
 			const token = `${token_type} ${access_token}`;
 			Cookies.set('token', token);
 
-			const { data: user } = await basicRequest.get('/users/me');
-			await Swal.fire(`Hi ${user.first_name}`, '歡迎回來', 'success');
+			const user: User = await getUserMe();
 			Cookies.set('user_id', user.id);
 
 			router.refresh(); // To make header bar status change
@@ -77,34 +76,6 @@ export default function Page({ params: { lng } }: any) {
 		} finally {
 			setSubmitButtonDisabled(false);
 		}
-	}
-	function social_register(values: any) {
-		const url = '/user/';
-		basicRequest
-			.post(url, values)
-			.then(() => {
-				clickLogin(values);
-			})
-			.catch(function (error: any) {
-				if (error.response.status === 400) {
-					let msg = error.response.data;
-					const isAccountExist = msg.email?.some(
-						(o: string) => o === 'user with this email already exists.'
-					);
-					if (isAccountExist) {
-						clickLogin(values);
-					}
-				} else {
-					let msgs: any = [];
-					const title = error.response.status.toString();
-					if (msgs.length > 0) {
-						Swal.fire(title, msgs.join('<br>'), 'error');
-					} else {
-						Swal.fire(title, JSON.stringify(error.response.data), 'error');
-					}
-					console.error(error);
-				}
-			});
 	}
 	function fbLogin() {
 		// TODO: TBD
@@ -131,6 +102,23 @@ export default function Page({ params: { lng } }: any) {
 		// 	}
 		// }, payload);
 	}
+	const googleLogin = async () => {
+		setSubmitButtonDisabled(true);
+
+		try {
+			const url = '/auth/google/authorize';
+			const req = await basicRequest.get(url);
+
+			const { authorization_url } = req.data;
+			location.href = authorization_url;
+		} catch (error: any) {
+			const title = error.response?.status.toString();
+			let msg = error.response?.data?.detail;
+			Swal.fire(title, msg, 'error');
+		} finally {
+			setSubmitButtonDisabled(false);
+		}
+	};
 
 	return (
 		<div className="login h-full w-full py-12 text-center md:px-5">
@@ -155,7 +143,7 @@ export default function Page({ params: { lng } }: any) {
 						isInvalid={'password' in formik.errors}
 					/>
 				</div>
-				<div className="form-group block w-full">
+				<div className="form-group">
 					<Link className="text-gympoolBlue" href={`/${lng}/forget-password`}>
 						{t('forgetPassword')}?
 					</Link>
@@ -169,8 +157,14 @@ export default function Page({ params: { lng } }: any) {
 			<h4 className="spreader mb-5 mt-2 w-full border-b pt-12 leading-[0.1em]">
 				<span className="bg-whiteSmoke px-2">{t('or')}</span>
 			</h4>
-			<div className="button-box">
-				<Button onClick={fbLogin}>{t('loginViaFB')}</Button>
+
+			<div className="button-box mx-auto flex w-1/4 flex-col gap-4">
+				<Button onClick={fbLogin} disabled={submitButtonDisabled}>
+					{t('SignInWithFacebook')}
+				</Button>
+				<Button onClick={googleLogin} disabled={submitButtonDisabled} color="green">
+					{t('SignInWithGoogle')}
+				</Button>
 			</div>
 		</div>
 	);

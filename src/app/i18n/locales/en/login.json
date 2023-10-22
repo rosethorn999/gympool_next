@@ -5,6 +5,8 @@
 	"submit": "Submit",
 	"or": "OR",
 	"forgetPassword": "Forget Password",
-	"loginViaFB": "Login via Facebook",
-	"LOGIN_USER_NOT_VERIFIED": "Your account is not yet authenticated, click Confirm to be redirected to the authentication page."
+	"SignInWithFacebook": "Sign in with Facebook",
+	"SignInWithGoogle": "Sign in with Google",
+	"LOGIN_USER_NOT_VERIFIED": "Your account is not yet authenticated, click Confirm to be redirected to the authentication page.",
+	"somethingWrongBackToLogin": "Something wrong? Back to login"
 }
