@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Contract, User } from '../../app/type/type';
+import { Contract, User } from '../types/type';
 import Cookies from 'js-cookie';
 import { SetSpinnerClose, SetSpinnerOpen } from '../[lng]/components/Spinner';
 const host = process.env.NEXT_PUBLIC_API_HOST;
@@ -18,6 +18,7 @@ basicRequest.interceptors.request.use(
 		if (token) {
 			config.headers['Authorization'] = token;
 		}
+		// TODO: Add an arg to hide spinner while fetching
 		if (isCRC) {
 			SetSpinnerOpen();
 		}

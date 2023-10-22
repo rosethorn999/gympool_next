@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useTranslation } from '@/app/i18n/client';
+import { User } from '@/app/types/type';
 
 export default function Page({ params: { lng } }: any) {
 	const { t } = useTranslation(lng, 'login');

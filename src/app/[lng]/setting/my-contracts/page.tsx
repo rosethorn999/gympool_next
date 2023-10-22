@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import loadingGif from '../../../../../public/loading.gif';
-import { Contract } from '@/app/type/type';
+import { Contract } from '@/app/types/type';
 import { getMyContracts } from '@/app/apis/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrownOpen } from '@fortawesome/free-regular-svg-icons';

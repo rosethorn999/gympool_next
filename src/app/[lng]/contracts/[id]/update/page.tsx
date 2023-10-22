@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import basicRequest, { getContract } from '@/app/apis/api';
-import { Contract, User } from '@/app/type/type';
+import { Contract, User } from '@/app/types/type';
 import { useTranslation } from '@/app/i18n/client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

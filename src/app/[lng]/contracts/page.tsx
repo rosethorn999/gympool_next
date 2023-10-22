@@ -5,7 +5,7 @@ import loadingGif from '../../../../public/loading.gif';
 import { getContracts } from '../../apis/api';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Contract } from '../../type/type';
+import { Contract } from '../../types/type';
 import { useTranslation } from '../../i18n';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrownOpen } from '@fortawesome/free-regular-svg-icons';

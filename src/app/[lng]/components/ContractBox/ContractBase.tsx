@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import { Contract } from '@/app/type/type';
+import { Contract } from '@/app/types/type';
 import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contract }) => {

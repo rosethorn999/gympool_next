@@ -14,7 +14,7 @@ import TextBox from '../../components/TextBox';
 import Button from '@/app/[lng]/components/Button';
 import Cookies from 'js-cookie';
 import { calcProductLife, isDateValid } from '@/app/utils/contract';
-import { Contract, User } from '../../../type/type';
+import { Contract, User } from '../../../types/type';
 
 export default function Page({ params: { lng, id: recordId } }: any) {
 	const { t } = useTranslation(lng, 'contracts');

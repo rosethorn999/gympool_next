@@ -1,6 +1,6 @@
 import { getUser, getUsers } from '@/app/apis/api';
 import { useTranslation } from '@/app/i18n';
-import { Pagination, User } from '@/app/type/type';
+import { Pagination, User } from '@/app/types/type';
 
 export async function generateStaticParams() {
 	const { results: users }: Pagination<User> = await getUsers();

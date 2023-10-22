@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ContractBox } from './components/ContractBox';
 import { getContracts, getCountyScatter } from '../../app/apis/api';
-import { Contract, Pagination } from '../../app/type/type';
+import { Contract, Pagination } from '../types/type';
 import { useTranslation } from '../i18n';
 
 declare global {

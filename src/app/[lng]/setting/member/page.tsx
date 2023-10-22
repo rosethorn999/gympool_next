@@ -11,7 +11,7 @@ import selections from '../../../../../public/selections.json';
 import zipCode from '../../../../../public/twZipCode.json';
 import { useEffect, useState } from 'react';
 import DatePick from '../../components/DatePick';
-import { User } from '@/app/type/type';
+import { User } from '@/app/types/type';
 
 export default function Page({ params: { lng }, searchParams }: any) {
 	const { t } = useTranslation(lng, 'setting');
@@ -250,7 +250,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 				<div className="form-group flex flex-wrap py-1">
 					<label className="w-full leading-10 md:w-1/4">{t('modify_time')}</label>
 					<div className="control-box w-full md:w-3/4">
-						<span className="leading-10">{formik.values.modify_time.slice(0, 19)}</span>
+						<span className="leading-10">{formik.values.modify_time?.slice(0, 19)}</span>
 					</div>
 				</div>
 				<div className="form-group flex flex-wrap py-1">

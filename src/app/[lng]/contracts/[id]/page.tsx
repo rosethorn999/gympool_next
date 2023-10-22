@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faMessage, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { getContracts, getContract } from '@/app/apis/api';
-import { Contract, Pagination } from '@/app/type/type';
+import { Contract, Pagination } from '@/app/types/type';
 import { useTranslation } from '@/app/i18n';
 
 export async function generateStaticParams() {
