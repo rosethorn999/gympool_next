@@ -143,6 +143,26 @@ async function getUser(id: string, abortController?: AbortController) {
 		.catch((error) => {});
 	return user;
 }
+async function getUsersSimple(abortController?: AbortController) {
+	const url = '/users-simple/';
+	const user = await basicRequest
+		.get<User[]>(url, { signal: abortController?.signal })
+		.then((response: any) => {
+			return response.data;
+		})
+		.catch((error) => {});
+	return user;
+}
+async function getUserSimple(id: string, abortController?: AbortController) {
+	const url = `/users-simple/${id}`;
+	const user = await basicRequest
+		.get<User>(url, { signal: abortController?.signal })
+		.then((response: any) => {
+			return response.data;
+		})
+		.catch((error) => {});
+	return user;
+}
 export {
 	host,
 	getContracts,
@@ -152,5 +172,7 @@ export {
 	getUserMe,
 	getUsers,
 	getUser,
+	getUsersSimple,
+	getUserSimple,
 };
 export default basicRequest;
