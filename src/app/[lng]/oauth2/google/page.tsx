@@ -10,12 +10,12 @@ import { User } from '@/app/types/type';
 import { useTranslation } from '@/app/i18n/client';
 
 export default function Page({ params: { lng }, searchParams }: any) {
-	const { t } = useTranslation(lng, 'login');
+	const { t } = useTranslation(lng, 'register');
 	const { code, code_verifier, state, error } = searchParams;
 	const router = useRouter();
 
 	useEffect(() => {
-		const googleLogin = async ([callbackAbortCtrl, getMeAbortCtrl]: AbortController[]) => {
+		const oauth2Login = async ([callbackAbortCtrl, getMeAbortCtrl]: AbortController[]) => {
 			try {
 				let url = '/auth/google/callback';
 				const queries = [];
@@ -35,6 +35,11 @@ export default function Page({ params: { lng }, searchParams }: any) {
 				// example: curl - X GET "https://www.googleapis.com/oauth2/v1/userinfo?alt=json" - H"Authorization: Bearer ya2....0169"
 				Cookies.set('user_id', user.id);
 
+				if (!user.is_verified) {
+					const title = t('Success');
+					const msg = `${user.email} ${t('afterLoginPromoteMsg')}.`;
+					await Swal.fire(title, msg, 'success');
+				}
 				router.refresh(); // To make header bar status change
 				router.push(`/${lng}/`);
 			} catch (error: any) {
@@ -47,7 +52,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 		};
 
 		const abortControllers = [new AbortController(), new AbortController()];
-		googleLogin(abortControllers);
+		oauth2Login(abortControllers);
 
 		return () => {
 			abortControllers.forEach((c) => c.abort());

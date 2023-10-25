@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 import { useState } from 'react';
+import { RegisterUser } from '@/app/types/type';
 
 export default function Page({ params: { lng } }: any) {
 	const { t } = useTranslation(lng, 'register');
@@ -40,28 +41,30 @@ export default function Page({ params: { lng } }: any) {
 
 		return errors;
 	};
+	const initialValues: RegisterUser = {
+		email: '',
+		password: '',
+		first_name: '',
+		last_name: '',
+	};
 	const formik = useFormik({
-		initialValues: {
-			email: '',
-			password: '',
-			first_name: '',
-			last_name: '',
-		},
+		initialValues,
 		validate,
 		onSubmit: (values) => {
 			createUser(values);
 		},
 	});
 
-	async function createUser(values: any) {
+	async function createUser(values: RegisterUser) {
 		setSubmitButtonDisabled(true);
 
 		try {
 			const url = '/auth/register';
 			const req = await basicRequest.post(url, values);
-			const msg = `${values.email} Can be login now`;
+			const title = t('Success');
+			const msg = `${values.email} ${t('afterLoginPromoteMsg')}.`;
 
-			await Swal.fire('Created', msg, 'success');
+			await Swal.fire(title, msg, 'success');
 			router.push(`/${lng}/login`);
 		} catch (error: any) {
 			let msg = '';
@@ -158,6 +161,7 @@ export default function Page({ params: { lng } }: any) {
 					<Link href={`/${lng}/privacy`} target="_blank" className="text-gympoolBlue">
 						{t('privacyPolicy')}
 					</Link>
+					.
 				</div>
 
 				<div className="button-box">

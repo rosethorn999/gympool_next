@@ -17,5 +17,6 @@
 	"Password should be at least 8 characters": "Password should be at least 8 characters",
 
 	"SignInWithFacebook": "Sign in with Facebook",
-	"SignInWithGoogle": "Sign in with Google"
+	"SignInWithGoogle": "Sign in with Google",
+	"afterLoginPromoteMsg": "can be login now, please check out your mail to verify account"
 }

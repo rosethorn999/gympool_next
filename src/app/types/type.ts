@@ -20,6 +20,12 @@ export type Contract = {
 	inventory: number;
 	view?: number;
 };
+export type RegisterUser = {
+	email: string;
+	password: string;
+	first_name: string;
+	last_name: string;
+};
 export type User = {
 	id: string;
 	email: string;

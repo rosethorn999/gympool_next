@@ -17,5 +17,6 @@
 	"Password should be at least 8 characters": "密碼最少需要八個字元",
 
 	"SignInWithFacebook": "用 Facebook 登入",
-	"SignInWithGoogle": "用 Google 登入"
+	"SignInWithGoogle": "用 Google 登入",
+	"afterLoginPromoteMsg": "已經可以登錄，請檢查您的郵件以驗證帳戶"
 }

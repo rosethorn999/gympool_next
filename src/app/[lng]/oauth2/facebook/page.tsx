@@ -10,12 +10,12 @@ import { User } from '@/app/types/type';
 import { useTranslation } from '@/app/i18n/client';
 
 export default function Page({ params: { lng }, searchParams }: any) {
-	const { t } = useTranslation(lng, 'login');
+	const { t } = useTranslation(lng, 'register');
 	const { code, code_verifier, state, error } = searchParams;
 	const router = useRouter();
 
 	useEffect(() => {
-		const facebookLogin = async ([callbackAbortCtrl, getMeAbortCtrl]: AbortController[]) => {
+		const oauth2Login = async ([callbackAbortCtrl, getMeAbortCtrl]: AbortController[]) => {
 			try {
 				let url = '/auth/facebook/callback';
 				const queries = [];
@@ -34,6 +34,12 @@ export default function Page({ params: { lng }, searchParams }: any) {
 				// TODO: user.first_name is null, backend should do a user update from facebook
 				Cookies.set('user_id', user.id);
 
+				if (!user.is_verified) {
+					const title = t('Success');
+					const msg = `${user.email} ${t('afterLoginPromoteMsg')}.`;
+					await Swal.fire(title, msg, 'success');
+				}
+
 				router.refresh(); // To make header bar status change
 				router.push(`/${lng}/`);
 			} catch (error: any) {
@@ -46,7 +52,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 		};
 
 		const abortControllers = [new AbortController(), new AbortController()];
-		facebookLogin(abortControllers);
+		oauth2Login(abortControllers);
 
 		return () => {
 			abortControllers.forEach((c) => c.abort());
