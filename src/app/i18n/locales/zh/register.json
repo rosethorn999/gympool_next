@@ -18,5 +18,7 @@
 
 	"SignInWithFacebook": "用 Facebook 登入",
 	"SignInWithGoogle": "用 Google 登入",
-	"afterLoginPromoteMsg": "已經可以登錄，請檢查您的郵件以驗證帳戶"
+	"afterLoginPromoteMsg": "已經可以登錄，請檢查您的郵件以驗證帳戶",
+	"somethingWrongBackToLogin": "出了問題嗎? 回登入頁",
+	"Redirecting": "導向中, 請稍後"
 }

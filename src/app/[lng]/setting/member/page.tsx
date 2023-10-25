@@ -12,6 +12,9 @@ import zipCode from '../../../../../public/twZipCode.json';
 import { useEffect, useState } from 'react';
 import DatePick from '../../components/DatePick';
 import { User } from '@/app/types/type';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 export default function Page({ params: { lng }, searchParams }: any) {
 	const { t } = useTranslation(lng, 'setting');
@@ -66,6 +69,8 @@ export default function Page({ params: { lng }, searchParams }: any) {
 			modify_time: '',
 			create_time: '',
 			last_login: '',
+
+			is_verified: false,
 		},
 		validate,
 		onSubmit: (values) => {
@@ -119,6 +124,21 @@ export default function Page({ params: { lng }, searchParams }: any) {
 					<label className="w-full leading-10 md:w-1/4">{t('email')}</label>
 					<div className="control-box w-full md:w-3/4">
 						<span className="leading-10">{formik.values.email}</span>
+						&nbsp;
+						{formik.values.is_verified ? (
+							<FontAwesomeIcon
+								icon={faCircleCheck}
+								color="green"
+								className="inline-block"
+								title="is_verified"
+							/>
+						) : (
+							<Link className="text-gympoolBlue" href={`/${lng}/verify`}>
+								<FontAwesomeIcon icon={faCircleXmark} color="red" className="inline-block" />
+								&nbsp;
+								{t('Verify')}
+							</Link>
+						)}
 					</div>
 				</div>
 				<div className="form-group flex flex-wrap py-1">

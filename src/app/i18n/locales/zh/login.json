@@ -7,7 +7,5 @@
 	"forgetPassword": "忘記密碼",
 	"SignInWithFacebook": "用 Facebook 登入",
 	"SignInWithGoogle": "用 Google 登入",
-	"LOGIN_USER_NOT_VERIFIED": "帳號未認證完成, 點擊確認後將導引到認證頁面",
-	"somethingWrongBackToLogin": "出了問題嗎? 回登入頁",
-	"Redirecting": "導向中, 請稍後"
+	"LOGIN_USER_NOT_VERIFIED": "帳號未認證完成, 點擊確認後將導引到認證頁面"
 }

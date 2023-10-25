@@ -18,5 +18,6 @@
 
 	"SignInWithFacebook": "Sign in with Facebook",
 	"SignInWithGoogle": "Sign in with Google",
-	"afterLoginPromoteMsg": "can be login now, please check out your mail to verify account"
+	"afterLoginPromoteMsg": "can be login now, please check out your mail to verify account",
+	"somethingWrongBackToLogin": "Something wrong? Back to login"
 }
