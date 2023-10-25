@@ -18,14 +18,14 @@ const FooterBar = async ({ lng }) => {
 								{t('motivation')}
 							</Link>
 						</li>
-						<li>
+						{/* <li>
 							<Link
 								href="/success-story"
 								className="mb-2 text-sm leading-6 text-pattensBlue hover:text-white"
 							>
 								{t('successStory')}
 							</Link>
-						</li>
+						</li> */}
 					</ul>
 				</div>
 				<div className="h-36">

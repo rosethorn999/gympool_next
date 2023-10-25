@@ -3,6 +3,7 @@ import { useTranslation } from '@/app/i18n';
 import { Pagination, User } from '@/app/types/type';
 
 export async function generateStaticParams() {
+	// FIXME: Need a super user role to access api or build will fail
 	const { results: users }: Pagination<User> = await getUsers();
 	const ids = users.map((o) => {
 		return { id: o.id.toString() };

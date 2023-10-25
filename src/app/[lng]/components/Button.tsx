@@ -12,7 +12,12 @@ function Button({
 	disabled?: boolean;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 }) {
-	const colorMap: any = { blue: 'bg-dodgerBlue', pink: 'bg-pink', green: 'bg-grassGreen' };
+	const colorMap: any = {
+		blue: 'bg-dodgerBlue',
+		pink: 'bg-pink',
+		green: 'bg-grassGreen',
+		red: 'bg-persianRed',
+	};
 	return (
 		<button
 			className={`btn blue m-0 h-8 cursor-pointer rounded-3xl bg-dodgerBlue px-7 py-1 text-white hover:opacity-90 focus:outline-none active:border-none disabled:cursor-not-allowed disabled:opacity-60 ${colorMap[color]}`}

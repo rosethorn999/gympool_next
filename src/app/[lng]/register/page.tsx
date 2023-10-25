@@ -7,9 +7,11 @@ import TextBox from '../components/TextBox';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
+import { useState } from 'react';
 
 export default function Page({ params: { lng } }: any) {
 	const { t } = useTranslation(lng, 'register');
+	const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 	const router = useRouter();
 
 	const validate = (values: any) => {
@@ -52,6 +54,8 @@ export default function Page({ params: { lng } }: any) {
 	});
 
 	async function createUser(values: any) {
+		setSubmitButtonDisabled(true);
+
 		try {
 			const url = '/auth/register';
 			const req = await basicRequest.post(url, values);
@@ -84,8 +88,27 @@ export default function Page({ params: { lng } }: any) {
 			const title = statusCode.toString();
 			Swal.fire(title, msg, 'error');
 			console.error(error);
+		} finally {
+			setSubmitButtonDisabled(false);
 		}
 	}
+	const oAuth2Login = async (provider: string) => {
+		setSubmitButtonDisabled(true);
+
+		try {
+			const url = `/auth/${provider}/authorize`;
+			const req = await basicRequest.get(url);
+
+			const { authorization_url } = req.data;
+			location.href = authorization_url;
+		} catch (error: any) {
+			const title = error.response?.status.toString();
+			let msg = error.response?.data?.detail;
+			Swal.fire(title, msg, 'error');
+		} finally {
+			setSubmitButtonDisabled(false);
+		}
+	};
 	return (
 		<div className="Register h-full w-full py-12 text-center md:px-5">
 			<h1 className="mb-3">{t('CompleteYourRegistrationByFillingOutTheFollowingInformation')}</h1>
@@ -143,6 +166,18 @@ export default function Page({ params: { lng } }: any) {
 					</Button>
 				</div>
 			</form>
+
+			<h4 className="spreader mb-5 mt-2 w-full border-b pt-12 leading-[0.1em]">
+				<span className="bg-whiteSmoke px-2">{t('OR')}</span>
+			</h4>
+			<div className="button-box mx-auto flex w-1/4 flex-col gap-4">
+				<Button onClick={() => oAuth2Login('facebook')} disabled={submitButtonDisabled}>
+					{t('SignInWithFacebook')}
+				</Button>
+				<Button onClick={() => oAuth2Login('google')} disabled={submitButtonDisabled} color="red">
+					{t('SignInWithGoogle')}
+				</Button>
+			</div>
 		</div>
 	);
 }

@@ -63,6 +63,16 @@ export default function Page() {
 			</p>
 
 			<p>We do not share your personal information with Google for any other purposes.</p>
+
+			<h2 className="text-lg font-bold">Facebook OAuth 2.0 Verification</h2>
+			<p>
+				We use Facebook OAuth 2.0 to authenticate users and to authorize access to our services.
+				When you sign in to Gympool-STG using Facebook OAuth 2.0, Facebook will provide us with your
+				name, email address, and profile picture. We use this information to create an account for
+				you and to provide you with our services.
+			</p>
+
+			<p>We do not share your personal information with Facebook for any other purposes.</p>
 		</>
 	);
 }
