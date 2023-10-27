@@ -25,5 +25,6 @@
 	"invalid": "Invalid",
 	"Membership": "Membership",
 	"County": "County",
-	"District": "District"
+	"District": "District",
+	"lineIdPromote": "Please search my line id"
 }

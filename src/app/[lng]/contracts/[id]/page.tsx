@@ -82,7 +82,7 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 								<p className="text-xl">{t('sellerInfo')}</p>
 								<div>
 									{t('creator')}:&nbsp;
-									<Link className="text-dodgerBlue underline" href={`/user/${creator.id}`}>
+									<Link className="text-dodgerBlue underline" href={`/${lng}/user/${creator.id}`}>
 										{creator.first_name}
 									</Link>
 								</div>
@@ -94,35 +94,50 @@ export default async function Page({ params: { lng, id: recordId } }: any) {
 												? 'cursor-pointer opacity-70 hover:opacity-100'
 												: 'opacity-20 hover:cursor-not-allowed'
 										}`}
-										title={creator.line_id}
+										title={`${t('lineIdPromote')}: ${creator.line_id}`}
 									/>
-									<FontAwesomeIcon
-										icon={faFacebookMessenger}
-										className={`text-3xl ${
-											creator.facebook_id
-												? 'cursor-pointer opacity-70 hover:opacity-100'
-												: 'opacity-20 hover:cursor-not-allowed'
-										}`}
-										title={creator.facebook_id}
-									/>
-									<FontAwesomeIcon
-										icon={faCommentSms}
-										className={`text-3xl ${
-											creator.mobile
-												? 'cursor-pointer opacity-70 hover:opacity-100'
-												: 'opacity-20 hover:cursor-not-allowed'
-										}`}
-										title={creator.mobile}
-									/>
-									<FontAwesomeIcon
-										icon={faEnvelope}
-										className={`text-3xl ${
-											creator.email
-												? 'cursor-pointer opacity-70 hover:opacity-100'
-												: 'opacity-20 hover:cursor-not-allowed'
-										}`}
-										title={creator.email}
-									/>
+									<Link
+										href={`https://www.facebook.com/${creator.facebook_id}`}
+										className={creator.facebook_id ? 'pointer-events-auto' : `pointer-events-none`}
+									>
+										<FontAwesomeIcon
+											icon={faFacebookMessenger}
+											className={`text-3xl ${
+												creator.facebook_id
+													? 'cursor-pointer opacity-70 hover:opacity-100'
+													: 'opacity-20 hover:cursor-not-allowed'
+											}`}
+											title={creator.facebook_id}
+										/>
+									</Link>
+									<Link
+										href={`sms:+886${creator.mobile}&body=Ask from Gympool member`}
+										className={creator.mobile ? 'pointer-events-auto' : `pointer-events-none`}
+									>
+										<FontAwesomeIcon
+											icon={faCommentSms}
+											className={`text-3xl ${
+												creator.mobile
+													? 'cursor-pointer opacity-70 hover:opacity-100'
+													: 'opacity-20 hover:cursor-not-allowed'
+											}`}
+											title={creator.mobile}
+										/>
+									</Link>
+									<Link
+										href={`mailto:${creator.email}?subject=Ask from Gympool member`}
+										className={creator.email ? 'pointer-events-auto' : `pointer-events-none`}
+									>
+										<FontAwesomeIcon
+											icon={faEnvelope}
+											className={`text-3xl ${
+												creator.email
+													? 'cursor-pointer opacity-70 hover:opacity-100'
+													: 'opacity-20 hover:cursor-not-allowed'
+											}`}
+											title={creator.email}
+										/>
+									</Link>
 								</div>
 							</div>
 						</div>

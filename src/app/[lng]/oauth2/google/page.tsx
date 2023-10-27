@@ -32,7 +32,7 @@ export default function Page({ params: { lng }, searchParams }: any) {
 
 				const user: User = await getUserMe(getMeAbortCtrl);
 				// TODO: user.first_name is null, backend should do a user update from google
-				// example: curl - X GET "https://www.googleapis.com/oauth2/v1/userinfo?alt=json" - H"Authorization: Bearer ya2....0169"
+				// example: curl -X GET "https://www.googleapis.com/oauth2/v1/userinfo?alt=json" -H "Authorization: Bearer ya2....0169"
 				Cookies.set('user_id', user.id);
 
 				if (!user.is_verified) {

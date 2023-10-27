@@ -81,38 +81,24 @@ export const ContractBase = ({ t, fitXs, r }: { t: any; fitXs: boolean; r: Contr
 				<div className={`hidden w-full flex-wrap gap-2 md:flex ${fitXs && 'md:hidden'}`}>
 					<FontAwesomeIcon
 						icon={faLine}
-						className={`text-3xl ${
-							creator.line_id
-								? 'cursor-pointer opacity-70 hover:opacity-100'
-								: 'opacity-20 hover:cursor-not-allowed'
-						}`}
+						className={`text-3xl ${creator.line_id ? 'cursor-pointer opacity-70' : 'opacity-20'}`}
 						title={creator.line_id}
 					/>
 					<FontAwesomeIcon
 						icon={faFacebookMessenger}
 						className={`text-3xl ${
-							creator.facebook_id
-								? 'cursor-pointer opacity-70 hover:opacity-100'
-								: 'opacity-20 hover:cursor-not-allowed'
+							creator.facebook_id ? 'cursor-pointer opacity-70' : 'opacity-20'
 						}`}
 						title={creator.facebook_id}
 					/>
 					<FontAwesomeIcon
 						icon={faCommentSms}
-						className={`text-3xl ${
-							creator.mobile
-								? 'cursor-pointer opacity-70 hover:opacity-100'
-								: 'opacity-20 hover:cursor-not-allowed'
-						}`}
+						className={`text-3xl ${creator.mobile ? 'cursor-pointer opacity-70' : 'opacity-20'}`}
 						title={creator.mobile}
 					/>
 					<FontAwesomeIcon
 						icon={faEnvelope}
-						className={`text-3xl ${
-							creator.email
-								? 'cursor-pointer opacity-70 hover:opacity-100'
-								: 'opacity-20 hover:cursor-not-allowed'
-						}`}
+						className={`text-3xl ${creator.email ? 'cursor-pointer opacity-70' : 'opacity-20'}`}
 						title={creator.email}
 					/>
 				</div>
