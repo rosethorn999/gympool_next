@@ -1,0 +1,21 @@
+name: Unit Test
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - uses: 'actions/checkout@v3'
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+      - name: npm install
+        run: npm ci
+      - name: Test
+        run: npm test

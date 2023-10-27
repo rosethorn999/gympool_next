@@ -4,13 +4,7 @@ import { getContracts, getCountyScatter } from '../../app/apis/api';
 import { Contract, Pagination } from '../types/type';
 import { useTranslation } from '../i18n';
 
-declare global {
-	interface Window {
-		FB: any;
-	}
-}
-
-const Page = async ({ params: { lng } }: any) => {
+const Page = async ({ params: { lng } }: { params: { lng: string } }) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng);
 	// // const isMobileWidth = window.innerWidth <= 480;
