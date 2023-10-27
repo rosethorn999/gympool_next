@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 import { languages } from '../../../i18n/settings';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSelectedLayoutSegments, useSearchParams } from 'next/navigation';
 import gymPoolLogo from '../../../../../public/gymPoolLogo.svg';
 
 export const HeaderBase = ({ t, lng }) => {
@@ -15,6 +15,8 @@ export const HeaderBase = ({ t, lng }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState();
 	const token = Cookies.get('token');
 	const router = useRouter();
+	const SearchParams = useSearchParams();
+	const SelectedLayoutSegments = useSelectedLayoutSegments();
 
 	useEffect(() => {
 		setIsLoggedIn(!!token);
@@ -28,7 +30,11 @@ export const HeaderBase = ({ t, lng }) => {
 	}
 	function clickLangSwitcher() {
 		const switchToLang = languages[(languages.indexOf(lng) + 1) % languages.length];
-		router.push(`/${switchToLang}/`);
+		const segments = SelectedLayoutSegments.join('/');
+		const queries = new URLSearchParams(SearchParams).toString();
+
+		const newUrl = `/${switchToLang}/${segments}?${queries}`;
+		router.push(newUrl);
 	}
 	function triggerMobileMenu(toStatus = false) {
 		toStatus = !isMobileMenuOpened;

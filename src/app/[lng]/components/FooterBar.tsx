@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useTranslation } from '../../i18n';
 
-const FooterBar = async ({ lng }) => {
+export default async function FooterBar({ lng }: { lng: string }) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lng, 'footer');
 	return (
@@ -80,6 +80,4 @@ const FooterBar = async ({ lng }) => {
 			</div>
 		</footer>
 	);
-};
-
-export default FooterBar;
+}
