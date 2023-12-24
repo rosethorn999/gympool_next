@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ContractBox } from './components/ContractBox';
+import ContractBox from './components/ContractBox';
 import { getContracts, getCountyScatter } from '../../app/apis/api';
 import { Contract, Pagination } from '../types/type';
 import { useTranslation } from '../i18n';

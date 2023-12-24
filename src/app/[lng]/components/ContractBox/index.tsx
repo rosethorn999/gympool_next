@@ -8,7 +8,7 @@ async function ContractBox({
 	r,
 }: {
 	lng: string;
-	fitXs: boolean;
+	fitXs?: boolean;
 	r: Contract;
 }) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks

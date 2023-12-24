@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import selections from '../../../../../public/selections.json';
 import Image from 'next/image';
-import { ContractBox } from '@/app/[lng]/components/ContractBox';
+import ContractBox from '@/app/[lng]/components/ContractBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentSms, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';

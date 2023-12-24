@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContractBox } from '../components/ContractBox';
+import ContractBox from '../components/ContractBox';
 import SearchBox from '../components/SearchBox';
 import loadingGif from '../../../../public/loading.gif';
 import { getContracts } from '../../apis/api';

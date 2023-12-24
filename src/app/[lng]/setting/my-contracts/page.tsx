@@ -5,7 +5,7 @@ import { Contract } from '@/app/types/type';
 import { getMyContracts } from '@/app/apis/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrownOpen } from '@fortawesome/free-regular-svg-icons';
-import { ContractBox } from '../../components/ContractBox/client';
+import ContractBox from '../../components/ContractBox/client';
 import Link from 'next/link';
 import { useTranslation } from '@/app/i18n/client';
 import Cookies from 'js-cookie';

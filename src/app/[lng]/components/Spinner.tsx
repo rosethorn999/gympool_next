@@ -2,7 +2,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import logo from '../../../../public/logo.svg';
-
+// TODO: Maybe can use useRef here instead
+//www.developerway.com/posts/refs-from-dom-to-api
 function Spinner({ defaultState = false }: { defaultState?: boolean }) {
 	const [isOpen, setIsOpen] = useState<boolean>(defaultState);
 	return (
